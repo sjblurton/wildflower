@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {backgroundColourOptions, colourOptions, textColourOptions} from './colourOptions'
 
 export const siteSettingsType = defineType({
 	name: 'siteSettings',
@@ -65,15 +66,10 @@ export const siteSettingsType = defineType({
 			type: 'string',
 			description: 'Site-wide default text colour. Applied when a section does not specify its own.',
 			options: {
-				list: [
-					{title: 'Black', value: 'black'},
-					{title: 'White', value: 'white'},
-					{title: 'Primary', value: 'primary'},
-					{title: 'Secondary', value: 'secondary'},
-				],
+				list: textColourOptions,
 				layout: 'radio',
 			},
-			initialValue: 'black',
+			initialValue: colourOptions.black.value,
 		}),
 		defineField({
 			name: 'defaultBackgroundColor',
@@ -81,15 +77,10 @@ export const siteSettingsType = defineType({
 			type: 'string',
 			description: 'Site-wide default background colour. Applied when a section does not specify its own.',
 			options: {
-				list: [
-					{title: 'White', value: 'white'},
-					{title: 'Black', value: 'black'},
-					{title: 'Primary', value: 'primary'},
-					{title: 'Secondary', value: 'secondary'},
-				],
+				list: backgroundColourOptions,
 				layout: 'radio',
 			},
-			initialValue: 'white',
+			initialValue: colourOptions.white.value,
 		}),
 		defineField({
 			name: 'primaryColor',
@@ -109,15 +100,10 @@ export const siteSettingsType = defineType({
 			type: 'string',
 			description: 'Background colour of the navigation bar.',
 			options: {
-				list: [
-					{title: 'White', value: 'white'},
-					{title: 'Black', value: 'black'},
-					{title: 'Primary', value: 'primary'},
-					{title: 'Secondary', value: 'secondary'},
-				],
+				list: backgroundColourOptions,
 				layout: 'radio',
 			},
-			initialValue: 'white',
+			initialValue: colourOptions.white.value,
 		}),
 		defineField({
 			name: 'navTextColor',
@@ -125,15 +111,10 @@ export const siteSettingsType = defineType({
 			type: 'string',
 			description: 'Colour of the navigation links and text.',
 			options: {
-				list: [
-					{title: 'White', value: 'white'},
-					{title: 'Black', value: 'black'},
-					{title: 'Primary', value: 'primary'},
-					{title: 'Secondary', value: 'secondary'},
-				],
+				list: textColourOptions,
 				layout: 'radio',
 			},
-			initialValue: 'black',
+			initialValue: colourOptions.black.value,
 		}),
 		defineField({
 			name: 'navLinks',

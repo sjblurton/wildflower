@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import { colourOptions, textColourOptions} from './colourOptions'
 
 export const imageSectionType = defineType({
 	name: 'imageSection',
@@ -33,13 +34,10 @@ export const imageSectionType = defineType({
 			title: 'Text color',
 			type: 'string',
 			options: {
-				list: [
-					{title: 'White', value: 'white'},
-					{title: 'Black', value: 'black'},
-				],
+				list: textColourOptions,
 				layout: 'radio',
 			},
-			initialValue: 'white',
+			initialValue: colourOptions.white.value,
 		}),
 		defineField({
 			name: 'overlayStyle',
