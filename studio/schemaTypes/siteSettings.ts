@@ -5,6 +5,16 @@ export const siteSettingsType = defineType({
 	name: 'siteSettings',
 	title: 'Site settings',
 	type: 'document',
+	groups: [
+		{
+			name: 'seo',
+			title: 'SEO',
+		},
+		{
+			name: 'styling',
+			title: 'Styling',
+		},
+	],
 	fields: [
 		defineField({
 			name: 'siteTitle',
@@ -12,6 +22,7 @@ export const siteSettingsType = defineType({
 			type: 'string',
 			description: 'The default site name used across SEO and sharing when a page does not provide its own value.',
 			validation: (Rule) => Rule.required(),
+			group: 'seo',
 		}),
 		defineField({
 			name: 'siteUrl',
@@ -19,6 +30,7 @@ export const siteSettingsType = defineType({
 			type: 'url',
 			description: 'The main website URL, for example https://example.com. This is used for canonical URLs and sharing metadata.',
 			validation: (Rule) => Rule.required().uri({scheme: ['http', 'https']}),
+			group: 'seo',
 		}),
 		defineField({
 			name: 'defaultMetaTitle',
@@ -26,6 +38,7 @@ export const siteSettingsType = defineType({
 			type: 'string',
 			description: 'Fallback browser and search result title when a page-specific SEO title is not set.',
 			validation: (Rule) => Rule.max(60).warning('Keep meta titles under 60 characters'),
+			group: 'seo',
 		}),
 		defineField({
 			name: 'defaultMetaDescription',
@@ -35,6 +48,7 @@ export const siteSettingsType = defineType({
 			description: 'Fallback description used by search engines and social previews when a page-specific description is not set.',
 			validation: (Rule) =>
 				Rule.max(160).warning('Keep meta descriptions under 160 characters'),
+			group: 'seo',
 		}),
 		defineField({
 			name: 'defaultOgImage',
@@ -53,20 +67,15 @@ export const siteSettingsType = defineType({
 					validation: (Rule) => Rule.required(),
 				}),
 			],
+			group: 'seo',
 		}),
 		defineField({
-			name: 'defaultSocialSettings',
-			title: 'Default social settings',
-			type: 'reference',
-			to: [{type: 'socialSettings'}],
-			description: 'Optional default social settings set for sections and CTAs that use social links.',
-		}),
-		defineField({
-			name: 'defaultContactSettings',
-			title: 'Default contact settings',
-			type: 'reference',
-			to: [{type: 'contactSettings'}],
-			description: 'Optional default contact settings set for footer or other contact blocks.',
+			name: 'noIndexByDefault',
+			title: 'Noindex by default',
+			type: 'boolean',
+			description: 'Enable this if pages should default to not being indexed by search engines unless you explicitly override that behavior later.',
+			initialValue: false,
+			group: 'seo',
 		}),
 		defineField({
 			name: 'defaultTextColor',
@@ -78,6 +87,7 @@ export const siteSettingsType = defineType({
 				layout: 'radio',
 			},
 			initialValue: colourOptions.black.value,
+			group: 'styling',
 		}),
 		defineField({
 			name: 'defaultBackgroundColor',
@@ -89,25 +99,21 @@ export const siteSettingsType = defineType({
 				layout: 'radio',
 			},
 			initialValue: colourOptions.white.value,
+			group: 'styling',
 		}),
 		defineField({
 			name: 'primaryColor',
 			title: 'Primary colour',
 			type: 'colorToken',
 			description: 'Optional main brand colour. If not set, primary falls back to black.',
+			group: 'styling',
 		}),
 		defineField({
 			name: 'secondaryColor',
 			title: 'Secondary colour',
 			type: 'colorToken',
 			description: 'Optional accent brand colour. If not set, secondary falls back to white.',
-		}),
-		defineField({
-			name: 'noIndexByDefault',
-			title: 'Noindex by default',
-			type: 'boolean',
-			description: 'Enable this if pages should default to not being indexed by search engines unless you explicitly override that behavior later.',
-			initialValue: false,
+			group: 'styling',
 		}),
 	],
 	preview: {

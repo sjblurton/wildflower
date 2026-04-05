@@ -3,8 +3,15 @@ import {defineField, defineType} from 'sanity'
 export const contactLinkType = defineType({
 	name: 'contactLink',
 	title: 'Contact link',
-	type: 'object',
+	type: 'document',
 	fields: [
+		defineField({
+			name: 'title',
+			title: 'Title',
+			type: 'string',
+			description: 'Descriptive internal name, for example "Main phone" or "Support email".',
+			validation: (Rule) => Rule.required(),
+		}),
 		defineField({
 			name: 'type',
 			title: 'Type',
@@ -109,15 +116,16 @@ export const contactLinkType = defineType({
 		}),
 	preview: {
 		select: {
+			title: 'title',
 			type: 'type',
 			label: 'label',
 			phoneNumber: 'phoneNumber',
 			emailAddress: 'emailAddress',
 		},
-		prepare({type, label, phoneNumber, emailAddress}) {
+		prepare({title, type, label, phoneNumber, emailAddress}) {
 			const value = type === 'email' ? emailAddress : phoneNumber
 			return {
-				title: label || 'Contact link',
+				title: title || label || 'Contact link',
 				subtitle: `${type || 'unknown'}${value ? ` • ${value}` : ''}`,
 			}
 		},

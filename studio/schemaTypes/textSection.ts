@@ -1,6 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {colourOptions, sectionBackgroundColourOptions} from './colourOptions'
-import {socialPlatformOptions} from './socialLink'
 
 export const textSectionType = defineType({
 	name: 'textSection',
@@ -95,6 +94,7 @@ export const textSectionType = defineType({
 						list: [
 							{title: 'Page', value: 'page'},
 							{title: 'Social link', value: 'social'},
+                            {title: "Contact link", value: "contact"},
 						],
 						layout: 'radio',
 					},
@@ -108,31 +108,29 @@ export const textSectionType = defineType({
                     description: 'Page to navigate to when the CTA button is clicked',
 					hidden: ({parent}) => {
 						const cta = parent as {linkType?: string} | undefined
-						return cta?.linkType === 'social'
+						return cta?.linkType !== 'page'
 					},
 				}),
 				defineField({
-					name: 'targetSocialSettings',
-					title: 'Social settings set',
+					name: 'targetSocialLink',
+					title: 'Target social link',
 					type: 'reference',
-					to: [{type: 'socialSettings'}],
-					description: 'Choose which social settings set should provide the CTA link.',
+					to: [{type: 'socialLink'}],
+					description: 'Social link to open when the CTA button is clicked.',
 					hidden: ({parent}) => {
 						const cta = parent as {linkType?: string} | undefined
 						return cta?.linkType !== 'social'
 					},
 				}),
 				defineField({
-					name: 'targetSocialPlatform',
-					title: 'Social platform',
-					type: 'string',
-					description: 'Platform to use from the selected social settings set.',
-					options: {
-						list: socialPlatformOptions,
-					},
+					name: 'targetContactLink',
+					title: 'Target contact link',
+					type: 'reference',
+					to: [{type: 'contactLink'}],
+					description: 'Contact link to open when the CTA button is clicked.',
 					hidden: ({parent}) => {
 						const cta = parent as {linkType?: string} | undefined
-						return cta?.linkType !== 'social'
+						return cta?.linkType !== 'contact'
 					},
 				}),
 			],
@@ -141,10 +139,10 @@ export const textSectionType = defineType({
 					const cta = value as
 						| {
 								label?: string
-								linkType?: 'page' | 'social'
+								linkType?: 'page' | 'social' | 'contact'
 								targetPage?: {_ref?: string}
-								targetSocialSettings?: {_ref?: string}
-								targetSocialPlatform?: string
+								targetSocialLink?: {_ref?: string}
+								targetContactLink?: {_ref?: string}
 						  }
 						| undefined
 
@@ -154,7 +152,7 @@ export const textSectionType = defineType({
 
 					const hasLabel = Boolean(cta.label?.trim())
 					const hasAnyTarget = Boolean(
-						cta.targetPage?._ref || cta.targetSocialSettings?._ref || cta.targetSocialPlatform,
+						cta.targetPage?._ref || cta.targetSocialLink?._ref || cta.targetContactLink?._ref,
 					)
 					const hasAnyCtaData = hasLabel || hasAnyTarget
 
@@ -168,25 +166,19 @@ export const textSectionType = defineType({
 
 					const linkType = cta.linkType || 'page'
 
-					if (linkType === 'social') {
-						const hasSettings = Boolean(cta.targetSocialSettings?._ref)
-						const hasPlatform = Boolean(cta.targetSocialPlatform)
-						if (!hasSettings || !hasPlatform) {
-							return 'Social CTA must include both a social settings set and a social platform'
-						}
-						if (cta.targetPage?._ref) {
-							return 'Social CTA should not include a target page'
-						}
-						return true
+					if (linkType === 'social' && !Boolean(cta.targetSocialLink?._ref)) {
+							return 'Social CTA must include a target social link'
+
+					}
+
+					if (linkType === 'contact' && !Boolean(cta.targetContactLink?._ref)) {
+							return 'Contact CTA must include a target contact link'
+
 					}
 
 					const hasTargetPage = Boolean(cta.targetPage?._ref)
-					if (!hasTargetPage) {
+					if (linkType === 'page' && !hasTargetPage) {
 						return 'Page CTA must include a target page'
-					}
-
-					if (cta.targetSocialSettings?._ref || cta.targetSocialPlatform) {
-						return 'Page CTA should not include social settings or social platform'
 					}
 
 					if (hasLabel && hasTargetPage) {

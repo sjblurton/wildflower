@@ -3,12 +3,10 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 
-const singlePageTypes = ['siteSettings', 'contactSettings', 'socialSettings', 'navSettings', 'footerSettings'] as const
+const singlePageTypes = ['siteSettings', 'navSettings', 'footerSettings'] as const
 
 const singletonDocuments = {
   siteSettings: {title: 'Site settings', documentId: 'siteSettings'},
-  contactSettings: {title: 'Contact settings', documentId: 'contactSettings'},
-  socialSettings: {title: 'Social settings', documentId: 'socialSettings'},
   navSettings: {title: 'Navigation settings', documentId: 'navSettings'},
   footerSettings: {title: 'Footer settings', documentId: 'footerSettings'},
 } as const

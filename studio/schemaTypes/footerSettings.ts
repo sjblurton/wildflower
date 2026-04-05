@@ -5,6 +5,17 @@ export const footerSettingsType = defineType({
 	name: 'footerSettings',
 	title: 'Footer settings',
 	type: 'document',
+			groups: [
+		{
+			name: 'content',
+			title: 'Content',
+			default: true,
+		},
+		{
+			name: 'styling',
+			title: 'Styling',
+		},
+	],
 	fields: [
 		defineField({
 			name: 'title',
@@ -12,6 +23,7 @@ export const footerSettingsType = defineType({
 			type: 'string',
 			hidden: true,
 			initialValue: 'Footer settings',
+			group: 'content',
 		}),
 		defineField({
 			name: 'footerBackgroundColor',
@@ -23,6 +35,7 @@ export const footerSettingsType = defineType({
 				layout: 'radio',
 			},
 			initialValue: colourOptions.black.value,
+			group: 'styling',
 		}),
 		defineField({
 			name: 'footerTextColor',
@@ -34,6 +47,7 @@ export const footerSettingsType = defineType({
 				layout: 'radio',
 			},
 			initialValue: colourOptions.white.value,
+			group: 'styling',
 		}),
 		defineField({
 			name: 'footerLogo',
@@ -52,18 +66,21 @@ export const footerSettingsType = defineType({
 					validation: (Rule) => Rule.required(),
 				}),
 			],
+			group: 'content',
 		}),
 		defineField({
 			name: 'footerSiteName',
 			title: 'Footer site name',
 			type: 'string',
 			description: 'Optional footer brand name text.',
+			group: 'content',
 		}),
 		defineField({
 			name: 'footerCopyrightText',
 			title: 'Footer copyright text',
 			type: 'string',
 			description: 'Optional short copyright text, e.g. © Wildflower 2026.',
+			group: 'content',
 		}),
 		defineField({
 			name: 'footerNavLinks',
@@ -105,20 +122,23 @@ export const footerSettingsType = defineType({
 					},
 				}),
 			],
+			group: 'content',
 		}),
 		defineField({
-			name: 'footerSocialSettings',
-			title: 'Footer social settings',
-			type: 'reference',
-			to: [{type: 'socialSettings'}],
-			description: 'Select which social settings set should be rendered in the footer.',
+			name: 'footerSocialLinks',
+			title: 'Footer social links',
+			type: 'array',
+			of: [{type: 'reference', to: [{type: 'socialLink'}]}],
+			description: 'Social links to display in the footer.',
+			group: 'content',
 		}),
 		defineField({
-			name: 'footerContactSettings',
-			title: 'Footer contact settings',
-			type: 'reference',
-			to: [{type: 'contactSettings'}],
-			description: 'Select which contact settings set should be rendered in the footer.',
+			name: 'footerContactLinks',
+			title: 'Footer contact links',
+			type: 'array',
+			of: [{type: 'reference', to: [{type: 'contactLink'}]}],
+			description: 'Contact links to display in the footer.',
+			group: 'content',
 		}),
 	],
 	preview: {

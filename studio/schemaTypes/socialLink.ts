@@ -12,8 +12,15 @@ export const socialPlatformOptions = [
 export const socialLinkType = defineType({
 	name: 'socialLink',
 	title: 'Social link',
-	type: 'object',
+	type: 'document',
 	fields: [
+		defineField({
+			name: 'title',
+			title: 'Title',
+			type: 'string',
+			description: 'Descriptive name for this social link, for example "Main Instagram Account" or "TikTok Channel".',
+			validation: (Rule) => Rule.required(),
+		}),
 		defineField({
 			name: 'platform',
 			title: 'Platform',
@@ -67,14 +74,15 @@ export const socialLinkType = defineType({
 	],
 	preview: {
 		select: {
+			title: 'title',
 			platform: 'platform',
 			url: 'url',
 			media: 'icon',
 		},
-		prepare({platform, url, media}) {
+		prepare({title, platform, url, media}) {
 			return {
-				title: platform ? `Social: ${platform}` : 'Social link',
-				subtitle: url || 'No URL set',
+				title: title || 'Untitled social link',
+				subtitle: `${platform ? platform + ' • ' : ''}${url || 'No URL set'}`,
 				media,
 			}
 		},

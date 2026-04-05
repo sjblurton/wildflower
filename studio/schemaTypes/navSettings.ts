@@ -5,6 +5,17 @@ export const navSettingsType = defineType({
 	name: 'navSettings',
 	title: 'Navigation settings',
 	type: 'document',
+		groups: [
+		{
+			name: 'content',
+			title: 'Content',
+			default: true,
+		},
+		{
+			name: 'styling',
+			title: 'Styling',
+		},
+	],
 	fields: [
 		defineField({
 			name: 'title',
@@ -12,6 +23,7 @@ export const navSettingsType = defineType({
 			type: 'string',
 			hidden: true,
 			initialValue: 'Navigation settings',
+			group: 'content',
 		}),
 		defineField({
 			name: 'navBackgroundColor',
@@ -23,6 +35,7 @@ export const navSettingsType = defineType({
 				layout: 'radio',
 			},
 			initialValue: colourOptions.white.value,
+			group: 'styling',
 		}),
 		defineField({
 			name: 'navTextColor',
@@ -34,6 +47,7 @@ export const navSettingsType = defineType({
 				layout: 'radio',
 			},
 			initialValue: colourOptions.black.value,
+			group: 'styling',
 		}),
 		defineField({
 			name: 'navLogo',
@@ -52,12 +66,14 @@ export const navSettingsType = defineType({
 					description: 'Describe the logo image for accessibility. This text is not publicly visible but is important for screen readers.',
 				}),
 			],
+			group: 'content',
 		}),
 		defineField({
 			name: 'navSiteName',
 			title: 'Nav site name',
 			type: 'string',
 			description: 'Optional text shown alongside or instead of the nav logo.',
+			group: 'content',
 		}),
 		defineField({
 			name: 'navLinks',
@@ -99,6 +115,7 @@ export const navSettingsType = defineType({
 					},
 				}),
 			],
+			group: 'content',
 		}),
 	],
 	preview: {
