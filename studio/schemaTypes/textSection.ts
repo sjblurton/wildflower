@@ -43,12 +43,19 @@ export const textSectionType = defineType({
 			],
 			validation: (Rule) =>
 				Rule.custom((value) => {
-					if (!value) {
+					const cta = value as
+						| {
+								label?: string
+								targetPage?: {_ref?: string}
+						  }
+						| undefined
+
+					if (!cta) {
 						return true
 					}
 
-					const hasLabel = Boolean(value.label)
-					const hasTarget = Boolean(value.targetPage?._ref)
+					const hasLabel = Boolean(cta.label)
+					const hasTarget = Boolean(cta.targetPage?._ref)
 
 					if (hasLabel === hasTarget) {
 						return true
