@@ -1,10 +1,22 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {colourOptions, sectionBackgroundColourOptions} from './colourOptions'
 
 export const socialLinksSectionType = defineType({
 	name: 'socialLinksSection',
 	title: 'Social links section',
 	type: 'object',
 	fields: [
+		defineField({
+			name: 'backgroundColor',
+			title: 'Background colour',
+			type: 'string',
+			description: 'Optional background for this section.',
+			options: {
+				list: sectionBackgroundColourOptions,
+				layout: 'radio',
+			},
+			initialValue: colourOptions.transparent.value,
+		}),
 		defineField({
 			name: 'header',
 			title: 'Header',

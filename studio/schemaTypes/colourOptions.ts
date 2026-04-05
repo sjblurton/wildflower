@@ -1,4 +1,5 @@
 export const colourOptions = {
+	transparent: {title: 'None', value: 'transparent'},
 	white: {title: 'White', value: 'white'},
 	black: {title: 'Black', value: 'black'},
 	primary: {title: 'Primary', value: 'primary'},
@@ -18,4 +19,9 @@ export const backgroundColourOptions = [
 	{title: colourOptions.black.title, value: colourOptions.black.value},
 	{title: colourOptions.primary.title, value: colourOptions.primary.value},
 	{title: colourOptions.secondary.title, value: colourOptions.secondary.value},
+]
+
+export const sectionBackgroundColourOptions = [
+	{title: colourOptions.transparent.title, value: colourOptions.transparent.value},
+	...backgroundColourOptions,
 ]
