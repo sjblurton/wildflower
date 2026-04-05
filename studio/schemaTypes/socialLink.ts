@@ -1,5 +1,14 @@
 import {defineField, defineType} from 'sanity'
 
+export const socialPlatformOptions = [
+	{title: 'Instagram', value: 'instagram'},
+	{title: 'TikTok', value: 'tiktok'},
+	{title: 'Twitter/X', value: 'x'},
+	{title: 'Facebook', value: 'facebook'},
+	{title: 'LinkedIn', value: 'linkedin'},
+	{title: 'YouTube', value: 'youtube'},
+]
+
 export const socialLinkType = defineType({
 	name: 'socialLink',
 	title: 'Social link',
@@ -11,14 +20,7 @@ export const socialLinkType = defineType({
 			type: 'string',
 			description: 'Select the social network. The website can use this value to show the correct logo automatically.',
 			options: {
-				list: [
-					{title: 'Instagram', value: 'instagram'},
-					{title: 'TikTok', value: 'tiktok'},
-					{title: 'Twitter/X', value: 'x'},
-					{title: 'Facebook', value: 'facebook'},
-					{title: 'LinkedIn', value: 'linkedin'},
-					{title: 'YouTube', value: 'youtube'},
-				],
+				list: socialPlatformOptions,
 			},
 			validation: (Rule) => Rule.required(),
 		}),
@@ -35,30 +37,33 @@ export const socialLinkType = defineType({
 			type: 'string',
 			description: 'Optional accessible label or custom link text.',
 		}),
-        defineField({
-            name: "handle",
-            title: "Handle",
-            type: "string",
-            description: "Optional social media handle, for example @yourname. This can be used by the website to display the handle next to the link.",
-        }),
-        defineField({
-            name: 'icon',
-            title: 'Icon',
-            type: 'image',
-            description: 'Optional custom icon for this social link. If not set, the website can use the platform value to show a default logo.',
-            options: {
-                hotspot: true,
-            },
-            fields: [
-                defineField({
-                    name: 'alt',
-                    title: 'Alt text',
-                    type: 'string',
-					description: 'Describe the logo image for accessibility. This text is not publicly visible but is important for screen readers.',
-                    validation: (Rule) => Rule.required(),
-                }),
-            ],
-        }),
+		defineField({
+			name: 'handle',
+			title: 'Handle',
+			type: 'string',
+			description:
+				'Optional social media handle, for example @yourname. This can be used by the website to display the handle next to the link.',
+		}),
+		defineField({
+			name: 'icon',
+			title: 'Icon',
+			type: 'image',
+			description:
+				'Optional custom icon for this social link. If not set, the website can use the platform value to show a default logo.',
+			options: {
+				hotspot: true,
+			},
+			fields: [
+				defineField({
+					name: 'alt',
+					title: 'Alt text',
+					type: 'string',
+					description:
+						'Describe the logo image for accessibility. This text is not publicly visible but is important for screen readers.',
+					validation: (Rule) => Rule.required(),
+				}),
+			],
+		}),
 	],
 	preview: {
 		select: {

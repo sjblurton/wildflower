@@ -3,6 +3,14 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 
+const singlePageTypes = ['siteSettings', 'contactSettings', 'socialSettings'] as const
+
+const singletonDocuments = {
+  siteSettings: {title: 'Site settings', documentId: 'siteSettings'},
+  contactSettings: {title: 'Contact settings', documentId: 'contactSettings'},
+  socialSettings: {title: 'Social settings', documentId: 'socialSettings'},
+} as const
+
 export default defineConfig({
   name: 'default',
   title: 'wildflower',
@@ -16,11 +24,16 @@ export default defineConfig({
         S.list()
           .title('Content')
           .items([
-            S.listItem()
-              .title('Site settings')
-              .id('siteSettings')
-              .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
-            ...S.documentTypeListItems().filter((item) => item.getId() !== 'siteSettings'),
+            ...singlePageTypes.map((schemaType) => {
+              const config = singletonDocuments[schemaType]
+              return S.listItem()
+                .title(config.title)
+                .id(schemaType)
+                .child(S.document().schemaType(schemaType).documentId(config.documentId))
+            }),
+            ...S.documentTypeListItems().filter(
+              (item) => !singlePageTypes.includes(item.getId() as (typeof singlePageTypes)[number]),
+            ),
           ]),
     }),
     visionTool(),
@@ -29,7 +42,12 @@ export default defineConfig({
   document: {
     newDocumentOptions: (previous, {creationContext}) => {
       if (creationContext.type === 'global') {
-        return previous.filter((templateItem) => templateItem.templateId !== 'siteSettings')
+        return previous.filter(
+          (templateItem) =>
+            !singlePageTypes.includes(
+              templateItem.templateId as (typeof singlePageTypes)[number],
+            ),
+        )
       }
 
       return previous

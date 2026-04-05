@@ -49,16 +49,24 @@ export const siteSettingsType = defineType({
 					name: 'alt',
 					title: 'Alt text',
 					type: 'string',
+					description: 'Describe the logo image for accessibility. This text is not publicly visible but is important for screen readers.',
 					validation: (Rule) => Rule.required(),
 				}),
 			],
 		}),
 		defineField({
-			name: 'socialLinks',
-			title: 'Social links',
-			type: 'array',
-			description: 'Global social links, typically used in the footer. Add one or many as needed.',
-			of: [{type: 'socialLink'}],
+			name: 'defaultSocialSettings',
+			title: 'Default social settings',
+			type: 'reference',
+			to: [{type: 'socialSettings'}],
+			description: 'Optional default social settings set for sections and CTAs that use social links.',
+		}),
+		defineField({
+			name: 'defaultContactSettings',
+			title: 'Default contact settings',
+			type: 'reference',
+			to: [{type: 'contactSettings'}],
+			description: 'Optional default contact settings set for footer or other contact blocks.',
 		}),
 		defineField({
 			name: 'defaultTextColor',
@@ -117,6 +125,30 @@ export const siteSettingsType = defineType({
 			initialValue: colourOptions.black.value,
 		}),
 		defineField({
+			name: 'navLogo',
+			title: 'Nav logo',
+			type: 'image',
+			description: 'Optional logo shown in the navigation area.',
+			options: {
+				hotspot: true,
+			},
+			fields: [
+				defineField({
+					name: 'alt',
+					title: 'Alt text',
+					type: 'string',
+					validation: (Rule) => Rule.required(),
+                    description: 'Describe the logo image for accessibility. This text is not publicly visible but is important for screen readers.',
+				}),
+			],
+		}),
+		defineField({
+			name: 'navSiteName',
+			title: 'Nav site name',
+			type: 'string',
+			description: 'Optional text shown alongside or instead of the nav logo.',
+		}),
+		defineField({
 			name: 'navLinks',
 			title: 'Nav links',
 			type: 'array',
@@ -156,6 +188,113 @@ export const siteSettingsType = defineType({
 					},
 				}),
 			],
+		}),
+		defineField({
+			name: 'footerBackgroundColor',
+			title: 'Footer background colour',
+			type: 'string',
+			description: 'Background colour of the global footer.',
+			options: {
+				list: backgroundColourOptions,
+				layout: 'radio',
+			},
+			initialValue: colourOptions.black.value,
+		}),
+		defineField({
+			name: 'footerTextColor',
+			title: 'Footer text colour',
+			type: 'string',
+			description: 'Text and link colour used in the global footer.',
+			options: {
+				list: textColourOptions,
+				layout: 'radio',
+			},
+			initialValue: colourOptions.white.value,
+		}),
+		defineField({
+			name: 'footerLogo',
+			title: 'Footer logo',
+			type: 'image',
+			description: 'Optional logo shown in the footer.',
+			options: {
+				hotspot: true,
+			},
+			fields: [
+				defineField({
+					name: 'alt',
+					title: 'Alt text',
+					type: 'string',
+					description: 'Describe the logo image for accessibility. This text is not publicly visible but is important for screen readers.',
+					validation: (Rule) => Rule.required(),
+				}),
+			],
+		}),
+		defineField({
+			name: 'footerSiteName',
+			title: 'Footer site name',
+			type: 'string',
+			description: 'Optional footer brand name text.',
+		}),
+		defineField({
+			name: 'footerCopyrightText',
+			title: 'Footer copyright text',
+			type: 'string',
+			description: 'Optional short copyright text, e.g. © Wildflower 2026.',
+		}),
+		defineField({
+			name: 'footerNavLinks',
+			title: 'Footer nav links',
+			type: 'array',
+			description: 'Links shown in the footer navigation area.',
+			of: [
+				defineArrayMember({
+					type: 'object',
+					name: 'footerNavLink',
+					title: 'Footer nav link',
+					fields: [
+						defineField({
+							name: 'label',
+							title: 'Label',
+							type: 'string',
+							validation: (Rule) => Rule.required(),
+						}),
+						defineField({
+							name: 'page',
+							title: 'Page',
+							type: 'reference',
+							to: [{type: 'page'}],
+							validation: (Rule) => Rule.required(),
+						}),
+					],
+					preview: {
+						select: {
+							label: 'label',
+							pageTitle: 'page.title',
+							slug: 'page.slug.current',
+						},
+						prepare({label, pageTitle, slug}) {
+							return {
+								title: label || 'Untitled link',
+								subtitle: pageTitle ? `→ ${pageTitle}${slug ? ` (/${slug})` : ''}` : 'No page selected',
+							}
+						},
+					},
+				}),
+			],
+		}),
+		defineField({
+			name: 'footerSocialSettings',
+			title: 'Footer social settings',
+			type: 'reference',
+			to: [{type: 'socialSettings'}],
+			description: 'Select which social settings set should be rendered in the footer.',
+		}),
+		defineField({
+			name: 'footerContactSettings',
+			title: 'Footer contact settings',
+			type: 'reference',
+			to: [{type: 'contactSettings'}],
+			description: 'Select which contact settings set should be rendered in the footer.',
 		}),
 		defineField({
 			name: 'noIndexByDefault',
