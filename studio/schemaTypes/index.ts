@@ -1,3 +1,4 @@
+import {ctaType} from './content/cta'
 import {imageSectionType} from './content/imageSection'
 import {pageType} from './content/page'
 import {productCardType} from './content/productCard'
@@ -14,6 +15,7 @@ import {colourTokenType} from './tokens/colourToken'
 export const schemaTypes = [
   colourTokenType,
   contactLinkType,
+  ctaType,
   footerSettingsType,
   imageSectionType,
   navSettingsType,

@@ -37,16 +37,26 @@ export const productCardType = defineType({
       rows: 4,
       validation: (Rule) => Rule.required(),
     }),
+    defineField({
+      name: 'cta',
+      title: 'CTA',
+      type: 'cta',
+    }),
   ],
   preview: {
     select: {
       title: 'title',
       media: 'image',
+      ctaLabel: 'cta.label',
+      ctaType: 'cta.linkType',
     },
-    prepare({title, media}) {
+    prepare({title, media, ctaLabel, ctaType}) {
+      const hasCta = Boolean(ctaLabel)
+      const ctaState = hasCta ? `CTA: ${ctaLabel} (${ctaType || 'page'})` : 'No CTA'
+
       return {
         title: title || 'Untitled product card',
-        subtitle: 'Product card',
+        subtitle: ctaState,
         media,
       }
     },
