@@ -10,7 +10,31 @@ export default defineConfig({
   projectId: 'rocap12l',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title('Content')
+          .items([
+            S.listItem()
+              .title('Site settings')
+              .id('siteSettings')
+              .child(S.document().schemaType('siteSettings').documentId('siteSettings')),
+            ...S.documentTypeListItems().filter((item) => item.getId() !== 'siteSettings'),
+          ]),
+    }),
+    visionTool(),
+  ],
+
+  document: {
+    newDocumentOptions: (previous, {creationContext}) => {
+      if (creationContext.type === 'global') {
+        return previous.filter((templateItem) => templateItem.templateId !== 'siteSettings')
+      }
+
+      return previous
+    },
+  },
 
   schema: {
     types: schemaTypes,

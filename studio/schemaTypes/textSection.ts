@@ -71,10 +71,12 @@ export const textSectionType = defineType({
 			items: 'items',
 			ctaLabel: 'cta.label',
 			ctaTarget: 'cta.targetPage._ref',
+            cta: 'cta',
 		},
-		prepare({header, items, ctaLabel, ctaTarget}) {
+		prepare({header, items, ctaLabel}) {
 			const count = Array.isArray(items) ? items.length : 0
-			const ctaState = ctaLabel && ctaTarget ? 'CTA set' : 'No CTA'
+			const hasCta = Boolean(ctaLabel)
+			const ctaState = hasCta ? 'CTA set' : 'No CTA'
 
 			return {
 				title: header || 'Text section',

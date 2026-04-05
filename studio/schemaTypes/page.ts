@@ -27,30 +27,21 @@ export const pageType = defineType({
 			},
 			validation: (Rule) => Rule.required(),
 		}),
-		defineField({
-			name: 'heroImage',
-			title: 'Hero image',
-			type: 'image',
-			group: 'content',
-			options: {
-				hotspot: true,
-			},
-			fields: [
-				defineField({
-					name: 'alt',
-					title: 'Alt text',
-					type: 'string',
-					validation: (Rule) => Rule.required(),
-				}),
-			],
-			validation: (Rule) => Rule.required(),
-		}),
+        defineField({
+            name: "Header",
+            type: "string",
+            title: "Header",
+            group: "content",
+            description: "Optional header for the top of the page.",
+        }),
+
 		defineField({
 			name: 'content',
 			title: 'Content',
 			type: 'array',
 			group: 'content',
 			of: [
+				defineArrayMember({type: 'imageSection'}),
 				defineArrayMember({type: 'textSection'}),
 				defineArrayMember({type: 'productsSection'}),
 			],
@@ -69,7 +60,7 @@ export const pageType = defineType({
 					name: 'metaTitle',
 					title: 'Meta title',
 					type: 'string',
-					description: 'Overrides the page title in the browser and search results.',
+					description: 'Optional page-specific SEO title. Leave empty to use the global default or page title.',
 					validation: (Rule) => Rule.max(60).warning('Keep meta titles under 60 characters'),
 				}),
 				defineField({
@@ -77,13 +68,14 @@ export const pageType = defineType({
 					title: 'Meta description',
 					type: 'text',
 					rows: 3,
-					validation: (Rule) =>
-						Rule.max(160).warning('Keep meta descriptions under 160 characters'),
+					description: 'Optional page-specific description for search engines and social previews. Leave empty to use the global default.',
+					validation: (Rule) => Rule.max(160).warning('Keep meta descriptions under 160 characters'),
 				}),
 				defineField({
 					name: 'ogImage',
 					title: 'Open Graph image',
 					type: 'image',
+					description: 'Optional page-specific social sharing image. This is used in link previews on places like iMessage, Slack, Facebook, and Discord. Leave empty to use the global default image.',
 					options: {
 						hotspot: true,
 					},
@@ -92,6 +84,7 @@ export const pageType = defineType({
 							name: 'alt',
 							title: 'Alt text',
 							type: 'string',
+							validation: (Rule) => Rule.required(),
 						}),
 					],
 				}),
@@ -101,7 +94,7 @@ export const pageType = defineType({
 	preview: {
 		select: {
 			title: 'title',
-			media: 'heroImage',
+			media: 'content.0.image',
 			slug: 'slug.current',
 		},
 		prepare({title, media, slug}) {
