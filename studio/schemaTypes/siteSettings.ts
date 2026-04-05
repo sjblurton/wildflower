@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const siteSettingsType = defineType({
 	name: 'siteSettings',
@@ -58,6 +58,123 @@ export const siteSettingsType = defineType({
 			type: 'array',
 			description: 'Global social links, typically used in the footer. Add one or many as needed.',
 			of: [{type: 'socialLink'}],
+		}),
+		defineField({
+			name: 'defaultTextColor',
+			title: 'Default text colour',
+			type: 'string',
+			description: 'Site-wide default text colour. Applied when a section does not specify its own.',
+			options: {
+				list: [
+					{title: 'Black', value: 'black'},
+					{title: 'White', value: 'white'},
+					{title: 'Primary', value: 'primary'},
+					{title: 'Secondary', value: 'secondary'},
+				],
+				layout: 'radio',
+			},
+			initialValue: 'black',
+		}),
+		defineField({
+			name: 'defaultBackgroundColor',
+			title: 'Default background colour',
+			type: 'string',
+			description: 'Site-wide default background colour. Applied when a section does not specify its own.',
+			options: {
+				list: [
+					{title: 'White', value: 'white'},
+					{title: 'Black', value: 'black'},
+					{title: 'Primary', value: 'primary'},
+					{title: 'Secondary', value: 'secondary'},
+				],
+				layout: 'radio',
+			},
+			initialValue: 'white',
+		}),
+		defineField({
+			name: 'primaryColor',
+			title: 'Primary colour',
+			type: 'colorToken',
+			description: 'Optional main brand colour. If not set, primary falls back to black.',
+		}),
+		defineField({
+			name: 'secondaryColor',
+			title: 'Secondary colour',
+			type: 'colorToken',
+			description: 'Optional accent brand colour. If not set, secondary falls back to white.',
+		}),
+		defineField({
+			name: 'navBackgroundColor',
+			title: 'Nav background colour',
+			type: 'string',
+			description: 'Background colour of the navigation bar.',
+			options: {
+				list: [
+					{title: 'White', value: 'white'},
+					{title: 'Black', value: 'black'},
+					{title: 'Primary', value: 'primary'},
+					{title: 'Secondary', value: 'secondary'},
+				],
+				layout: 'radio',
+			},
+			initialValue: 'white',
+		}),
+		defineField({
+			name: 'navTextColor',
+			title: 'Nav text colour',
+			type: 'string',
+			description: 'Colour of the navigation links and text.',
+			options: {
+				list: [
+					{title: 'White', value: 'white'},
+					{title: 'Black', value: 'black'},
+					{title: 'Primary', value: 'primary'},
+					{title: 'Secondary', value: 'secondary'},
+				],
+				layout: 'radio',
+			},
+			initialValue: 'black',
+		}),
+		defineField({
+			name: 'navLinks',
+			title: 'Nav links',
+			type: 'array',
+			description: 'Links shown in the navigation bar.',
+			of: [
+				defineArrayMember({
+					type: 'object',
+					name: 'navLink',
+					title: 'Nav link',
+					fields: [
+						defineField({
+							name: 'label',
+							title: 'Label',
+							type: 'string',
+							validation: (Rule) => Rule.required(),
+						}),
+						defineField({
+							name: 'page',
+							title: 'Page',
+							type: 'reference',
+							to: [{type: 'page'}],
+							validation: (Rule) => Rule.required(),
+						}),
+					],
+					preview: {
+						select: {
+							label: 'label',
+							pageTitle: 'page.title',
+							slug: 'page.slug.current',
+						},
+						prepare({label, pageTitle, slug}) {
+							return {
+								title: label || 'Untitled link',
+								subtitle: pageTitle ? `→ ${pageTitle}${slug ? ` (/${slug})` : ''}` : 'No page selected',
+							}
+						},
+					},
+				}),
+			],
 		}),
 		defineField({
 			name: 'noIndexByDefault',
