@@ -53,22 +53,11 @@ export const siteSettingsType = defineType({
 			],
 		}),
 		defineField({
-			name: 'twitterHandle',
-			title: 'Twitter/X handle',
-			type: 'string',
-			description: 'Optional account handle used for brand metadata and social sharing, for example @wildflower.',
-		}),
-		defineField({
-			name: 'instagramHandle',
-			title: 'Instagram handle',
-			type: 'string',
-			description: 'Optional Instagram account handle, for example @wildflower.',
-		}),
-		defineField({
-			name: 'tiktokHandle',
-			title: 'TikTok handle',
-			type: 'string',
-			description: 'Optional TikTok account handle, for example @wildflower.',
+			name: 'socialLinks',
+			title: 'Social links',
+			type: 'array',
+			description: 'Global social links, typically used in the footer. Add one or many as needed.',
+			of: [{type: 'socialLink'}],
 		}),
 		defineField({
 			name: 'noIndexByDefault',
