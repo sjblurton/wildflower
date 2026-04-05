@@ -15,12 +15,53 @@ export const textSectionType = defineType({
 			name: 'items',
 			title: 'Text items',
 			type: 'array',
+			description: 'Add as many text items as needed. Each item can contain up to 250 characters.',
 			of: [
 				defineArrayMember({
-					type: 'block',
+					type: 'object',
+					name: 'textItem',
+					title: 'Text item',
+					fields: [
+						defineField({
+							name: 'body',
+							title: 'Body',
+							type: 'array',
+							of: [
+								defineArrayMember({
+									type: 'block',
+								}),
+							],
+							validation: (Rule) =>
+								Rule.required().custom((value) => {
+									const blocks = Array.isArray(value)
+										? (value as Array<{children?: Array<{_type?: string; text?: string}>}>)
+										: []
+
+									const totalCharacters = blocks.reduce((blockCount, block) => {
+										const children = Array.isArray(block.children) ? block.children : []
+
+										const textInBlock = children.reduce((childCount, child) => {
+											if (child?._type !== 'span') {
+												return childCount
+											}
+
+											return childCount + (child.text || '').length
+										}, 0)
+
+										return blockCount + textInBlock
+									}, 0)
+
+									if (totalCharacters <= 250) {
+										return true
+									}
+
+									return 'Each text item can contain a maximum of 250 characters'
+								}),
+						}),
+					],
 				}),
 			],
-			validation: (Rule) => Rule.required().min(1).max(2),
+			validation: (Rule) => Rule.required().min(1),
 		}),
 		defineField({
 			name: 'cta',
