@@ -44,9 +44,7 @@ export default defineConfig({
       if (creationContext.type === 'global') {
         return previous.filter(
           (templateItem) =>
-            !singlePageTypes.includes(
-              templateItem.templateId as (typeof singlePageTypes)[number],
-            ),
+            !singlePageTypes.includes(templateItem.templateId as (typeof singlePageTypes)[number]),
         )
       }
 

@@ -35,7 +35,7 @@ const MUI_SHADES = [
   {title: '900 (darkest)', value: '900'},
 ]
 
-export const colorTokenType = defineType({
+export const colourTokenType = defineType({
   name: 'colorToken',
   title: 'Colour token',
   type: 'object',

@@ -1,27 +1,27 @@
-import {colorTokenType} from './colorToken'
-import {contactLinkType} from './contactLink'
-import {footerSettingsType} from './footerSettings'
-import {imageSectionType} from './imageSection'
-import {navSettingsType} from './navSettings'
-import {pageType} from './page'
-import {productCardType} from './productCard'
-import {productsSectionType} from './productsSection'
-import {socialLinkType} from './socialLink'
-import {socialLinksSectionType} from './socialLinksSection'
-import {siteSettingsType} from './siteSettings'
-import {textSectionType} from './textSection'
+import {imageSectionType} from './content/imageSection'
+import {pageType} from './content/page'
+import {productCardType} from './content/productCard'
+import {productsSectionType} from './content/productsSection'
+import {socialLinksSectionType} from './content/socialLinksSection'
+import {textSectionType} from './content/textSection'
+import {contactLinkType} from './links/contactLink'
+import {socialLinkType} from './links/socialLink'
+import {footerSettingsType} from './settings/footerSettings'
+import {navSettingsType} from './settings/navSettings'
+import {siteSettingsType} from './settings/siteSettings'
+import {colourTokenType} from './tokens/colourToken'
 
 export const schemaTypes = [
-	colorTokenType,
-	contactLinkType,
-	footerSettingsType,
-	imageSectionType,
-	navSettingsType,
-	pageType,
-	productCardType,
-	productsSectionType,
-	socialLinkType,
-	socialLinksSectionType,
-	siteSettingsType,
-	textSectionType,
+  colourTokenType,
+  contactLinkType,
+  footerSettingsType,
+  imageSectionType,
+  navSettingsType,
+  pageType,
+  productCardType,
+  productsSectionType,
+  socialLinkType,
+  socialLinksSectionType,
+  siteSettingsType,
+  textSectionType,
 ]
