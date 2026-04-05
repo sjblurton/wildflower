@@ -85,6 +85,7 @@ export const pageType = defineType({
 							name: 'alt',
 							title: 'Alt text',
 							type: 'string',
+							description: 'Describe the logo image for accessibility. This text is not publicly visible but is important for screen readers.',
 							validation: (Rule) => Rule.required(),
 						}),
 					],
