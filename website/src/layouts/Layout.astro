@@ -1,24 +1,20 @@
 ---
-import '../styles/global.css'
-import Footer from '../components/ui/footer/Footer.astro'
-import NavBar from '../components/ui/nav/NavBar.astro'
 
+import type { DaisyTheme } from '../lib/schemas/shared/primitives'
+import { sanityClient } from 'sanity:client'
+import { siteThemeQuery } from './siteTheme.query'
+import { siteThemeSchema } from './siteTheme.schema'
+import LayoutView from './LayoutView.astro'
+
+interface Props {
+	pageSlug?: string
+}
+
+const { pageSlug } = Astro.props as Props
+const siteSettings = await siteThemeSchema.parseAsync(await sanityClient.fetch(siteThemeQuery))
+const activeTheme: DaisyTheme = siteSettings.theme
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Wildflower</title>
-	</head>
-	<body class="min-h-screen bg-base-100 text-base-content">
-		<NavBar />
-		<main>
-			<slot />
-		</main>
-		<Footer />
-	</body>
-</html>
+<LayoutView activeTheme={activeTheme} pageSlug={pageSlug} pathname={Astro.url.pathname}>
+	<slot />
+</LayoutView>
