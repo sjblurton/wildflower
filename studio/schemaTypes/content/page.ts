@@ -25,7 +25,9 @@ export const pageType = defineType({
         source: 'title',
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
+      description:
+        'URL-friendly identifier for the page, typically derived from the title. This is used to construct the page URL (e.g., /about). It must be unique across all pages. For homepage use a slug of "home".',
+      validation: (Rule) => [Rule.required()],
     }),
     defineField({
       name: 'Header',
@@ -44,6 +46,7 @@ export const pageType = defineType({
         defineArrayMember({type: 'imageSection'}),
         defineArrayMember({type: 'communicationLinksSection'}),
         defineArrayMember({type: 'textSection'}),
+        defineArrayMember({type: 'productHeroSection'}),
         defineArrayMember({type: 'productsSection'}),
       ],
     }),
@@ -105,9 +108,12 @@ export const pageType = defineType({
       slug: 'slug.current',
     },
     prepare({title, media, slug}) {
+      const isSlug = typeof slug === 'string' && slug.length > 0
+      const slugText = isSlug && slug !== 'home' ? `/${slug}` : isSlug ? 'Homepage' : 'No slug set'
+
       return {
         title,
-        subtitle: slug ? `/${slug}` : 'No slug set',
+        subtitle: slugText,
         media,
       }
     },
