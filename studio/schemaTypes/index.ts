@@ -3,7 +3,7 @@ import {imageSectionType} from './content/imageSection'
 import {pageType} from './content/page'
 import {productCardType} from './content/productCard'
 import {productsSectionType} from './content/productsSection'
-import {socialLinksSectionType} from './content/socialLinksSection'
+import {communicationLinksSectionType} from './content/communicationLinksSection'
 import {textSectionType} from './content/textSection'
 import {contactLinkType} from './links/contactLink'
 import {socialLinkType} from './links/socialLink'
@@ -23,7 +23,7 @@ export const schemaTypes = [
   productCardType,
   productsSectionType,
   socialLinkType,
-  socialLinksSectionType,
+  communicationLinksSectionType,
   siteSettingsType,
   textSectionType,
 ]
