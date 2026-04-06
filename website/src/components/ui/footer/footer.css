@@ -1,0 +1,23 @@
+.footer-icon {
+  display: inline-flex;
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: currentColor;
+  line-height: 0;
+}
+
+.footer-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.footer-icon path,
+.footer-icon circle,
+.footer-icon rect,
+.footer-icon polygon,
+.footer-icon ellipse {
+  fill: currentColor;
+  stroke: currentColor;
+}

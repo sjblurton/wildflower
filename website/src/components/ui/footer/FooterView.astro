@@ -1,0 +1,78 @@
+---
+import type { FooterSettings } from './footer.schema'
+import SanityImage from '../atoms/media/SanityImage.astro'
+import {
+  contactHref,
+  contactLinkText,
+  contactLocalIcon,
+  socialLinkText,
+  socialLocalIcon,
+} from './footer.logic'
+import './footer.css'
+
+
+
+interface Props {
+  footer: FooterSettings
+}
+
+const {footer} = Astro.props
+---
+
+<footer class=`bg-base-200 border-t border-base-300 mt-16 bg-${footer.footerBackground} text-${footer.footerBackground}-content` >
+  <div class="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
+    <section>
+      <h2 class="font-semibold text-lg">{footer?.footerSiteName}</h2>
+      <p class="text-sm opacity-80 mt-2">{footer?.footerCopyrightText}</p>
+    </section>
+
+   {footer.footerNavLinks.length > 0 && (
+    <section>
+      <h3 class="font-medium mb-3">Pages</h3>
+      <ul class="space-y-2 text-sm">
+        {footer.footerNavLinks.map((item) => (
+          <li>
+            <a href={item.slug} class="link link-hover">{item.label}</a>
+          </li>
+        ))}
+      </ul>
+    </section>)}
+
+    { (footer.footerSocialLinks.length > 0 || footer.footerContactLinks.length > 0) && (
+      <section>
+        <h3 class="font-medium mb-3">Connect</h3>
+        <ul class="space-y-2 text-sm">
+          {footer.footerSocialLinks.map((item) => (
+            <li>
+              <a
+                href={item.url}
+                class="link link-hover inline-flex items-center gap-2"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={item.label || item.title}
+              >
+                {item.icon?.asset?._ref ? (
+                  <SanityImage image={item.icon} alt={item.icon.alt || item.title} width={24} class="h-4 w-4" />
+                ) : (
+                  socialLocalIcon(item) && <span class="footer-icon" aria-hidden="true" set:html={socialLocalIcon(item)} />
+                )}
+                {socialLinkText(item)}
+              </a>
+            </li>
+          ))}
+          {footer.footerContactLinks.map((item) => (
+            <li>
+              <a href={contactHref(item)} class="link link-hover inline-flex items-center gap-2" aria-label={item.label || item.title}>
+                {item.icon?.asset?._ref ? (
+                  <SanityImage image={item.icon} alt={item.icon.alt || item.title} width={24} class="h-4 w-4" />
+                ) : (
+                  contactLocalIcon(item) && <span class="footer-icon" aria-hidden="true" set:html={contactLocalIcon(item)} />
+                )}
+                {contactLinkText(item)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>)}
+  </div>
+</footer>

@@ -1,0 +1,10 @@
+---
+import { sanityClient } from '../../../lib/sanity'
+import { footerSettingsQuery } from './footer.query'
+import { footerSettingsSchema } from './footer.schema'
+import FooterView from './FooterView.astro'
+
+const footer = await footerSettingsSchema.parseAsync(await sanityClient.fetch(footerSettingsQuery))
+---
+
+<FooterView footer={footer} />
