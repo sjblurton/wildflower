@@ -1,0 +1,23 @@
+---
+import type { Page } from '../../lib/schemas/content/page';
+
+interface Props {
+  page: Page;
+}
+
+const { page } = Astro.props;
+---
+
+<section class="max-w-4xl mx-auto py-20 px-4">
+  <div class="card bg-base-200 shadow-sm border border-base-300">
+    <div class="card-body">
+      <h1 class="card-title text-3xl">{page.title}</h1>
+      <p class="text-base-content/60 text-sm">
+        {page.slug === 'home' ? '/' : `/${page.slug}`}
+
+      </p>
+      <h1>Welcome to {page.title}</h1>
+      <p>Page content coming soon.</p>
+    </div>
+  </div>
+</section>
