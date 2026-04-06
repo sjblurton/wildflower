@@ -1,9 +1,21 @@
 import {defineField, defineType} from 'sanity'
+import {ctaColourOptions} from '../tokens/colourOptions'
+import {
+  ctaLinkTypeOptions,
+  ctaDefaults,
+  ctaIconPositionOptions,
+  ctaSizeOptions,
+  ctaStyleOptions,
+  ctaWidthOptions,
+  type CtaIconPosition,
+  type CtaLinkType,
+} from '../tokens/ctaOptions'
 
 export const ctaType = defineType({
   name: 'cta',
   title: 'CTA',
   type: 'object',
+  description: 'Call to action button. Can be used on pages or in other sections as needed.',
   fields: [
     defineField({
       name: 'label',
@@ -16,14 +28,90 @@ export const ctaType = defineType({
       title: 'Link type',
       type: 'string',
       options: {
-        list: [
-          {title: 'Page', value: 'page'},
-          {title: 'Social link', value: 'social'},
-          {title: 'Contact link', value: 'contact'},
-        ],
+        list: ctaLinkTypeOptions,
         layout: 'radio',
       },
-      initialValue: 'page',
+      initialValue: ctaDefaults.linkType,
+    }),
+    defineField({
+      name: 'style',
+      title: 'Style',
+      type: 'string',
+      description: 'Visual style of the button.',
+      options: {
+        list: ctaStyleOptions,
+        layout: 'radio',
+      },
+      initialValue: ctaDefaults.style,
+    }),
+    defineField({
+      name: 'colour',
+      title: 'Colour',
+      type: 'string',
+      description: 'Semantic DaisyUI colour for the button.',
+      options: {
+        list: ctaColourOptions,
+        layout: 'radio',
+      },
+      initialValue: ctaDefaults.colour,
+    }),
+    defineField({
+      name: 'size',
+      title: 'Size',
+      type: 'string',
+      description: 'Button size.',
+      options: {
+        list: ctaSizeOptions,
+        layout: 'radio',
+      },
+      initialValue: ctaDefaults.size,
+    }),
+    defineField({
+      name: 'width',
+      title: 'Width',
+      type: 'string',
+      description: 'How the button should size in the layout.',
+      options: {
+        list: ctaWidthOptions,
+        layout: 'radio',
+      },
+      initialValue: ctaDefaults.width,
+    }),
+    defineField({
+      name: 'hasIcon',
+      title: 'Show icon',
+      type: 'boolean',
+      description:
+        'Enable an icon. If no custom icon is uploaded, the frontend will choose a default icon based on the link type.',
+      initialValue: ctaDefaults.hasIcon,
+    }),
+    defineField({
+      name: 'iconPosition',
+      title: 'Icon position',
+      type: 'string',
+      options: {
+        list: ctaIconPositionOptions,
+        layout: 'radio',
+      },
+      initialValue: ctaDefaults.iconPosition,
+      hidden: ({parent}) => {
+        const cta = parent as {hasIcon?: boolean} | undefined
+        return !cta?.hasIcon
+      },
+    }),
+    defineField({
+      name: 'customIcon',
+      title: 'Custom icon',
+      type: 'image',
+      description:
+        'Optional custom icon override. If empty, the frontend will use a default icon based on the link type.',
+      options: {
+        hotspot: false,
+      },
+      hidden: ({parent}) => {
+        const cta = parent as {hasIcon?: boolean} | undefined
+        return !cta?.hasIcon
+      },
     }),
     defineField({
       name: 'targetPage',
@@ -32,7 +120,7 @@ export const ctaType = defineType({
       to: [{type: 'page'}],
       description: 'Page to navigate to when the CTA button is clicked',
       hidden: ({parent}) => {
-        const cta = parent as {linkType?: string} | undefined
+        const cta = parent as {linkType?: CtaLinkType} | undefined
         return cta?.linkType !== 'page'
       },
     }),
@@ -43,7 +131,7 @@ export const ctaType = defineType({
       to: [{type: 'socialLink'}],
       description: 'Social link to open when the CTA button is clicked.',
       hidden: ({parent}) => {
-        const cta = parent as {linkType?: string} | undefined
+        const cta = parent as {linkType?: CtaLinkType} | undefined
         return cta?.linkType !== 'social'
       },
     }),
@@ -54,7 +142,7 @@ export const ctaType = defineType({
       to: [{type: 'contactLink'}],
       description: 'Contact link to open when the CTA button is clicked.',
       hidden: ({parent}) => {
-        const cta = parent as {linkType?: string} | undefined
+        const cta = parent as {linkType?: CtaLinkType} | undefined
         return cta?.linkType !== 'contact'
       },
     }),
@@ -64,7 +152,9 @@ export const ctaType = defineType({
       const cta = value as
         | {
             label?: string
-            linkType?: 'page' | 'social' | 'contact'
+            linkType?: CtaLinkType
+            hasIcon?: boolean
+            iconPosition?: CtaIconPosition
             targetPage?: {_ref?: string}
             targetSocialLink?: {_ref?: string}
             targetContactLink?: {_ref?: string}
@@ -102,6 +192,10 @@ export const ctaType = defineType({
       const hasTargetPage = Boolean(cta.targetPage?._ref)
       if (linkType === 'page' && !hasTargetPage) {
         return 'Page CTA must include a target page'
+      }
+
+      if (cta.hasIcon && !cta.iconPosition) {
+        return 'CTA with an icon must include an icon position'
       }
 
       if (hasLabel && hasAnyTarget) {
