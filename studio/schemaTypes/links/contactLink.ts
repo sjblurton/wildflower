@@ -32,7 +32,26 @@ export const contactLinkType = defineType({
       title: 'Label',
       type: 'string',
       description: 'Button or link text shown to users.',
-      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'icon',
+      title: 'Icon',
+      type: 'image',
+      description:
+        'Optional custom icon for this contact link. If not set, the website can use the contact type to show a default icon.',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt text',
+          type: 'string',
+          description:
+            'Describe the icon image for accessibility. This text is not publicly visible but is important for screen readers.',
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
     }),
     defineField({
       name: 'phoneNumber',
@@ -121,12 +140,14 @@ export const contactLinkType = defineType({
       label: 'label',
       phoneNumber: 'phoneNumber',
       emailAddress: 'emailAddress',
+      media: 'icon',
     },
-    prepare({title, type, label, phoneNumber, emailAddress}) {
+    prepare({title, type, label, phoneNumber, emailAddress, media}) {
       const value = type === 'email' ? emailAddress : phoneNumber
       return {
         title: title || label || 'Contact link',
         subtitle: `${type || 'unknown'}${value ? ` • ${value}` : ''}`,
+        media,
       }
     },
   },

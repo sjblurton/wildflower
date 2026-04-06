@@ -1,6 +1,6 @@
 import {defineField, defineType} from 'sanity'
 
-export const socialPlatformOptions = [
+const socialPlatformOptions = [
   {title: 'Instagram', value: 'instagram'},
   {title: 'TikTok', value: 'tiktok'},
   {title: 'Twitter/X', value: 'x'},

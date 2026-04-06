@@ -33,8 +33,10 @@ export const imageSectionType = defineType({
     }),
     defineField({
       name: 'textColor',
-      title: 'Text color',
+      title: 'Text colour',
       type: 'string',
+      description:
+        'Choose black or white for text shown on top of the image. This is the only place manual text colour is used.',
       options: {
         list: textColourOptions,
         layout: 'radio',

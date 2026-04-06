@@ -7,10 +7,11 @@ export const communicationLinksSectionType = defineType({
   type: 'object',
   fields: [
     defineField({
-      name: 'backgroundColor',
+      name: 'background',
       title: 'Background colour',
       type: 'string',
-      description: 'Optional background for this section.',
+      description:
+        'Optional section background style. Text contrast is handled automatically by the active theme.',
       options: {
         list: sectionBackgroundColourOptions,
         layout: 'radio',
