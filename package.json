@@ -2,13 +2,51 @@
   "name": "wildflower",
   "private": true,
   "version": "1.0.0",
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "knip": "^6.3.0",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.8.1",
+    "prettier-plugin-groq": "^0.2.5"
+  },
   "scripts": {
+    "prepare": "husky",
     "dev:website": "npm --prefix website run dev",
     "dev:studio": "npm --prefix studio run dev",
+    "knip": "knip",
+    "knip:ci": "knip --no-progress",
+    "knip:website": "knip --workspace website",
+    "knip:studio": "knip --workspace studio",
     "build": "npm run build:website && npm run build:studio",
     "build:website": "npm --prefix website run build",
     "build:studio": "npm --prefix studio run build",
     "preview:website": "npm --prefix website run preview",
-    "start:studio": "npm --prefix studio run start"
+    "start:studio": "npm --prefix studio run start",
+    "lint": "npm --prefix website run lint && npm --prefix studio run lint",
+    "lint:fix": "npm --prefix website run lint:fix && npm --prefix studio run lint:fix",
+    "format:check": "npm --prefix website run format:check && npm --prefix studio run format:check",
+    "format:staged": "lint-staged",
+    "typecheck": "npm --prefix website run typecheck && npm --prefix studio run typecheck",
+    "stylelint": "npm --prefix website run stylelint",
+    "stylelint:fix": "npm --prefix website run stylelint:fix",
+    "precommit:checks": "npm run lint && npm run typecheck && npm run stylelint",
+    "precommit:fixes": "npm run format:staged"
+  },
+  "lint-staged": {
+    "*.{json,md,html,yml,yaml}": [
+      "prettier --write --ignore-unknown"
+    ],
+    "website/**/*.{js,mjs,cjs,ts,tsx,jsx,astro}": [
+      "prettier --write --ignore-unknown",
+      "npm --prefix website exec eslint --fix"
+    ],
+    "studio/**/*.{js,mjs,cjs,ts,tsx}": [
+      "prettier --write --ignore-unknown",
+      "npm --prefix studio exec eslint --fix"
+    ],
+    "website/src/**/*.css": [
+      "prettier --write --ignore-unknown",
+      "npm --prefix website exec stylelint --fix"
+    ]
   }
 }

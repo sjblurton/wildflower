@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/knip/schema.json",
+  "workspaces": {
+    "website": {
+      "entry": [
+        "src/pages/**/*.astro",
+        "src/layouts/**/*.astro",
+        "src/components/**/*.{astro,ts,tsx}"
+      ],
+      "project": ["src/**/*.{astro,ts,tsx,js,mjs,cjs}"],
+      "ignoreDependencies": ["daisyui", "tailwindcss"]
+    },
+    "studio": {
+      "entry": ["schemaTypes/index.ts"],
+      "project": ["**/*.{ts,tsx,js,mjs,cjs}"]
+    }
+  }
+}
