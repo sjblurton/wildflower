@@ -1,0 +1,36 @@
+---
+import SanityImage from '../atoms/media/SanityImage.astro'
+import type { NavSettings } from './nav.schema'
+
+interface Props {
+  nav: NavSettings
+}
+
+const {nav} = Astro.props
+const links = Array.isArray(nav?.navLinks) ? nav.navLinks : []
+const siteName = nav?.navSiteName || 'Wildflower'
+---
+
+<nav class=`navbar bg-base-100 border-b border-base-300 px-4 bg-${nav.navBackground} text-${nav.navBackground}-content`>
+  <div class="max-w-6xl flex flex-direction-row items-center justify-between w-full mx-auto">
+    <div class="navbar-start gap-3">
+      <a href="/" class="font-semibold text-lg flex items-center gap-2">
+        {nav?.navLogo && <SanityImage image={nav.navLogo} alt={siteName} class="h-8 w-auto" width={120} />}
+        <span>{siteName}</span>
+      </a>
+    </div>
+
+    <div class="navbar-end">
+      <ul class="menu menu-horizontal px-1 gap-1">
+        {links.map((link) => {
+          const href = link.slug
+          return (
+            <li>
+              <a href={href}>{link.label}</a>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
+  </div>
+</nav>
