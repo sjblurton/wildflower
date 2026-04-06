@@ -38,15 +38,15 @@
     ],
     "website/**/*.{js,mjs,cjs,ts,tsx,jsx,astro}": [
       "prettier --write --ignore-unknown",
-      "npm --prefix website exec eslint --fix"
+      "sh -c 'npm --prefix website run lint:fix'"
     ],
     "studio/**/*.{js,mjs,cjs,ts,tsx}": [
       "prettier --write --ignore-unknown",
-      "npm --prefix studio exec eslint --fix"
+      "sh -c 'npm --prefix studio run lint:fix'"
     ],
     "website/src/**/*.css": [
       "prettier --write --ignore-unknown",
-      "npm --prefix website exec stylelint --fix"
+      "sh -c 'npm --prefix website run stylelint:fix'"
     ]
   }
 }

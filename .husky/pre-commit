@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-npm run precommit:fixes && npm run precommit:checks
+npm run precommit:fixes

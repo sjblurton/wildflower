@@ -1,16 +1,18 @@
 .footer-icon {
   display: inline-flex;
+  flex: 0 0 auto;
+
   width: 1rem;
   height: 1rem;
-  flex: 0 0 auto;
-  color: currentColor;
+
   line-height: 0;
+  color: currentcolor;
 }
 
 .footer-icon svg {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
 }
 
 .footer-icon path,
@@ -18,6 +20,6 @@
 .footer-icon rect,
 .footer-icon polygon,
 .footer-icon ellipse {
-  fill: currentColor;
-  stroke: currentColor;
+  fill: currentcolor;
+  stroke: currentcolor;
 }
