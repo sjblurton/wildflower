@@ -94,6 +94,7 @@ export const siteSettingsType = defineType({
         layout: 'radio',
       },
       initialValue: 'lofi',
+      validation: (Rule) => Rule.required(),
       group: 'styling',
     }),
   ],
