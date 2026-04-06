@@ -1,5 +1,5 @@
 import {defineField, defineType} from 'sanity'
-import {backgroundColourOptions, colourOptions, textColourOptions} from '../tokens/colourOptions'
+import {daisyThemeOptions} from '../tokens/colourOptions'
 
 export const siteSettingsType = defineType({
   name: 'siteSettings',
@@ -84,43 +84,16 @@ export const siteSettingsType = defineType({
       group: 'seo',
     }),
     defineField({
-      name: 'defaultTextColor',
-      title: 'Default text colour',
+      name: 'theme',
+      title: 'Theme',
       type: 'string',
       description:
-        'Site-wide default text colour. Applied when a section does not specify its own.',
+        'Choose the global DaisyUI theme for the website. Text and surface contrast are handled automatically by the selected theme.',
       options: {
-        list: textColourOptions,
+        list: daisyThemeOptions,
         layout: 'radio',
       },
-      initialValue: colourOptions.black.value,
-      group: 'styling',
-    }),
-    defineField({
-      name: 'defaultBackgroundColor',
-      title: 'Default background colour',
-      type: 'string',
-      description:
-        'Site-wide default background colour. Applied when a section does not specify its own.',
-      options: {
-        list: backgroundColourOptions,
-        layout: 'radio',
-      },
-      initialValue: colourOptions.white.value,
-      group: 'styling',
-    }),
-    defineField({
-      name: 'primaryColor',
-      title: 'Primary colour',
-      type: 'colorToken',
-      description: 'Optional main brand colour. If not set, primary falls back to black.',
-      group: 'styling',
-    }),
-    defineField({
-      name: 'secondaryColor',
-      title: 'Secondary colour',
-      type: 'colorToken',
-      description: 'Optional accent brand colour. If not set, secondary falls back to white.',
+      initialValue: 'lofi',
       group: 'styling',
     }),
   ],

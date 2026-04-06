@@ -1,5 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {backgroundColourOptions, colourOptions, textColourOptions} from '../tokens/colourOptions'
+import {backgroundColourOptions, colourOptions} from '../tokens/colourOptions'
 
 export const footerSettingsType = defineType({
   name: 'footerSettings',
@@ -26,27 +26,16 @@ export const footerSettingsType = defineType({
       group: 'content',
     }),
     defineField({
-      name: 'footerBackgroundColor',
+      name: 'footerBackground',
       title: 'Footer background colour',
       type: 'string',
-      description: 'Background colour of the global footer.',
+      description:
+        'Background style for the global footer. Text contrast is handled automatically by the active theme.',
       options: {
         list: backgroundColourOptions,
         layout: 'radio',
       },
-      initialValue: colourOptions.black.value,
-      group: 'styling',
-    }),
-    defineField({
-      name: 'footerTextColor',
-      title: 'Footer text colour',
-      type: 'string',
-      description: 'Text and link colour used in the global footer.',
-      options: {
-        list: textColourOptions,
-        layout: 'radio',
-      },
-      initialValue: colourOptions.white.value,
+      initialValue: colourOptions.secondary.value,
       group: 'styling',
     }),
     defineField({

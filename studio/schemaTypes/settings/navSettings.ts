@@ -1,5 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {backgroundColourOptions, colourOptions, textColourOptions} from '../tokens/colourOptions'
+import {backgroundColourOptions, colourOptions} from '../tokens/colourOptions'
 
 export const navSettingsType = defineType({
   name: 'navSettings',
@@ -26,28 +26,18 @@ export const navSettingsType = defineType({
       group: 'content',
     }),
     defineField({
-      name: 'navBackgroundColor',
+      name: 'navBackground',
       title: 'Nav background colour',
       type: 'string',
-      description: 'Background colour of the navigation bar.',
+      description:
+        'Background style for the navigation bar. Text contrast is handled automatically by the active theme.',
       options: {
         list: backgroundColourOptions,
         layout: 'radio',
       },
-      initialValue: colourOptions.white.value,
+      initialValue: colourOptions.primary.value,
       group: 'styling',
-    }),
-    defineField({
-      name: 'navTextColor',
-      title: 'Nav text colour',
-      type: 'string',
-      description: 'Colour of the navigation links and text.',
-      options: {
-        list: textColourOptions,
-        layout: 'radio',
-      },
-      initialValue: colourOptions.black.value,
-      group: 'styling',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'navLogo',
@@ -81,6 +71,10 @@ export const navSettingsType = defineType({
       title: 'Nav links',
       type: 'array',
       description: 'Links shown in the navigation bar.',
+      validation: (Rule) => [
+        Rule.required(),
+        Rule.min(1).error('Please add at least one navigation link.'),
+      ],
       of: [
         defineArrayMember({
           type: 'object',
