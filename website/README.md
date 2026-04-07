@@ -38,8 +38,36 @@ All commands are run from the root of the project, from a terminal:
 | `npm run dev`             | Starts local dev server at `localhost:4321`      |
 | `npm run build`           | Build your production site to `./dist/`          |
 | `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run test`            | Run unit tests with Vitest                       |
+| `npm run test:watch`      | Run Vitest in watch mode                         |
+| `npm run test:coverage`   | Run tests with coverage output                   |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## Navigation Resilience
+
+Navigation data is loaded through a non-throwing path in [src/components/ui/nav/NavBar.astro](src/components/ui/nav/NavBar.astro).
+
+- Fetch failures and schema-validation failures both fall back to a safe nav model.
+- Fallback links are always Home and Contact.
+- Brand rendering supports logo and site name together.
+- If both logo and site name are missing, the navbar renders the literal fallback text Wildflower.
+
+Diagnostic logs are emitted via the structured logger in [src/lib/logger.ts](src/lib/logger.ts) with event keys:
+
+- `nav.fetch_failed`
+- `nav.validation_failed`
+- `nav.fallback_applied`
+
+## Navigation Tests
+
+Nav safety logic tests live in [src/components/ui/nav/nav.logic.test.ts](src/components/ui/nav/nav.logic.test.ts).
+
+The suite covers:
+
+- Happy path parsing of valid nav payloads.
+- Fetch failure fallback behaviour.
+- Validation failure fallback behaviour with prettified Zod diagnostics.
 
 ## 👀 Want to learn more?
 
