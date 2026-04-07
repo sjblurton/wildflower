@@ -1,14 +1,11 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 import {ctaColourOptions} from '../tokens/colourOptions'
 import {
-  ctaLinkTypeOptions,
   ctaDefaults,
   ctaIconPositionOptions,
   ctaSizeOptions,
   ctaStyleOptions,
   ctaWidthOptions,
-  type CtaIconPosition,
-  type CtaLinkType,
 } from '../tokens/ctaOptions'
 
 export const ctaType = defineType({
@@ -21,17 +18,7 @@ export const ctaType = defineType({
       name: 'label',
       title: 'Button label',
       type: 'string',
-      description: 'Label for the CTA button',
-    }),
-    defineField({
-      name: 'linkType',
-      title: 'Link type',
-      type: 'string',
-      options: {
-        list: ctaLinkTypeOptions,
-        layout: 'radio',
-      },
-      initialValue: ctaDefaults.linkType,
+      description: 'Label for the CTA buttons. e.g. "Learn more" or "Buy now".',
     }),
     defineField({
       name: 'style',
@@ -114,94 +101,37 @@ export const ctaType = defineType({
       },
     }),
     defineField({
-      name: 'targetPage',
-      title: 'Target page',
-      type: 'reference',
-      to: [{type: 'page'}],
-      description: 'Page to navigate to when the CTA button is clicked',
-      hidden: ({parent}) => {
-        const cta = parent as {linkType?: CtaLinkType} | undefined
-        return cta?.linkType !== 'page'
-      },
-    }),
-    defineField({
-      name: 'targetSocialLink',
-      title: 'Target social link',
-      type: 'reference',
-      to: [{type: 'socialLink'}],
-      description: 'Social link to open when the CTA button is clicked.',
-      hidden: ({parent}) => {
-        const cta = parent as {linkType?: CtaLinkType} | undefined
-        return cta?.linkType !== 'social'
-      },
-    }),
-    defineField({
-      name: 'targetContactLink',
-      title: 'Target contact link',
-      type: 'reference',
-      to: [{type: 'contactLink'}],
-      description: 'Contact link to open when the CTA button is clicked.',
-      hidden: ({parent}) => {
-        const cta = parent as {linkType?: CtaLinkType} | undefined
-        return cta?.linkType !== 'contact'
-      },
+      name: 'links',
+      title: 'Links',
+      type: 'array',
+      description:
+        'Social, contact, and page links to display in this section. Optionally link to multiple destinations if needed, for example a product page and a related video.',
+      of: [
+        defineArrayMember({
+          name: 'contactLinkReference',
+          type: 'reference',
+          to: [{type: 'contactLink'}],
+        }),
+        defineArrayMember({
+          name: 'pageLinkReference',
+          type: 'reference',
+          to: [{type: 'page'}],
+        }),
+      ],
     }),
   ],
-  validation: (Rule) =>
-    Rule.custom((value) => {
-      const cta = value as
-        | {
-            label?: string
-            linkType?: CtaLinkType
-            hasIcon?: boolean
-            iconPosition?: CtaIconPosition
-            targetPage?: {_ref?: string}
-            targetSocialLink?: {_ref?: string}
-            targetContactLink?: {_ref?: string}
-          }
-        | undefined
-
-      if (!cta) {
-        return true
+  preview: {
+    select: {
+      title: 'label',
+      links: 'links',
+    },
+    prepare({title, links}) {
+      const linkCount = links?.length ?? 0
+      const titleString = `CTA: ${title ?? `button${links?.length > 1 ? 's' : ''}`}`
+      return {
+        title: titleString,
+        subtitle: `${linkCount} link${linkCount === 1 ? '' : 's'}`,
       }
-
-      const hasLabel = Boolean(cta.label?.trim())
-      const hasAnyTarget = Boolean(
-        cta.targetPage?._ref || cta.targetSocialLink?._ref || cta.targetContactLink?._ref,
-      )
-      const hasAnyCtaData = hasLabel || hasAnyTarget
-
-      if (!hasAnyCtaData) {
-        return true
-      }
-
-      if (!hasLabel) {
-        return 'CTA must include a button label'
-      }
-
-      const linkType = cta.linkType || 'page'
-
-      if (linkType === 'social' && !Boolean(cta.targetSocialLink?._ref)) {
-        return 'Social CTA must include a target social link'
-      }
-
-      if (linkType === 'contact' && !Boolean(cta.targetContactLink?._ref)) {
-        return 'Contact CTA must include a target contact link'
-      }
-
-      const hasTargetPage = Boolean(cta.targetPage?._ref)
-      if (linkType === 'page' && !hasTargetPage) {
-        return 'Page CTA must include a target page'
-      }
-
-      if (cta.hasIcon && !cta.iconPosition) {
-        return 'CTA with an icon must include an icon position'
-      }
-
-      if (hasLabel && hasAnyTarget) {
-        return true
-      }
-
-      return 'CTA must include both a button label and a valid target'
-    }),
+    },
+  },
 })

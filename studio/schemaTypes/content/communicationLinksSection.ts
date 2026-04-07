@@ -5,6 +5,17 @@ export const communicationLinksSectionType = defineType({
   name: 'communicationLinksSection',
   title: 'Communication links section',
   type: 'object',
+  groups: [
+    {
+      name: 'content',
+      title: 'Content',
+      default: true,
+    },
+    {
+      name: 'style',
+      title: 'Style',
+    },
+  ],
   fields: [
     defineField({
       name: 'background',
@@ -17,28 +28,31 @@ export const communicationLinksSectionType = defineType({
         layout: 'radio',
       },
       initialValue: colourOptions.transparent.value,
+      group: 'style',
     }),
     defineField({
       name: 'header',
       title: 'Header',
       type: 'string',
       description: 'Optional heading shown above social links.',
+      group: 'content',
     }),
     defineField({
       name: 'links',
       title: 'Links',
       type: 'array',
       description: 'Social and contact links to display in this section.',
+      group: 'content',
       of: [
-        defineArrayMember({
-          name: 'socialLinkReference',
-          type: 'reference',
-          to: [{type: 'socialLink'}],
-        }),
         defineArrayMember({
           name: 'contactLinkReference',
           type: 'reference',
           to: [{type: 'contactLink'}],
+        }),
+        defineArrayMember({
+          name: 'pageLinkReference',
+          type: 'reference',
+          to: [{type: 'page'}],
         }),
       ],
       validation: (Rule) => Rule.required().min(1),
@@ -53,7 +67,7 @@ export const communicationLinksSectionType = defineType({
       const count = Array.isArray(links) ? links.length : 0
 
       return {
-        title: header || 'Social links section',
+        title: header || 'Communication links section',
         subtitle: `${count} link${count === 1 ? '' : 's'}`,
       }
     },

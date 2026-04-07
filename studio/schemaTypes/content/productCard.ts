@@ -4,17 +4,6 @@ export const productCardType = defineType({
   name: 'productCard',
   title: 'Product card',
   type: 'object',
-  groups: [
-    {
-      name: 'content',
-      title: 'Content',
-      default: true,
-    },
-    {
-      name: 'cta',
-      title: 'CTA',
-    },
-  ],
   fields: [
     defineField({
       name: 'image',
@@ -34,14 +23,12 @@ export const productCardType = defineType({
         }),
       ],
       validation: (Rule) => Rule.required(),
-      group: 'content',
     }),
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
       validation: (Rule) => Rule.required(),
-      group: 'content',
     }),
     defineField({
       name: 'description',
@@ -49,37 +36,23 @@ export const productCardType = defineType({
       type: 'text',
       rows: 4,
       validation: (Rule) => Rule.required(),
-      group: 'content',
     }),
     defineField({
-      name: 'addCta',
-      title: 'Add CTA',
-      type: 'boolean',
-      initialValue: false,
-      group: 'content',
-    }),
-    defineField({
-      name: 'cta',
+      name: 'ctaButton',
       title: 'CTA',
-      type: 'cta',
+      type: 'array',
+      of: [{type: 'cta'}],
       description: 'Optional call to action for this product card.',
-      group: 'cta',
-      hidden: ({parent}) => {
-        const productCard = parent as {addCta?: boolean} | undefined
-        return !productCard?.addCta
-      },
     }),
   ],
   preview: {
     select: {
       title: 'title',
       media: 'image',
-      ctaLabel: 'cta.label',
-      ctaType: 'cta.linkType',
-      hasCta: 'addCta',
+      ctaButton: 'ctaButton',
     },
-    prepare({title, media, ctaLabel, hasCta, ctaType}) {
-      const ctaState = hasCta ? `CTA: ${ctaLabel} (${ctaType || 'page'})` : 'No CTA'
+    prepare({title, media, ctaButton}) {
+      const ctaState = `Has ${ctaButton?.length || 0} CTA${ctaButton?.length === 1 ? '' : 's'}`
 
       return {
         title: title || 'Untitled product card',

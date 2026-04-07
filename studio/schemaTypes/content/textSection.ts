@@ -12,10 +12,6 @@ export const textSectionType = defineType({
       default: true,
     },
     {
-      name: 'cta',
-      title: 'CTA',
-    },
-    {
       name: 'styling',
       title: 'Styling',
     },
@@ -95,40 +91,31 @@ export const textSectionType = defineType({
       validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
-      name: 'addCta',
-      title: 'Add CTA',
-      type: 'boolean',
-      initialValue: false,
-      group: 'content',
-    }),
-    defineField({
-      name: 'cta',
+      name: 'ctaButtons',
       title: 'CTA',
-      type: 'cta',
+      type: 'array',
       description: 'Optional call to action for this text section.',
-      group: 'cta',
-      hidden: ({parent}) => {
-        const textSection = parent as {addCta?: boolean} | undefined
-        return !textSection?.addCta
-      },
+      group: 'content',
+      of: [
+        defineArrayMember({
+          type: 'cta',
+        }),
+      ],
     }),
   ],
   preview: {
     select: {
       header: 'header',
       items: 'items',
-      hasCta: 'addCta',
-      ctaLabel: 'cta.label',
-      ctaType: 'cta.linkType',
+      ctaButtons: 'ctaButtons',
     },
-    prepare({header, items, hasCta, ctaLabel, ctaType}) {
-      const count = Array.isArray(items) ? items.length : 0
-      const ctaState = hasCta ? 'CTA set' : 'No CTA'
-      const ctaTypeLabel = hasCta ? ` (${ctaType || 'page'})` : ''
+    prepare({header, items, ctaButtons}) {
+      const count = items?.length ?? 0
+      const ctaCount = ctaButtons?.length ?? 0
 
       return {
         title: header || 'Text section',
-        subtitle: `${count} text item${count === 1 ? '' : 's'} • ${ctaState}${ctaTypeLabel}`,
+        subtitle: `${count} text item${count === 1 ? '' : 's'} • ${ctaCount} CTA${ctaCount === 1 ? '' : 's'}`,
       }
     },
   },

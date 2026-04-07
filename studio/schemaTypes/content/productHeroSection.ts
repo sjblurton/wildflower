@@ -20,10 +20,6 @@ export const productHeroSectionType = defineType({
       title: 'Media',
     },
     {
-      name: 'cta',
-      title: 'CTA',
-    },
-    {
       name: 'styling',
       title: 'Styling',
     },
@@ -47,8 +43,8 @@ export const productHeroSectionType = defineType({
       title: 'Title',
       type: 'string',
       group: 'content',
-      description: 'Main heading for the product hero section.',
-      validation: (Rule) => Rule.required(),
+      description:
+        'Optional main heading for the product hero section. This will be above the image block. Or create a custom heading within the body field using the block editor.',
     }),
     defineField({
       name: 'body',
@@ -101,32 +97,25 @@ export const productHeroSectionType = defineType({
       validation: (Rule) => Rule.required().min(1).max(6),
     }),
     defineField({
-      name: 'addCta',
-      title: 'Add CTA',
-      type: 'boolean',
-      initialValue: false,
-      group: 'content',
-    }),
-    defineField({
-      name: 'cta',
+      name: 'ctaButtons',
       title: 'CTA',
-      type: 'cta',
+      type: 'array',
       description: 'Optional call to action for this product hero section.',
-      group: 'cta',
-      hidden: ({parent}) => {
-        const section = parent as {addCta?: boolean} | undefined
-        return !section?.addCta
-      },
+      group: 'content',
+      of: [
+        defineArrayMember({
+          type: 'cta',
+        }),
+      ],
     }),
   ],
   preview: {
     select: {
       title: 'title',
       images: 'images',
-      hasCta: 'addCta',
-      ctaType: 'cta.linkType',
+      ctaButtons: 'ctaButtons',
     },
-    prepare({title, images, hasCta, ctaType}) {
+    prepare({title, images, ctaButtons}) {
       const imageList = Array.isArray(images)
         ? images
         : images && typeof images === 'object'
@@ -135,7 +124,9 @@ export const productHeroSectionType = defineType({
 
       const imageCount = imageList.length
       const media = imageList[0]
-      const ctaState = hasCta ? `CTA set (${ctaType || 'page'})` : 'No CTA'
+      const ctaCount = ctaButtons?.length ?? 0
+      const ctaState =
+        ctaCount > 0 ? `CTA set (${ctaCount} button${ctaCount === 1 ? '' : 's'})` : 'No CTA'
 
       return {
         title: title || 'Product hero section',

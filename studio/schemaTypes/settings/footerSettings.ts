@@ -115,14 +115,8 @@ export const footerSettingsType = defineType({
         }),
       ],
       group: 'content',
-    }),
-    defineField({
-      name: 'footerSocialLinks',
-      title: 'Footer social links',
-      type: 'array',
-      of: [{type: 'reference', to: [{type: 'socialLink'}]}],
-      description: 'Social links to display in the footer.',
-      group: 'content',
+      validation: (Rule) =>
+        Rule.unique().error('Each page can only be linked once in the footer navigation'),
     }),
     defineField({
       name: 'footerContactLinks',
@@ -131,6 +125,8 @@ export const footerSettingsType = defineType({
       of: [{type: 'reference', to: [{type: 'contactLink'}]}],
       description: 'Contact links to display in the footer.',
       group: 'content',
+      validation: (Rule) =>
+        Rule.unique().error('Each contact link can only be used once in the footer'),
     }),
   ],
   preview: {

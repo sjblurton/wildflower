@@ -7,7 +7,12 @@ import {productsSectionType} from './content/productsSection'
 import {communicationLinksSectionType} from './content/communicationLinksSection'
 import {textSectionType} from './content/textSection'
 import {contactLinkType} from './links/contactLink'
-import {socialLinkType} from './links/socialLink'
+import {instagramLinkType} from './links/instagramLink'
+import {phoneLinkType} from './links/phoneLink'
+import {ticTocLinkType} from './links/ticTocLink'
+import {emailLinkType} from './links/emailLink'
+import {whatsappLinkType} from './links/watsappLink'
+
 import {footerSettingsType} from './settings/footerSettings'
 import {navSettingsType} from './settings/navSettings'
 import {siteSettingsType} from './settings/siteSettings'
@@ -22,8 +27,12 @@ export const schemaTypes = [
   productCardType,
   productHeroSectionType,
   productsSectionType,
-  socialLinkType,
   communicationLinksSectionType,
   siteSettingsType,
   textSectionType,
+  instagramLinkType,
+  phoneLinkType,
+  ticTocLinkType,
+  emailLinkType,
+  whatsappLinkType,
 ]
