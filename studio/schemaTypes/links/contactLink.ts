@@ -6,148 +6,51 @@ export const contactLinkType = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
-      description: 'Descriptive internal name, for example "Main phone" or "Support email".',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'type',
-      title: 'Type',
-      type: 'string',
-      description: 'Choose the contact action this link should open.',
-      options: {
-        list: [
-          {title: 'Phone call', value: 'phone'},
-          {title: 'Email', value: 'email'},
-          {title: 'WhatsApp', value: 'whatsapp'},
-        ],
-        layout: 'radio',
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'label',
-      title: 'Label',
-      type: 'string',
-      description: 'Button or link text shown to users.',
-    }),
-    defineField({
-      name: 'icon',
-      title: 'Icon',
-      type: 'image',
+      name: 'contactType',
+      title: 'Contact type',
+      type: 'array',
       description:
-        'Optional custom icon for this contact link. If not set, the website can use the contact type to show a default icon.',
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        defineField({
-          name: 'alt',
-          title: 'Alt text',
-          type: 'string',
-          description:
-            'Describe the icon image for accessibility. This text is not publicly visible but is important for screen readers.',
-          validation: (Rule) => Rule.required(),
-        }),
+        'Select the type of contact information. This can be used by the website to show the correct icon automatically.',
+      of: [
+        {type: 'emailLink'},
+        {type: 'phoneLink'},
+        {type: 'instagramLink'},
+        {type: 'ticTocLink'},
+        {type: 'whatsappLink'},
       ],
-    }),
-    defineField({
-      name: 'phoneNumber',
-      title: 'Phone number',
-      type: 'string',
-      description: 'Use international format where possible, e.g. +447700900123.',
-      hidden: ({parent}) => {
-        const item = parent as {type?: string} | undefined
-        return item?.type === 'email'
-      },
-    }),
-    defineField({
-      name: 'emailAddress',
-      title: 'Email address',
-      type: 'string',
-      description: 'Used for mailto links.',
-      hidden: ({parent}) => {
-        const item = parent as {type?: string} | undefined
-        return item?.type !== 'email'
-      },
-    }),
-    defineField({
-      name: 'prefillMessage',
-      title: 'WhatsApp prefilled message',
-      type: 'string',
-      description: 'Optional message text appended to the WhatsApp link.',
-      hidden: ({parent}) => {
-        const item = parent as {type?: string} | undefined
-        return item?.type !== 'whatsapp'
-      },
+      validation: (Rule) => Rule.required().min(1).max(1),
     }),
   ],
-  validation: (Rule) =>
-    Rule.custom((value) => {
-      const link = value as
-        | {
-            type?: string
-            phoneNumber?: string
-            emailAddress?: string
-            prefillMessage?: string
-          }
-        | undefined
-
-      if (!link) {
-        return true
-      }
-
-      const type = link.type
-      const phone = (link.phoneNumber || '').trim()
-      const email = (link.emailAddress || '').trim()
-      const prefillMessage = (link.prefillMessage || '').trim()
-
-      if ((type === 'phone' || type === 'whatsapp') && !phone) {
-        return 'Phone number is required for phone and WhatsApp links'
-      }
-
-      if (type === 'email' && !email) {
-        return 'Email address is required for email links'
-      }
-
-      if (type === 'email' && email) {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        if (!emailPattern.test(email)) {
-          return 'Enter a valid email address'
-        }
-      }
-
-      if (type !== 'email' && email) {
-        return 'Email address should only be set when type is Email'
-      }
-
-      if (type === 'email' && phone) {
-        return 'Phone number should only be set for Phone call or WhatsApp'
-      }
-
-      if (type !== 'whatsapp' && prefillMessage) {
-        return 'WhatsApp prefilled message can only be set when type is WhatsApp'
-      }
-
-      return true
-    }),
   preview: {
     select: {
-      title: 'title',
-      type: 'type',
-      label: 'label',
-      phoneNumber: 'phoneNumber',
-      emailAddress: 'emailAddress',
-      media: 'icon',
+      contactType: 'contactType.0._type',
+      title: 'contactType.0.title',
     },
-    prepare({title, type, label, phoneNumber, emailAddress, media}) {
-      const value = type === 'email' ? emailAddress : phoneNumber
+    prepare({contactType, title}) {
+      let type = 'Untitled contact link'
+      if (contactType) {
+        switch (contactType) {
+          case 'emailLink':
+            type = 'Email'
+            break
+          case 'phoneLink':
+            type = 'Phone'
+            break
+          case 'instagramLink':
+            type = 'Instagram'
+            break
+          case 'ticTocLink':
+            type = 'TikTok'
+            break
+          case 'whatsappLink':
+            type = 'WhatsApp'
+            break
+          default:
+            type = contactType.charAt(0).toUpperCase() + contactType.slice(1)
+        }
+      }
       return {
-        title: title || label || 'Contact link',
-        subtitle: `${type || 'unknown'}${value ? ` • ${value}` : ''}`,
-        media,
+        title: `${type} contact link${title ? ` - ${title}` : ''}`,
       }
     },
   },
