@@ -1,4 +1,5 @@
-import { sanityClient, urlFor } from '../../lib/sanity';
+import { sanityClient, urlFor } from '../../../lib/cms/sanity';
+import { toTrimmedString } from '../../../lib/primitives/strings';
 import { pageSeoBySlugQuery, siteSeoQuery } from './seo.query';
 import { pageSeoDocumentSchema, siteSeoSchema } from './seo.schema';
 
@@ -17,13 +18,8 @@ export interface SeoMetadata {
   twitterCard: 'summary' | 'summary_large_image';
 }
 
-const normaliseText = (value?: string | null) => {
-  const trimmed = value?.trim();
-  return trimmed ? trimmed : undefined;
-};
-
 const buildCanonicalUrl = (siteUrl: string | null, path: string) => {
-  const baseUrl = normaliseText(siteUrl);
+  const baseUrl = toTrimmedString(siteUrl);
 
   if (!baseUrl) {
     return undefined;
@@ -52,16 +48,16 @@ export const loadSeoMetadata = async ({
     ? urlFor(ogImage).width(1200).height(630).fit('crop').auto('format').url()
     : undefined;
   const title =
-    normaliseText(pageDocument?.seo?.metaTitle) ??
-    normaliseText(siteSettings.defaultMetaTitle) ??
-    normaliseText(pageDocument?.title) ??
-    normaliseText(siteSettings.siteTitle) ??
+    toTrimmedString(pageDocument?.seo?.metaTitle) ??
+    toTrimmedString(siteSettings.defaultMetaTitle) ??
+    toTrimmedString(pageDocument?.title) ??
+    toTrimmedString(siteSettings.siteTitle) ??
     'Wildflower';
   const description =
-    normaliseText(pageDocument?.seo?.metaDescription) ??
-    normaliseText(siteSettings.defaultMetaDescription);
+    toTrimmedString(pageDocument?.seo?.metaDescription) ??
+    toTrimmedString(siteSettings.defaultMetaDescription);
   const canonicalUrl = buildCanonicalUrl(siteSettings.siteUrl, pathname);
-  const ogImageAlt = normaliseText(ogImage?.alt);
+  const ogImageAlt = toTrimmedString(ogImage?.alt);
   const noIndex = siteSettings.noIndexByDefault;
 
   return {

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { sanityImageSchema } from '../../lib/schemas/shared/primitives';
+import { sanityImageSchema } from '../../../lib/schemas/shared/primitives';
 
 export const pageSeoSchema = z
   .object({
