@@ -2,9 +2,9 @@
 import { z } from 'zod';
 import Layout from '../layouts/Layout.astro';
 import PageTemplate from '../components/templates/PageTemplate.astro';
-import { pageBySlugQuery, pageSlugListQuery } from '../lib/queries';
+import { pageBySlugQuery, pageSlugListQuery } from '../lib/cms/queries';
 import { pageSchema, pageSlugListItemSchema } from '../lib/schemas/content/page';
-import { sanityClient } from '../lib/sanity';
+import { sanityClient } from '../lib/cms/sanity';
 
 export async function getStaticPaths() {
   const rawSlugs = await sanityClient.fetch(pageSlugListQuery);
