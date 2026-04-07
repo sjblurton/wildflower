@@ -7,16 +7,23 @@ interface Props {
 }
 
 const {nav} = Astro.props
-const links = Array.isArray(nav?.navLinks) ? nav.navLinks : []
-const siteName = nav?.navSiteName || 'Wildflower'
+const links = Array.isArray(nav?.navLinks)
+  ? nav.navLinks.filter((link) => link?.label?.trim() && link?.slug?.trim())
+  : []
+const siteName = nav?.navSiteName?.trim() || null
+const hasLogo = Boolean(nav?.navLogo?.asset?._ref)
+const hasLogoAlt = Boolean(nav?.navLogo?.alt?.trim())
+const hasSiteName = Boolean(siteName)
+const showFallbackName = !hasLogo && !hasSiteName
 ---
 
-<nav class=`navbar bg-base-100 border-b border-base-300 px-4 bg-${nav.navBackground} text-${nav.navBackground}-content`>
+<nav class={`navbar bg-base-100 border-b border-base-300 px-4 bg-${nav.navBackground} text-${nav.navBackground}-content`}>
   <div class="max-w-6xl flex flex-direction-row items-center justify-between w-full mx-auto">
     <div class="navbar-start gap-3">
       <a href="/" class="font-semibold text-lg flex items-center gap-2">
-        {nav?.navLogo && <SanityImage image={nav.navLogo} alt={siteName} class="h-8 w-auto" width={120} />}
-        <span>{siteName}</span>
+        {hasLogo && <SanityImage image={nav.navLogo} alt={hasLogoAlt ? nav.navLogo?.alt : siteName ?? 'Wildflower'} class="h-8 w-auto" width={120} />}
+        {hasSiteName && <span>{siteName}</span>}
+        {showFallbackName && <span>Wildflower</span>}
       </a>
     </div>
 

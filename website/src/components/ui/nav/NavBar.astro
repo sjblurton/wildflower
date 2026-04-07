@@ -1,10 +1,13 @@
 ---
-import { sanityClient } from '../../../lib/sanity'
+import { sanityClient } from '../../../lib/cms/sanity'
+import { loadNavSettings } from './nav.logic'
 import { navSettingsQuery } from './nav.query'
-import { NavSettingsSchema } from './nav.schema'
 import NavBarView from './NavBarView.astro'
 
-const nav = await NavSettingsSchema.parseAsync(await sanityClient.fetch(navSettingsQuery))
+const nav = await loadNavSettings({
+	fetchNavSettings: () => sanityClient.fetch(navSettingsQuery),
+	queryName: 'navSettingsQuery',
+})
 ---
 
 <NavBarView nav={nav} />

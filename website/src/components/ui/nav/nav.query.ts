@@ -1,4 +1,4 @@
-import { imageProjection, navLinkProjection } from '../../../lib/queries';
+import { imageProjection, navLinkProjection } from '../../../lib/cms/queries';
 
 export const navSettingsQuery = /* groq */ `
   *[_type == "navSettings" && _id == "navSettings"][0]{
