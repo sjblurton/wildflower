@@ -1,13 +1,16 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import { describe, expect, it } from 'vitest';
 
 import NavBarView from './NavBarView.astro';
+
+const navBarViewComponent = NavBarView as unknown as AstroComponentFactory;
 
 describe('NavBarView', () => {
   it('renders site name when provided', async () => {
     const container = await AstroContainer.create();
 
-    const html = await container.renderToString(NavBarView, {
+    const html = await container.renderToString(navBarViewComponent, {
       props: {
         nav: {
           _id: 'navSettings',
@@ -28,7 +31,7 @@ describe('NavBarView', () => {
   it('renders literal Wildflower fallback when both logo and siteName are missing', async () => {
     const container = await AstroContainer.create();
 
-    const html = await container.renderToString(NavBarView, {
+    const html = await container.renderToString(navBarViewComponent, {
       props: {
         nav: {
           _id: 'navSettings',
@@ -48,7 +51,7 @@ describe('NavBarView', () => {
   it('filters invalid links before render', async () => {
     const container = await AstroContainer.create();
 
-    const html = await container.renderToString(NavBarView, {
+    const html = await container.renderToString(navBarViewComponent, {
       props: {
         nav: {
           _id: 'navSettings',
