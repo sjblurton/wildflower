@@ -1,9 +1,4 @@
-import {
-  contactLinkDereferenceProjection,
-  imageProjection,
-  navLinkProjection,
-  socialLinkDereferenceProjection,
-} from '../../../lib/cms/queries';
+import { contactLinkFragment, imageProjection, navLinkProjection } from '../../../lib/cms/queries';
 
 export const footerSettingsQuery = /* groq */ `
   *[_type == "footerSettings" && _id == "footerSettings"][0]{
@@ -18,19 +13,8 @@ export const footerSettingsQuery = /* groq */ `
     footerNavLinks[]{
       ${navLinkProjection}
     },
-    footerSocialLinks[]{
-      _key,
-      "_type": @->_type,
-      ...@->{
-        ${socialLinkDereferenceProjection}
-      }
-    },
     footerContactLinks[]{
-      _key,
-      "_type": @->_type,
-      ...@->{
-        ${contactLinkDereferenceProjection}
-      }
+      ${contactLinkFragment}
     }
   }
 `;

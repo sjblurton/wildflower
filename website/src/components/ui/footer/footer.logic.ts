@@ -1,61 +1,63 @@
-import type { FooterSettings } from './footer.schema';
-
 import envelopeIcon from '../../../assets/envelope.svg?raw';
-import facebookIcon from '../../../assets/facebook.svg?raw';
 import instagramIcon from '../../../assets/instagram.svg?raw';
-import linkedinIcon from '../../../assets/linkedin.svg?raw';
 import telephoneIcon from '../../../assets/telephone.svg?raw';
 import tiktokIcon from '../../../assets/tiktok.svg?raw';
 import whatsappIcon from '../../../assets/whatsapp.svg?raw';
-import xIcon from '../../../assets/x.svg?raw';
-import youtubeIcon from '../../../assets/youtube.svg?raw';
+import type { ContactLink } from '../../../lib/schemas/links/contactLinks';
 
-type SocialLinkItem = FooterSettings['footerSocialLinks'][number];
-type ContactLinkItem = FooterSettings['footerContactLinks'][number];
+type ContactLinkType = ContactLink['type'];
 
-const socialIconByPlatform = {
-  facebook: facebookIcon,
-  instagram: instagramIcon,
-  linkedin: linkedinIcon,
-  tiktok: tiktokIcon,
-  x: xIcon,
-  youtube: youtubeIcon,
+const socialIconByPlatformMap: Record<ContactLinkType, { icon: string; label: string }> = {
+  instagram: { icon: instagramIcon, label: 'Instagram' },
+  tiktok: { icon: tiktokIcon, label: 'TikTok' },
+  email: { icon: envelopeIcon, label: 'Email' },
+  phone: { icon: telephoneIcon, label: 'Phone' },
+  whatsapp: { icon: whatsappIcon, label: 'WhatsApp' },
 } as const;
 
-const contactIconByType = {
-  email: envelopeIcon,
-  phone: telephoneIcon,
-  whatsapp: whatsappIcon,
-} as const;
+type HrefMap = {
+  [K in ContactLinkType]: (item: Extract<ContactLink, { type: K }>) => string;
+};
 
-export const contactHref = (item: ContactLinkItem) => {
-  if (!item) return '#';
-  if (item.type === 'email' && item.emailAddress) return `mailto:${item.emailAddress}`;
-  if (item.type === 'phone' && item.phoneNumber) return `tel:${item.phoneNumber}`;
-  if (item.type === 'whatsapp' && item.phoneNumber) {
+const contactHrefMap: HrefMap = {
+  email: (item) => `mailto:${item.emailAddress}`,
+  phone: (item) => `tel:${item.phoneNumber}`,
+  whatsapp: (item) => {
     const phone = item.phoneNumber.replace(/[^\d+]/g, '').replace('+', '');
     const text = item.prefillMessage ? `?text=${encodeURIComponent(item.prefillMessage)}` : '';
     return `https://wa.me/${phone}${text}`;
-  }
-  return '#';
+  },
+  tiktok: (item) => item.url,
+  instagram: (item) => item.url,
 };
 
-export const socialLocalIcon = (item: SocialLinkItem) => {
-  return socialIconByPlatform[item.platform];
+const contactLinkService = {
+  getIcon(item: ContactLink) {
+    return socialIconByPlatformMap[item.type].icon;
+  },
+
+  getLabel(item: ContactLink) {
+    return socialIconByPlatformMap[item.type].label;
+  },
+
+  getHref(item: ContactLink) {
+    switch (item.type) {
+      case 'email':
+        return contactHrefMap.email(item);
+      case 'phone':
+        return contactHrefMap.phone(item);
+      case 'whatsapp':
+        return contactHrefMap.whatsapp(item);
+      case 'tiktok':
+        return contactHrefMap.tiktok(item);
+      case 'instagram':
+        return contactHrefMap.instagram(item);
+      default:
+        return '#';
+    }
+  },
 };
 
-export const contactLocalIcon = (item: ContactLinkItem) => {
-  return contactIconByType[item.type];
-};
-
-export const socialLinkText = (item: SocialLinkItem) => {
-  if (item.label) return item.label;
-  const hasAnyIcon = Boolean(item.icon?.asset?._ref || socialLocalIcon(item));
-  return hasAnyIcon ? undefined : item.title;
-};
-
-export const contactLinkText = (item: ContactLinkItem) => {
-  if (item.label) return item.label;
-  const hasAnyIcon = Boolean(item.icon?.asset?._ref || contactLocalIcon(item));
-  return hasAnyIcon ? undefined : item.title;
-};
+export const getIconForContactLink = (item: ContactLink) => contactLinkService.getIcon(item);
+export const getLabelForContactLink = (item: ContactLink) => contactLinkService.getLabel(item);
+export const getContactHref = (item: ContactLink) => contactLinkService.getHref(item);

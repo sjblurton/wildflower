@@ -1,12 +1,8 @@
 ---
 import type { FooterSettings } from './footer.schema'
-import SanityImage from '../atoms/media/SanityImage.astro'
 import {
-  contactHref,
-  contactLinkText,
-  contactLocalIcon,
-  socialLinkText,
-  socialLocalIcon,
+  getContactHref,getIconForContactLink,getLabelForContactLink
+
 } from './footer.logic'
 import './footer.css'
 
@@ -38,40 +34,19 @@ const {footer} = Astro.props
       </ul>
     </section>)}
 
-    { (footer.footerSocialLinks.length > 0 || footer.footerContactLinks.length > 0) && (
+    { ( footer.footerContactLinks.length > 0) && (
       <section>
         <h3 class="font-medium mb-3">Connect</h3>
         <ul class="space-y-2 text-sm">
-          {footer.footerSocialLinks.map((item) => (
+          {footer.footerContactLinks.map((item) =>(
             <li>
-              <a
-                href={item.url}
-                class="link link-hover inline-flex items-center gap-2"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={item.label || item.title}
-              >
-                {item.icon?.asset?._ref ? (
-                  <SanityImage image={item.icon} alt={item.icon.alt || item.title} width={24} class="h-4 w-4" />
-                ) : (
-                  socialLocalIcon(item) && <span class="footer-icon" aria-hidden="true" set:html={socialLocalIcon(item)} />
-                )}
-                {socialLinkText(item)}
+              <a href={getContactHref(item)} class="link link-hover inline-flex items-center gap-2" aria-label={getLabelForContactLink(item)}>
+                {<span class="footer-icon" aria-hidden="true" set:html={getIconForContactLink(item)} />}
+                {getLabelForContactLink(item)}
               </a>
             </li>
-          ))}
-          {footer.footerContactLinks.map((item) => (
-            <li>
-              <a href={contactHref(item)} class="link link-hover inline-flex items-center gap-2" aria-label={item.label || item.title}>
-                {item.icon?.asset?._ref ? (
-                  <SanityImage image={item.icon} alt={item.icon.alt || item.title} width={24} class="h-4 w-4" />
-                ) : (
-                  contactLocalIcon(item) && <span class="footer-icon" aria-hidden="true" set:html={contactLocalIcon(item)} />
-                )}
-                {contactLinkText(item)}
-              </a>
-            </li>
-          ))}
+          ) )}
+
         </ul>
       </section>)}
   </div>
