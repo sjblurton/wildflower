@@ -21,7 +21,6 @@ describe('loadNavSettings', () => {
         _type: 'navSettings',
         navSiteName: 'Wildflower Co',
         navLogo: null,
-        navBackground: 'accent',
         navLinks: [
           {
             _key: 'home',
@@ -35,7 +34,6 @@ describe('loadNavSettings', () => {
     });
 
     expect(nav.navSiteName).toBe('Wildflower Co');
-    expect(nav.navBackground).toBe('accent');
     expect(nav.navLinks).toEqual([
       {
         _key: 'home',
@@ -144,7 +142,6 @@ describe('loadNavSettings', () => {
     });
 
     expect(nav.navSiteName).toBeNull();
-    expect(nav.navBackground).toBe('primary');
     expect(nav.navLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
 
     expect(log.warn).toHaveBeenCalledWith(
@@ -164,7 +161,6 @@ describe('loadNavSettings', () => {
       fetchNavSettings: async () => ({
         _id: 'navSettings',
         _type: 'navSettings',
-        navBackground: 'not-valid',
         navLogo: { _type: 'image', alt: 'Logo' },
         navLinks: [{ _key: 'home-key', label: 'Home', slug: 'home' }],
       }),
@@ -177,14 +173,13 @@ describe('loadNavSettings', () => {
     expect(nav.navLogo).toEqual({ _type: 'image', alt: 'Logo' });
   });
 
-  it('returns fallback links when navLinks is not an array (line 52)', async () => {
+  it('returns fallback links when navLinks is not an array', async () => {
     const log = createLoggerSpy();
 
     const nav = await loadNavSettings({
       fetchNavSettings: async () => ({
         _id: 'navSettings',
         _type: 'navSettings',
-        navBackground: 'not-valid',
         navLinks: 'not-an-array',
       }),
       log,
@@ -201,7 +196,6 @@ describe('loadNavSettings', () => {
         _id: 'bad-nav',
         _type: 'navSettings',
         navSiteName: '  ',
-        navBackground: 'not-a-colour',
         navLinks: [
           null,
           {
@@ -224,7 +218,6 @@ describe('loadNavSettings', () => {
     });
 
     expect(nav.navSiteName).toBeNull();
-    expect(nav.navBackground).toBe('primary');
     expect(nav.navLinks).toEqual([
       {
         _key: 'fallback-link-1',

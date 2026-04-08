@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { LogEvents } from '../../../lib/logging/events';
 import { logger, summarisePayload, type LogPayload } from '../../../lib/logging/logger';
-import { backgroundColourSchema, sanityImageSchema } from '../../../lib/schemas/shared/primitives';
+import { sanityImageSchema } from '../../../lib/schemas/shared/primitives';
 import { isRecord } from '../../../lib/primitives/guards';
 import { normaliseSlug, toTrimmedString } from '../../../lib/primitives/strings';
 import { NavSettingsSchema, type NavSettings } from './nav.schema';
@@ -55,7 +55,6 @@ interface FallbackSeed {
 }
 
 const buildFallbackNav = (seed?: FallbackSeed): NavSettings => {
-  const safeBackground = backgroundColourSchema.safeParse(seed?.navBackground);
   const safeLogo = sanityImageSchema.safeParse(seed?.navLogo);
   const siteName = toTrimmedString(seed?.navSiteName) ?? null;
   const links =
@@ -66,7 +65,6 @@ const buildFallbackNav = (seed?: FallbackSeed): NavSettings => {
     _type: 'navSettings',
     navSiteName: siteName,
     navLogo: safeLogo.success ? safeLogo.data : null,
-    navBackground: safeBackground.success ? safeBackground.data : 'primary',
     navLinks: links,
   };
 };
@@ -80,7 +78,6 @@ const normaliseInvalidNav = (value: unknown) => {
     _id: toTrimmedString(value._id),
     navSiteName: toTrimmedString(value.navSiteName) ?? null,
     navLogo: value.navLogo,
-    navBackground: value.navBackground,
     navLinks: normaliseLinks(value.navLinks),
   });
 };

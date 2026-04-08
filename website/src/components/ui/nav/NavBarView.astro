@@ -1,4 +1,5 @@
 ---
+import LogoLink from '../atoms/LogoLink/LogoLink.astro'
 import SanityImage from '../atoms/media/SanityImage.astro'
 import type { NavSettings } from './nav.schema'
 
@@ -17,14 +18,24 @@ const hasSiteName = Boolean(siteName)
 const showFallbackName = !hasLogo && !hasSiteName
 ---
 
-<nav class={`navbar bg-base-100 border-b border-base-300 px-4 bg-${nav.navBackground} text-${nav.navBackground}-content`}>
+<nav class={`navbar border-b bg-base-200 border-base-300 px-4`}>
   <div class="max-w-6xl flex flex-direction-row items-center justify-between w-full mx-auto">
     <div class="navbar-start gap-3">
-      <a href="/" class="font-semibold text-lg flex items-center gap-2">
-        {hasLogo && <SanityImage image={nav.navLogo} alt={hasLogoAlt ? nav.navLogo?.alt : siteName ?? 'Wildflower'} class="h-8 w-auto" width={120} />}
-        {hasSiteName && <span>{siteName}</span>}
-        {showFallbackName && <span>Wildflower</span>}
-      </a>
+      {showFallbackName ? (
+        <LogoLink href="/" />
+      ) : (
+        <a href="/" class="font-semibold text-lg flex items-center gap-2">
+          {hasLogo && (
+            <SanityImage
+              image={nav.navLogo}
+              alt={hasLogoAlt ? nav.navLogo?.alt : siteName ?? 'Wildflower'}
+              class="h-8 w-auto"
+              width={120}
+            />
+          )}
+          {hasSiteName && <span>{siteName}</span>}
+        </a>
+      )}
     </div>
 
     <div class="navbar-end">
