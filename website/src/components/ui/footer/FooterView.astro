@@ -1,8 +1,6 @@
 ---
 import type { FooterSettings } from './footer.schema'
-import {
-  getContactHref,getIconForContactLink,getLabelForContactLink
-} from './footer.contact-links'
+import { getContactHref, getIconForContactLink, getLabelForContactLink } from './footer.contact-links'
 import './footer.css'
 import SanityImage from '../atoms/media/SanityImage.astro'
 import LogoLink from '../atoms/LogoLink/LogoLink.astro'
@@ -12,45 +10,63 @@ interface Props {
 }
 
 const {footer} = Astro.props
+const hasLogo = Boolean(footer.footerLogo?.asset?._ref)
+const hasSiteName = Boolean(footer.footerSiteName)
+const hasCopyright = Boolean(footer.footerCopyrightText)
+const hasNavLinks = footer.footerNavLinks.length > 0
+const hasContactLinks = footer.footerContactLinks.length > 0
 ---
 
 <footer class=`border-t bg-base-200 border-base-300 mt-16` >
   <div class="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
     <section>
-
-      {footer?.footerLogo?.asset?._ref ? (
-        <a href="/"><SanityImage image={footer.footerLogo} alt={footer.footerLogo?.alt || footer.footerSiteName || 'Wildflower'} class="h-10 w-auto mb-4" width={150} /></a>
-      ) : <LogoLink href='/' />}
-      {Boolean(footer?.footerSiteName) &&<h2 class="font-semibold text-lg">{footer?.footerSiteName}</h2>}
-     {Boolean(footer?.footerCopyrightText) && <p class="text-sm opacity-80 mt-2">{footer?.footerCopyrightText}</p>}
+      {hasLogo ? (
+        <a href="/">
+          <SanityImage
+            image={footer.footerLogo}
+            alt={footer.footerLogo?.alt || footer.footerSiteName || 'Wildflower'}
+            class="h-10 w-auto mb-4"
+            width={150}
+          />
+        </a>
+      ) : (
+        <LogoLink href='/' />
+      )}
+      {hasSiteName && <h2 class="font-semibold text-lg">{footer.footerSiteName}</h2>}
+      {hasCopyright && <p class="text-sm opacity-80 mt-2">{footer.footerCopyrightText}</p>}
     </section>
 
-   {footer.footerNavLinks.length > 0 && (
-    <section>
-      <h3 class="font-medium mb-3">Pages</h3>
-      <ul class="space-y-2 text-sm">
-        {footer.footerNavLinks.map((item) => (
-          <li>
-            <a href={item.slug} class="link link-hover">{item.label}</a>
-          </li>
-        ))}
-      </ul>
-    </section>)}
+    {hasNavLinks && (
+      <section>
+        <h3 class="font-medium mb-3">Pages</h3>
+        <ul class="space-y-2 text-sm">
+          {footer.footerNavLinks.map((item) => (
+            <li>
+              <a href={item.slug} class="link link-hover">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
 
-    { ( footer.footerContactLinks.length > 0) && (
+    {hasContactLinks && (
       <section>
         <h3 class="font-medium mb-3">Connect</h3>
         <ul class="space-y-2 text-sm">
-          {footer.footerContactLinks.map((item) =>(
+          {footer.footerContactLinks.map((item) => (
             <li>
-              <a href={getContactHref(item)} class="link link-hover inline-flex items-center gap-2" aria-label={getLabelForContactLink(item)}>
+              <a
+                href={getContactHref(item)}
+                class="link link-hover inline-flex items-center gap-2"
+                aria-label={getLabelForContactLink(item)}
+              >
                 {<span class="footer-icon" aria-hidden="true" set:html={getIconForContactLink(item)} />}
                 {getLabelForContactLink(item)}
               </a>
             </li>
-          ) )}
-
+          ))}
         </ul>
-      </section>)}
+      </section>
+    )}
   </div>
 </footer>
