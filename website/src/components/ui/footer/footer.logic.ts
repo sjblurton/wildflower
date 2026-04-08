@@ -1,63 +1,85 @@
-import envelopeIcon from '../../../assets/envelope.svg?raw';
-import instagramIcon from '../../../assets/instagram.svg?raw';
-import telephoneIcon from '../../../assets/telephone.svg?raw';
-import tiktokIcon from '../../../assets/tiktok.svg?raw';
-import whatsappIcon from '../../../assets/whatsapp.svg?raw';
-import type { ContactLink } from '../../../lib/schemas/links/contactLinks';
+import { z } from 'zod';
 
-type ContactLinkType = ContactLink['type'];
+import { LogEvents } from '../../../lib/logging/events';
+import { logger, summarisePayload, type LogPayload } from '../../../lib/logging/logger';
+import { footerSettingsSchema, type FooterSettings } from './footer.schema';
+import { buildFallbackFooter, normaliseInvalidFooter } from './footer.load.utils';
 
-const socialIconByPlatformMap: Record<ContactLinkType, { icon: string; label: string }> = {
-  instagram: { icon: instagramIcon, label: 'Instagram' },
-  tiktok: { icon: tiktokIcon, label: 'TikTok' },
-  email: { icon: envelopeIcon, label: 'Email' },
-  phone: { icon: telephoneIcon, label: 'Phone' },
-  whatsapp: { icon: whatsappIcon, label: 'WhatsApp' },
-} as const;
+interface LoadFooterSettingsOptions {
+  fetchFooterSettings: () => Promise<unknown>;
+  queryName?: string;
+  log?: {
+    info: (payload: LogPayload) => void;
+    warn: (payload: LogPayload) => void;
+    error: (payload: LogPayload) => void;
+  };
+}
 
-type HrefMap = {
-  [K in ContactLinkType]: (item: Extract<ContactLink, { type: K }>) => string;
+export const loadFooterSettings = async ({
+  fetchFooterSettings,
+  queryName = 'footerSettingsQuery',
+  log = logger,
+}: LoadFooterSettingsOptions): Promise<FooterSettings> => {
+  let rawPayload: unknown;
+
+  try {
+    rawPayload = await fetchFooterSettings();
+  } catch (error) {
+    log.error({
+      event: LogEvents.footer.fetchFailed,
+      area: 'footer',
+      message: 'Failed to fetch footer settings from Sanity; using fallback footer settings.',
+      meta: {
+        queryName,
+        error:
+          error instanceof Error
+            ? { name: error.name, message: error.message }
+            : { message: 'Unknown error' },
+      },
+    });
+
+    const fallback = buildFallbackFooter();
+
+    log.warn({
+      event: LogEvents.footer.fallbackApplied,
+      area: 'footer',
+      message: 'Applied fallback footer settings due to fetch failure.',
+      meta: { reason: 'fetch_failed', queryName },
+    });
+
+    return fallback;
+  }
+
+  const parseResult = footerSettingsSchema.safeParse(rawPayload);
+
+  if (parseResult.success) {
+    return parseResult.data;
+  }
+
+  const fallback = normaliseInvalidFooter(rawPayload);
+
+  log.warn({
+    event: LogEvents.footer.validationFailed,
+    area: 'footer',
+    message: 'Footer settings validation failed; using fallback-safe footer settings.',
+    meta: {
+      queryName,
+      zodError: z.prettifyError(parseResult.error),
+      issues: parseResult.error.issues.map((issue) => ({
+        path: issue.path.join('.'),
+        code: issue.code,
+        message: issue.message,
+      })),
+      payloadSummary: summarisePayload(rawPayload),
+    },
+  });
+
+  log.warn({
+    event: LogEvents.footer.fallbackApplied,
+    area: 'footer',
+    message: 'Applied fallback-safe footer settings after validation failure.',
+    meta: { reason: 'validation_failed', queryName },
+  });
+
+  return fallback;
 };
-
-const contactHrefMap: HrefMap = {
-  email: (item) => `mailto:${item.emailAddress}`,
-  phone: (item) => `tel:${item.phoneNumber}`,
-  whatsapp: (item) => {
-    const phone = item.phoneNumber.replace(/[^\d+]/g, '').replace('+', '');
-    const text = item.prefillMessage ? `?text=${encodeURIComponent(item.prefillMessage)}` : '';
-    return `https://wa.me/${phone}${text}`;
-  },
-  tiktok: (item) => item.url,
-  instagram: (item) => item.url,
-};
-
-const contactLinkService = {
-  getIcon(item: ContactLink) {
-    return socialIconByPlatformMap[item.type].icon;
-  },
-
-  getLabel(item: ContactLink) {
-    return socialIconByPlatformMap[item.type].label;
-  },
-
-  getHref(item: ContactLink) {
-    switch (item.type) {
-      case 'email':
-        return contactHrefMap.email(item);
-      case 'phone':
-        return contactHrefMap.phone(item);
-      case 'whatsapp':
-        return contactHrefMap.whatsapp(item);
-      case 'tiktok':
-        return contactHrefMap.tiktok(item);
-      case 'instagram':
-        return contactHrefMap.instagram(item);
-      default:
-        return '#';
-    }
-  },
-};
-
-export const getIconForContactLink = (item: ContactLink) => contactLinkService.getIcon(item);
-export const getLabelForContactLink = (item: ContactLink) => contactLinkService.getLabel(item);
-export const getContactHref = (item: ContactLink) => contactLinkService.getHref(item);
