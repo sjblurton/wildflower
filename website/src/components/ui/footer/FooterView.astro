@@ -5,8 +5,8 @@ import {
 
 } from './footer.logic'
 import './footer.css'
-
-
+import SanityImage from '../atoms/media/SanityImage.astro'
+import LogoLink from '../atoms/LogoLink/LogoLink.astro'
 
 interface Props {
   footer: FooterSettings
@@ -15,11 +15,15 @@ interface Props {
 const {footer} = Astro.props
 ---
 
-<footer class=`bg-base-200 border-t border-base-300 mt-16 bg-${footer.footerBackground} text-${footer.footerBackground}-content` >
+<footer class=`border-t bg-base-200 border-base-300 mt-16` >
   <div class="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
     <section>
-      <h2 class="font-semibold text-lg">{footer?.footerSiteName}</h2>
-      <p class="text-sm opacity-80 mt-2">{footer?.footerCopyrightText}</p>
+
+      {footer?.footerLogo?.asset?._ref ? (
+        <a href="/"><SanityImage image={footer.footerLogo} alt={footer.footerLogo?.alt || footer.footerSiteName || 'Wildflower'} class="h-10 w-auto mb-4" width={150} /></a>
+      ) : <LogoLink href='/'  />}
+      {Boolean(footer?.footerSiteName) &&<h2 class="font-semibold text-lg">{footer?.footerSiteName}</h2>}
+     {Boolean(footer?.footerCopyrightText) && <p class="text-sm opacity-80 mt-2">{footer?.footerCopyrightText}</p>}
     </section>
 
    {footer.footerNavLinks.length > 0 && (
