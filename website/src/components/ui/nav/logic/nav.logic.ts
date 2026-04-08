@@ -1,11 +1,11 @@
 import { z } from 'zod';
 
-import { LogEvents } from '../../../lib/logging/events';
-import { logger, summarisePayload, type LogPayload } from '../../../lib/logging/logger';
-import { sanityImageSchema } from '../../../lib/schemas/shared/primitives';
-import { isRecord } from '../../../lib/primitives/guards';
-import { normaliseSlug, toTrimmedString } from '../../../lib/primitives/strings';
-import { NavSettingsSchema, type NavSettings } from './nav.schema';
+import { LogEvents } from '../../../../lib/logging/events';
+import { logger, summarisePayload, type LogPayload } from '../../../../lib/logging/logger';
+import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
+import { isRecord } from '../../../../lib/primitives/guards';
+import { normaliseSlug, toTrimmedString } from '../../../../lib/primitives/strings';
+import { NavSettingsSchema, type NavSettings } from '../data/nav.schema';
 
 const FALLBACK_LINKS: NavSettings['navLinks'] = [
   {

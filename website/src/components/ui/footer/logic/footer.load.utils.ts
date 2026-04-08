@@ -1,8 +1,8 @@
-import { isRecord } from '../../../lib/primitives/guards';
-import { normaliseSlug, toTrimmedString } from '../../../lib/primitives/strings';
-import { contactTypeSchema } from '../../../lib/schemas/links/contactLinks';
-import { sanityImageSchema } from '../../../lib/schemas/shared/primitives';
-import type { FooterSettings } from './footer.schema';
+import { isRecord } from '../../../../lib/primitives/guards';
+import { normaliseSlug, toTrimmedString } from '../../../../lib/primitives/strings';
+import { contactTypeSchema } from '../../../../lib/schemas/links/contactLinks';
+import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
+import type { FooterSettings } from '../data/footer.schema';
 
 export const FALLBACK_FOOTER_LINKS: FooterSettings['footerNavLinks'] = [
   {

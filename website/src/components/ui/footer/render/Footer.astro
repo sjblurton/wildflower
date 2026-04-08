@@ -1,7 +1,7 @@
 ---
-import { sanityClient } from '../../../lib/cms/sanity'
-import { footerSettingsQuery } from './footer.query'
-import { loadFooterSettings } from './footer.logic'
+import { sanityClient } from '../../../../lib/cms/sanity'
+import { footerSettingsQuery } from '../data/footer.query'
+import { loadFooterSettings } from '../logic/footer.logic'
 import FooterView from './FooterView.astro'
 
 const footer = await loadFooterSettings({

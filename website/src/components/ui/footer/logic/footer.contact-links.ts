@@ -1,9 +1,9 @@
-import envelopeIcon from '../../../assets/envelope.svg?raw';
-import instagramIcon from '../../../assets/instagram.svg?raw';
-import telephoneIcon from '../../../assets/telephone.svg?raw';
-import tiktokIcon from '../../../assets/tiktok.svg?raw';
-import whatsappIcon from '../../../assets/whatsapp.svg?raw';
-import type { ContactLink } from '../../../lib/schemas/links/contactLinks';
+import envelopeIcon from '../../../../assets/envelope.svg?raw';
+import instagramIcon from '../../../../assets/instagram.svg?raw';
+import telephoneIcon from '../../../../assets/telephone.svg?raw';
+import tiktokIcon from '../../../../assets/tiktok.svg?raw';
+import whatsappIcon from '../../../../assets/whatsapp.svg?raw';
+import type { ContactLink } from '../../../../lib/schemas/links/contactLinks';
 
 type ContactLinkType = ContactLink['type'];
 

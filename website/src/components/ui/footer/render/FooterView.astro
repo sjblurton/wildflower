@@ -1,9 +1,9 @@
 ---
-import type { FooterSettings } from './footer.schema'
-import { getContactHref, getIconForContactLink, getLabelForContactLink } from './footer.contact-links'
+import type { FooterSettings } from '../data/footer.schema'
+import { getContactHref, getIconForContactLink, getLabelForContactLink } from '../logic/footer.contact-links'
 import './footer.css'
-import SanityImage from '../atoms/media/SanityImage.astro'
-import LogoLink from '../atoms/LogoLink/LogoLink.astro'
+import SanityImage from '../../atoms/media/SanityImage.astro'
+import LogoLink from '../../atoms/LogoLink/LogoLink.astro'
 
 interface Props {
   footer: FooterSettings

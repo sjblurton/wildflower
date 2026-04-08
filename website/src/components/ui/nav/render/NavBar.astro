@@ -1,7 +1,7 @@
 ---
-import { sanityClient } from '../../../lib/cms/sanity'
-import { loadNavSettings } from './nav.logic'
-import { navSettingsQuery } from './nav.query'
+import { sanityClient } from '../../../../lib/cms/sanity'
+import { loadNavSettings } from '../logic/nav.logic'
+import { navSettingsQuery } from '../data/nav.query'
 import NavBarView from './NavBarView.astro'
 
 const nav = await loadNavSettings({

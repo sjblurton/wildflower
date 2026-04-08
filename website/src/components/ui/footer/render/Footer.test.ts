@@ -2,16 +2,16 @@ import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { footerSettingsQuery } from './footer.query';
+import { footerSettingsQuery } from '../data/footer.query';
 import Footer from './Footer.astro';
 
-vi.mock('../../../lib/cms/sanity', () => ({
+vi.mock('../../../../lib/cms/sanity', () => ({
   sanityClient: {
     fetch: vi.fn(),
   },
 }));
 
-import { sanityClient } from '../../../lib/cms/sanity';
+import { sanityClient } from '../../../../lib/cms/sanity';
 
 const footerComponent = Footer as unknown as AstroComponentFactory;
 const fetchMock = vi.mocked(sanityClient.fetch) as unknown as {

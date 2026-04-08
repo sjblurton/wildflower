@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { navLinkSchema } from '../../../lib/schemas/links/navLink';
-import { sanityImageSchema } from '../../../lib/schemas/shared/primitives';
+import { navLinkSchema } from '../../../../lib/schemas/links/navLink';
+import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
 
 export const NavSettingsSchema = z.object({
   _id: z.string(),

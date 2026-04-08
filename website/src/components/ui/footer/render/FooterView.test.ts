@@ -2,7 +2,7 @@ import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
 import { describe, expect, it } from 'vitest';
 
-import type { FooterSettings } from './footer.schema';
+import type { FooterSettings } from '../data/footer.schema';
 import FooterView from './FooterView.astro';
 
 const footerViewComponent = FooterView as unknown as AstroComponentFactory;

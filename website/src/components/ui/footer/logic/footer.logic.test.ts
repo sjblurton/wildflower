@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import type { LogPayload } from '../../../lib/logging/logger';
+import type { LogPayload } from '../../../../lib/logging/logger';
 import { loadFooterSettings } from './footer.logic';
 
 const createLoggerSpy = () => {

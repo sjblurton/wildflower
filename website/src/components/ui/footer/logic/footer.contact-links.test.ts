@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import type { ContactLink } from '../../../lib/schemas/links/contactLinks';
+import type { ContactLink } from '../../../../lib/schemas/links/contactLinks';
 import {
   getContactHref,
   getIconForContactLink,

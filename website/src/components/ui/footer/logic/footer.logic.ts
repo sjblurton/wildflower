@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { LogEvents } from '../../../lib/logging/events';
-import { logger, summarisePayload, type LogPayload } from '../../../lib/logging/logger';
-import { footerSettingsSchema, type FooterSettings } from './footer.schema';
+import { LogEvents } from '../../../../lib/logging/events';
+import { logger, summarisePayload, type LogPayload } from '../../../../lib/logging/logger';
+import { footerSettingsSchema, type FooterSettings } from '../data/footer.schema';
 import { buildFallbackFooter, normaliseInvalidFooter } from './footer.load.utils';
 
 interface LoadFooterSettingsOptions {

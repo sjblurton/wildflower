@@ -1,7 +1,7 @@
 import z from 'zod';
-import { contactTypeSchema } from '../../../lib/schemas/links/contactLinks';
-import { navLinkSchema } from '../../../lib/schemas/links/navLink';
-import { sanityImageSchema } from '../../../lib/schemas/shared/primitives';
+import { contactTypeSchema } from '../../../../lib/schemas/links/contactLinks';
+import { navLinkSchema } from '../../../../lib/schemas/links/navLink';
+import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
 
 export const footerSettingsSchema = z.object({
   _id: z.string(),
