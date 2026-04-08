@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-const backgroundColourValues = ['primary', 'secondary', 'neutral', 'accent'] as const;
 const daisyThemeValues = [
   'lofi',
   'black',
@@ -14,7 +13,6 @@ const daisyThemeValues = [
   'cupcake',
 ] as const;
 
-export const backgroundColourSchema = z.enum(backgroundColourValues);
 export const daisyThemeSchema = z.enum(daisyThemeValues);
 
 const sanityAssetRefSchema = z.object({

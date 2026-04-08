@@ -1,12 +1,11 @@
 import z from 'zod';
 import { contactTypeSchema } from '../../../lib/schemas/links/contactLinks';
 import { navLinkSchema } from '../../../lib/schemas/links/navLink';
-import { backgroundColourSchema, sanityImageSchema } from '../../../lib/schemas/shared/primitives';
+import { sanityImageSchema } from '../../../lib/schemas/shared/primitives';
 
 export const footerSettingsSchema = z.object({
   _id: z.string(),
   _type: z.literal('footerSettings'),
-  footerBackground: backgroundColourSchema,
   footerContactLinks: contactTypeSchema.array(),
   footerCopyrightText: z.string().optional(),
   footerLogo: sanityImageSchema.nullable().optional(),
