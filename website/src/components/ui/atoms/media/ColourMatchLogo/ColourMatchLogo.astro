@@ -1,0 +1,18 @@
+---
+import siteLogo from "../../../../../assets/wildflower-logo.svg?raw"
+
+type Props = {
+  type?: 'inline' | 'block';
+  class?: string;
+};
+
+const { type = 'inline', class: className = '' } = Astro.props;
+const HtmlTag = type === 'block' ? 'div' : 'span';
+---
+
+<HtmlTag
+  class={`global-icon mb-4 ${className}`}
+  aria-hidden="true"
+  aria-label="Wildflower Logo"
+  set:html={siteLogo}
+/>
