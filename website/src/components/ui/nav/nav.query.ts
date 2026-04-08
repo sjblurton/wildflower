@@ -1,4 +1,5 @@
-import { imageProjection, navLinkProjection } from '../../../lib/cms/queries';
+import { imageProjection } from '../../../lib/cms/projections/primatives';
+import { navLinkProjection } from '../../../lib/cms/projections/links';
 
 export const navSettingsQuery = /* groq */ `
   *[_type == "navSettings" && _id == "navSettings"][0]{
@@ -8,7 +9,6 @@ export const navSettingsQuery = /* groq */ `
     navLogo{
       ${imageProjection}
     },
-    navBackground,
     navLinks[]{
       ${navLinkProjection}
     }
