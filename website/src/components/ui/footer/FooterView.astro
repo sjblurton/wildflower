@@ -21,7 +21,7 @@ const {footer} = Astro.props
 
       {footer?.footerLogo?.asset?._ref ? (
         <a href="/"><SanityImage image={footer.footerLogo} alt={footer.footerLogo?.alt || footer.footerSiteName || 'Wildflower'} class="h-10 w-auto mb-4" width={150} /></a>
-      ) : <LogoLink href='/'  />}
+      ) : <LogoLink href='/' />}
       {Boolean(footer?.footerSiteName) &&<h2 class="font-semibold text-lg">{footer?.footerSiteName}</h2>}
      {Boolean(footer?.footerCopyrightText) && <p class="text-sm opacity-80 mt-2">{footer?.footerCopyrightText}</p>}
     </section>
