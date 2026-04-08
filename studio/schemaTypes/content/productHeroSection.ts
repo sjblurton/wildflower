@@ -1,5 +1,4 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {colourOptions, sectionBackgroundColourOptions} from '../tokens/colourOptions'
 import {
   productHeroDefaults,
   productHeroImagePositionDesktopOptions,
@@ -19,25 +18,8 @@ export const productHeroSectionType = defineType({
       name: 'media',
       title: 'Media',
     },
-    {
-      name: 'styling',
-      title: 'Styling',
-    },
   ],
   fields: [
-    defineField({
-      name: 'background',
-      title: 'Background colour',
-      type: 'string',
-      group: 'styling',
-      description:
-        'Optional section background style. Text contrast is handled automatically by the active theme.',
-      options: {
-        list: sectionBackgroundColourOptions,
-        layout: 'radio',
-      },
-      initialValue: colourOptions.transparent.value,
-    }),
     defineField({
       name: 'title',
       title: 'Title',

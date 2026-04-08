@@ -1,47 +1,21 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {colourOptions, sectionBackgroundColourOptions} from '../tokens/colourOptions'
 
 export const textSectionType = defineType({
   name: 'textSection',
   title: 'Text section',
   type: 'object',
-  groups: [
-    {
-      name: 'content',
-      title: 'Content',
-      default: true,
-    },
-    {
-      name: 'styling',
-      title: 'Styling',
-    },
-  ],
+
   fields: [
-    defineField({
-      name: 'background',
-      title: 'Background colour',
-      type: 'string',
-      group: 'styling',
-      description:
-        'Optional section background style. Text contrast is handled automatically by the active theme.',
-      options: {
-        list: sectionBackgroundColourOptions,
-        layout: 'radio',
-      },
-      initialValue: colourOptions.transparent.value,
-    }),
     defineField({
       name: 'header',
       title: 'Header',
       type: 'string',
-      group: 'content',
       description: 'Optional header for the text section',
     }),
     defineField({
       name: 'items',
       title: 'Text items',
       type: 'array',
-      group: 'content',
       description: 'Add as many text items as needed. Each item can contain up to 250 characters.',
       of: [
         defineArrayMember({
@@ -95,7 +69,6 @@ export const textSectionType = defineType({
       title: 'CTA',
       type: 'array',
       description: 'Optional call to action for this text section.',
-      group: 'content',
       of: [
         defineArrayMember({
           type: 'cta',

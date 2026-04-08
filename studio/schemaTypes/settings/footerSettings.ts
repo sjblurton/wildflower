@@ -1,5 +1,4 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {backgroundColourOptions, colourOptions} from '../tokens/colourOptions'
 
 export const footerSettingsType = defineType({
   name: 'footerSettings',
@@ -12,8 +11,8 @@ export const footerSettingsType = defineType({
       default: true,
     },
     {
-      name: 'styling',
-      title: 'Styling',
+      name: 'logo',
+      title: 'Logo',
     },
   ],
   fields: [
@@ -26,23 +25,11 @@ export const footerSettingsType = defineType({
       group: 'content',
     }),
     defineField({
-      name: 'footerBackground',
-      title: 'Footer background colour',
-      type: 'string',
-      description:
-        'Background style for the global footer. Text contrast is handled automatically by the active theme.',
-      options: {
-        list: backgroundColourOptions,
-        layout: 'radio',
-      },
-      initialValue: colourOptions.secondary.value,
-      group: 'styling',
-    }),
-    defineField({
       name: 'footerLogo',
-      title: 'Footer logo',
+      title: 'Custom Footer logo',
       type: 'image',
-      description: 'Optional logo shown in the footer.',
+      description: 'Optional logo to override the fixed logo shown in the footer.',
+      group: 'logo',
       options: {
         hotspot: true,
       },
@@ -56,7 +43,6 @@ export const footerSettingsType = defineType({
           validation: (Rule) => Rule.required(),
         }),
       ],
-      group: 'content',
     }),
     defineField({
       name: 'footerSiteName',

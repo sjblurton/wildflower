@@ -1,5 +1,4 @@
 import {defineField, defineType} from 'sanity'
-import {colourOptions, textColourOptions} from '../tokens/colourOptions'
 
 export const imageSectionType = defineType({
   name: 'imageSection',
@@ -30,18 +29,6 @@ export const imageSectionType = defineType({
       title: 'Overlay title',
       type: 'string',
       description: 'Optional title displayed over the image.',
-    }),
-    defineField({
-      name: 'textColor',
-      title: 'Text colour',
-      type: 'string',
-      description:
-        'Choose black or white for text shown on top of the image. This is the only place manual text colour is used.',
-      options: {
-        list: textColourOptions,
-        layout: 'radio',
-      },
-      initialValue: colourOptions.white.value,
     }),
     defineField({
       name: 'overlayStyle',

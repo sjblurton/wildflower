@@ -1,5 +1,4 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
-import {backgroundColourOptions, colourOptions} from '../tokens/colourOptions'
 
 export const navSettingsType = defineType({
   name: 'navSettings',
@@ -12,8 +11,8 @@ export const navSettingsType = defineType({
       default: true,
     },
     {
-      name: 'styling',
-      title: 'Styling',
+      name: 'logo',
+      title: 'Logo',
     },
   ],
   fields: [
@@ -24,20 +23,6 @@ export const navSettingsType = defineType({
       hidden: true,
       initialValue: 'Navigation settings',
       group: 'content',
-    }),
-    defineField({
-      name: 'navBackground',
-      title: 'Nav background colour',
-      type: 'string',
-      description:
-        'Background style for the navigation bar. Text contrast is handled automatically by the active theme.',
-      options: {
-        list: backgroundColourOptions,
-        layout: 'radio',
-      },
-      initialValue: colourOptions.primary.value,
-      group: 'styling',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'navLogo',
@@ -57,7 +42,7 @@ export const navSettingsType = defineType({
             'Describe the logo image for accessibility. This text is not publicly visible but is important for screen readers.',
         }),
       ],
-      group: 'content',
+      group: 'logo',
     }),
     defineField({
       name: 'navSiteName',

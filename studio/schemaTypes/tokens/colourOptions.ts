@@ -25,18 +25,6 @@ export const daisyThemeOptions = [
   {title: 'Cupcake - playful bright pastel', value: 'cupcake'},
 ]
 
-export const textColourOptions = [
-  {title: colourOptions.black.title, value: colourOptions.black.value},
-  {title: colourOptions.white.title, value: colourOptions.white.value},
-]
-
-export const backgroundColourOptions = [
-  {title: colourOptions.primary.title, value: colourOptions.primary.value},
-  {title: colourOptions.secondary.title, value: colourOptions.secondary.value},
-  {title: colourOptions.neutral.title, value: colourOptions.neutral.value},
-  {title: colourOptions.accent.title, value: colourOptions.accent.value},
-]
-
 export const ctaColourOptions = [
   {title: colourOptions.primary.title, value: colourOptions.primary.value},
   {title: colourOptions.secondary.title, value: colourOptions.secondary.value},
@@ -46,9 +34,4 @@ export const ctaColourOptions = [
   {title: colourOptions.success.title, value: colourOptions.success.value},
   {title: colourOptions.warning.title, value: colourOptions.warning.value},
   {title: colourOptions.error.title, value: colourOptions.error.value},
-]
-
-export const sectionBackgroundColourOptions = [
-  {title: colourOptions.transparent.title, value: colourOptions.transparent.value},
-  ...backgroundColourOptions,
 ]
