@@ -73,14 +73,17 @@ Produce pragmatic architecture guidance for proposed code changes so implementat
 
 When asked to design a change, provide:
 
-1. Proposed file/folder layout.
+1. Proposed file/folder layout, with explicit boundaries for Astro, CSS, test, and shared logic files.
 2. Container vs presentation boundary.
 3. Data/render/logic split (if needed).
 4. Shared code placement (`src/lib` vs `src/components`).
-5. Test plan (at minimum smoke tests for presentation components).
-6. Short rationale focused on maintainability.
-7. Consistency, DRY, and SOLID assessment for the proposed design.
-8. Coverage plan, including any justified exceptions and a confirmation check before ignore-list updates.
+5. Explicitly call out any code that should be moved to shared modules/utilities.
+6. State if any code is duplicated and where it should be centralised.
+7. Require all new or changed components to have styles in a separate `.css` file unless explicitly justified.
+8. Test plan (at minimum smoke tests for presentation components).
+9. Short rationale focused on maintainability.
+10. Consistency, DRY, and SOLID assessment for the proposed design.
+11. Coverage plan, including any justified exceptions and a confirmation check before ignore-list updates.
 
 ## Decision Principles
 

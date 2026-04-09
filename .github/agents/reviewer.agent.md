@@ -62,7 +62,7 @@ Validate changes against the project conventions:
 
 Always present review results in this order:
 
-1. Findings (highest severity first).
+1. Findings (highest severity first). Always output a findings summary, even if “No issues found.”
 2. Open questions or assumptions.
 3. Brief change summary.
 4. Residual risks and testing gaps.
@@ -95,4 +95,6 @@ If no findings are identified, state that explicitly and still include residual 
 - Prefer minimal, targeted fixes over broad rewrites.
 - Call out uncertainty explicitly instead of guessing.
 - Keep recommendations implementation-ready.
+- Check for DRY (no repeated code; shared logic extracted).
+- Check for file boundaries (Astro, CSS, test, shared logic) and style separation.
 - Use British English spelling and phrasing in all review output.

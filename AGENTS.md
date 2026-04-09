@@ -19,7 +19,7 @@ Goals:
 
 Default stage order:
 
-`Plan -> Architect -> Build -> Tester -> Refactor -> Reviewer -> Documentation -> clean commit ready -> stop`
+`Plan -> Architect -> Build -> Tester -> Reviewer -> Clean Commit Ready -> Stop`
 
 ## Stage Contracts
 
@@ -32,6 +32,11 @@ Default stage order:
 ### Architect
 
 - Define file and folder structure and component boundaries.
+- Specify all file boundaries (Astro, CSS, test, shared logic).
+- Explicitly call out any code that should be moved to shared modules/utilities.
+- State if any code is duplicated and where it should be centralised.
+- Require all new or changed components to have styles in a separate `.css` file unless explicitly justified.
+- List all files to be created/modified, including CSS, test, and shared files.
 - Enforce consistency, DRY, and SOLID.
 - Define testing approach and any potential exception rationale.
 
@@ -57,19 +62,21 @@ Default stage order:
 ### Reviewer
 
 - Report findings first, highest severity first.
-- Validate regressions, risks, consistency, DRY/SOLID, and test adequacy.
+- Always output a findings summary, even if “No issues found.”
+- Validate regressions, risks, consistency, DRY/SOLID, test adequacy, and file boundaries (Astro, CSS, test, shared logic).
+- Check for DRY (no repeated code; shared logic extracted).
+- Check for style separation.
 - Report residual risks and testing gaps.
 
 ### Documentation
 
-- Update concise developer and user-facing documentation for the approved slice.
-- Add Storybook-related context notes when relevant to component usage.
-- Do not include Storybook publishing workflow requirements at this stage.
+(Removed: Documentation phase is no longer required. Usage notes should be included in Reviewer or Clean Commit Ready summaries if needed. All Storybook references removed.)
 
 ## Stop And Approval Rules
 
-- Hard stop at clean commit ready.
+- Hard stop at Clean Commit Ready.
 - No automatic progression to the next slice.
+- User approval required only at Plan and Clean Commit Ready.
 - Next slice starts only after explicit user approval.
 
 ## Commit Ownership
