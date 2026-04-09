@@ -69,6 +69,37 @@ The suite covers:
 - Fetch failure fallback behaviour.
 - Validation failure fallback behaviour with prettified Zod diagnostics.
 
+## ImageSection Component
+
+The `ImageSection.astro` component renders an image section with optional overlay and title, matching the Sanity imageSection schema.
+
+**Location:** `src/components/sections/ImageSection/ImageSection.astro`
+
+**Props:**
+
+- `image`: `{ asset: string; alt: string }` (required)
+- `overlayTitle`: `string` (optional)
+- `overlayStyle`: `'none' | 'darken' | 'lighten'` (required)
+- `overlayOpacity`: `number` (0–80, required)
+
+**Example usage:**
+
+```astro
+---
+import ImageSection from '../components/sections/ImageSection/ImageSection.astro';
+---
+
+<ImageSection
+  image={{ asset: '/images/example.jpg', alt: 'Example image' }}
+  overlayTitle="Overlay Title"
+  overlayStyle="darken"
+  overlayOpacity={40}
+/>
+```
+
+- Overlay and opacity logic matches the schema intent.
+- The component is accessible and fully tested.
+
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
