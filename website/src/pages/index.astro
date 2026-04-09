@@ -1,12 +1,26 @@
 ---
+
 import Layout from '../layouts/Layout.astro';
 import PageTemplate from '../components/templates/PageTemplate.astro';
 import { pageBySlugQuery } from '../lib/cms/queries';
 import { pageSchema } from '../lib/schemas/content/page';
 import { sanityClient } from '../lib/cms/sanity';
+import { logger } from '../lib/logging/logger';
+import z from 'zod';
+
 
 const rawPage = await sanityClient.fetch(pageBySlugQuery, { slug: 'home' });
+
 const result = pageSchema.safeParse(rawPage);
+if (!result.success) {
+  logger.error({
+    area: 'page',
+    event: 'page.validation_failed',
+    message: 'Page failed schema validation',
+    meta: { error: z.prettifyError(result.error), rawPage },
+  });
+}
+
 const page = result.success ? result.data : null;
 ---
 

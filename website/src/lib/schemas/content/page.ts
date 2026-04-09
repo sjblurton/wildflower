@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { pageSeoSchema } from './seo';
+import { contentSchema } from './section';
 
 export const pageSchema = z.object({
   _id: z.string(),
@@ -7,6 +8,7 @@ export const pageSchema = z.object({
   title: z.string(),
   slug: z.string(),
   seo: pageSeoSchema,
+  content: contentSchema.nullable().optional().default([]),
 });
 
 export const pageSlugListItemSchema = z.object({
