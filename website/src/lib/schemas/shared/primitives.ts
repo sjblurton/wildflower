@@ -23,7 +23,7 @@ const sanityAssetRefSchema = z.object({
 export const sanityImageSchema = z.object({
   _type: z.literal('image'),
   alt: z.string().min(1),
-  asset: sanityAssetRefSchema.optional(),
+  asset: sanityAssetRefSchema,
 });
 
 export type SanityImage = z.infer<typeof sanityImageSchema>;
