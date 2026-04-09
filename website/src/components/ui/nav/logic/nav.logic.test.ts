@@ -161,7 +161,11 @@ describe('loadNavSettings', () => {
       fetchNavSettings: async () => ({
         _id: 'navSettings',
         _type: 'navSettings',
-        navLogo: { _type: 'image', alt: 'Logo' },
+        navLogo: {
+          _type: 'image',
+          alt: 'Logo',
+          asset: { _ref: 'image-abc123', _type: 'reference' },
+        },
         navLinks: [{ _key: 'home-key', label: 'Home', slug: 'home' }],
       }),
       log,
@@ -170,7 +174,11 @@ describe('loadNavSettings', () => {
     expect(nav.navLinks).toEqual([
       { _key: 'home-key', _type: 'navLink', label: 'Home', slug: '/' },
     ]);
-    expect(nav.navLogo).toEqual({ _type: 'image', alt: 'Logo' });
+    expect(nav.navLogo).toEqual({
+      _type: 'image',
+      alt: 'Logo',
+      asset: { _ref: 'image-abc123', _type: 'reference' },
+    });
   });
 
   it('returns fallback links when navLinks is not an array', async () => {
