@@ -1,0 +1,42 @@
+---
+import SanityImage from '../../ui/atoms/media/SanityImage.astro';
+import type { SanityImage as SanityImageType } from '../../../lib/schemas/shared/primitives';
+import { getImageSectionLogic } from './ImageSection.logic';
+
+export interface Props {
+  image: SanityImageType;
+  overlayTitle?: string;
+  overlayOpacity: number;
+}
+
+const { image, overlayTitle,  overlayOpacity } = Astro.props as Props;
+const logic = getImageSectionLogic({ image,  overlayOpacity });
+---
+<section class="relative flex items-center justify-center overflow-hidden min-h-75">
+  {image?.asset ? (
+    logic.isTestImage ? (
+      <img src={typeof image.asset === 'string' ? image.asset : ''} alt={image.alt} class="w-full h-auto block" />
+    ) : (
+      <SanityImage
+        image={image}
+        class="w-full h-auto block"
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  ) : (
+    <div class="w-full h-auto block">Image unavailable</div>
+  )}
+  {overlayTitle && (<>
+  <div
+    class={`absolute inset-0 pointer-events-none transition-colors duration-200 bg-base-200/${logic.tailwindOpacity}`}
+    aria-hidden="true"
+  />
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 text-center text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">
+      {overlayTitle}
+    </div>
+
+  </>
+  )}
+
+</section>

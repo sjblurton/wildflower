@@ -1,83 +1,20 @@
 ---
-/**
- * ImageSection.astro
- * Renders an image section with optional overlay and title, matching the Sanity imageSection schema.
- *
- * Props:
- * - image: { asset: string; alt: string }
- * - overlayTitle?: string
- * - overlayStyle: 'none' | 'darken' | 'lighten'
- * - overlayOpacity: number (0–80)
- */
+
+import type { SanityImage as SanityImageType } from '../../../lib/schemas/shared/primitives';
+import ImageSectionShow from './ImageSectionShow.astro';
 
 export interface Props {
-  image: { asset: string; alt: string };
+  image: SanityImageType;
   overlayTitle?: string;
-  overlayStyle: 'none' | 'darken' | 'lighten';
   overlayOpacity: number;
 }
 
-const { image, overlayTitle, overlayStyle, overlayOpacity } = Astro.props as Props;
+const { image, overlayTitle, overlayOpacity } = Astro.props as Props;
 
-// Clamp and map opacity (0–80) to CSS opacity (0–0.8)
-const clampedOpacity = Math.max(0, Math.min(overlayOpacity ?? 0, 80));
-const cssOpacity = (clampedOpacity / 100).toFixed(2);
-
-const overlayColour = overlayStyle === 'darken'
-  ? 'rgba(0,0,0,' + cssOpacity + ')'
-  : overlayStyle === 'lighten'
-    ? 'rgba(255,255,255,' + cssOpacity + ')'
-    : 'transparent';
 ---
-<style>
-.image-section {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  min-height: 300px;
-}
-.image-section__img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.image-section__overlay {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  transition: background 0.2s;
-}
-.image-section__title {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  font-size: 2rem;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-  z-index: 2;
-  text-align: center;
-}
-</style>
 
-<section class="image-section">
-  <img
-    class="image-section__img"
-    src={image.asset}
-    alt={image.alt}
-    loading="lazy"
-    decoding="async"
-  />
-  {overlayStyle !== 'none' && (
-    <div
-      class="image-section__overlay"
-      style={`background: ${overlayColour};`}
-      aria-hidden="true"
-    />
-  )}
-  {overlayTitle && (
-    <div class="image-section__title">{overlayTitle}</div>
-  )}
-</section>
+<ImageSectionShow
+  image={image}
+  overlayTitle={overlayTitle}
+  overlayOpacity={overlayOpacity}
+/>
