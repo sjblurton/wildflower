@@ -31,38 +31,24 @@ export const imageSectionType = defineType({
       description: 'Optional title displayed over the image.',
     }),
     defineField({
-      name: 'overlayStyle',
-      title: 'Overlay style',
-      type: 'string',
-      options: {
-        list: [
-          {title: 'None', value: 'none'},
-          {title: 'Darken', value: 'darken'},
-          {title: 'Lighten', value: 'lighten'},
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'darken',
-    }),
-    defineField({
       name: 'overlayOpacity',
       title: 'Overlay opacity',
       type: 'number',
-      description: 'Overlay strength from 0 to 80.',
-      initialValue: 35,
-      validation: (Rule) => Rule.min(0).max(80),
+      description: 'Overlay strength from 0 (none) to 8 (strongest).',
+      initialValue: 3,
+      validation: (Rule) => Rule.min(0).integer().max(8),
     }),
   ],
   preview: {
     select: {
       title: 'overlayTitle',
       media: 'image',
-      textColor: 'textColor',
+      opacity: 'overlayOpacity',
     },
-    prepare({title, media, textColor}) {
+    prepare({title, media, opacity}) {
       return {
         title: title || 'Image section',
-        subtitle: `Text: ${textColor || 'white'}`,
+        subtitle: `Opacity: ${opacity || 3}`,
         media,
       }
     },
