@@ -37,6 +37,7 @@ Default stage order:
 
 ### Build
 
+- Use the `build` custom agent for implementation-stage execution.
 - Implement only the approved slice scope.
 - Do not introduce scope creep without explicit user approval.
 
