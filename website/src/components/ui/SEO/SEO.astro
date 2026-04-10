@@ -1,29 +1,14 @@
 ---
-import { loadSeoMetadata } from './SEO.logic'
+import { loadSeoMetadata } from './SEO.logic';
+import SeoShow from './SeoShow.astro';
 
 interface Props {
-	pageSlug?: string
-	pathname: string
+  pageSlug?: string;
+  pathname: string;
 }
 
-const { pageSlug, pathname } = Astro.props as Props
-const { title, description, canonicalUrl, ogImageUrl, ogImageAlt, robotsContent, twitterCard } =
-	await loadSeoMetadata({ pageSlug, pathname })
+const { pageSlug, pathname } = Astro.props as Props;
+const meta = await loadSeoMetadata({ pageSlug, pathname });
 ---
 
-<title>{title}</title>
-<meta name="robots" content={robotsContent} />
-<meta property="og:type" content="website" />
-<meta property="og:title" content={title} />
-<meta name="twitter:card" content={twitterCard} />
-<meta name="twitter:title" content={title} />
-
-{description && <meta name="description" content={description} />}
-{description && <meta property="og:description" content={description} />}
-{description && <meta name="twitter:description" content={description} />}
-{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-{canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
-{ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-{ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
-{ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
-{ogImageAlt && <meta name="twitter:image:alt" content={ogImageAlt} />}
+<SeoShow {...meta} />
