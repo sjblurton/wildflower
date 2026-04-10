@@ -7,8 +7,6 @@ import SeoShow from './SeoShow.astro';
 interface Props {
   pageSlug?: string;
   pathname: string;
-  fetchSeoSettings: () => Promise<unknown>;
-  fetchPageSeoDocument: (slug: string) => Promise<unknown>;
 }
 
 const { pageSlug, pathname } = Astro.props as Props;
