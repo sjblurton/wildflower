@@ -7,7 +7,15 @@ export default getViteConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html'],
-      exclude: ['**/*.astro', '**/*.query.ts', '**/*.query.test.ts', 'coverage/**'],
+      exclude: [
+        '**/*.astro',
+        '**/*.query.ts',
+        '**/*.query.test.ts',
+        'coverage/**',
+        '**/queries.ts',
+        '**/*.config.*',
+        '**/fixtures.ts',
+      ],
     },
   },
 });
