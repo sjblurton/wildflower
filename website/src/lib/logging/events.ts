@@ -19,7 +19,18 @@ export const LogEvents = {
     fetchFailed: 'page.fetch_failed',
     fallbackApplied: 'page.fallback_applied',
   },
+  seo: {
+    siteSettingsFetchFailed: 'seo.site_settings_fetch_failed',
+    pageDocumentFetchFailed: 'seo.page_document_fetch_failed',
+    siteSettingsParseFailed: 'seo.site_settings_parse_failed',
+    pageDocumentParseFailed: 'seo.page_document_parse_failed',
+    fallbackApplied: 'seo.fallback_applied',
+  },
 } as const;
 
 export type LogEvent =
-  (typeof LogEvents)[keyof typeof LogEvents][keyof (typeof LogEvents)[keyof typeof LogEvents]];
+  | (typeof LogEvents.nav)[keyof typeof LogEvents.nav]
+  | (typeof LogEvents.footer)[keyof typeof LogEvents.footer]
+  | (typeof LogEvents.section)[keyof typeof LogEvents.section]
+  | (typeof LogEvents.page)[keyof typeof LogEvents.page]
+  | (typeof LogEvents.seo)[keyof typeof LogEvents.seo];

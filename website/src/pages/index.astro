@@ -7,6 +7,7 @@ import { pageSchema } from '../lib/schemas/content/page';
 import { sanityClient } from '../lib/cms/sanity';
 import { logger } from '../lib/logging/logger';
 import z from 'zod';
+import { LogEvents } from '../lib/logging/events';
 
 
 const rawPage = await sanityClient.fetch(pageBySlugQuery, { slug: 'home' });
@@ -15,7 +16,7 @@ const result = pageSchema.safeParse(rawPage);
 if (!result.success) {
   logger.error({
     area: 'page',
-    event: 'page.validation_failed',
+    event: LogEvents.page.validationFailed,
     message: 'Page failed schema validation',
     meta: { error: z.prettifyError(result.error), rawPage },
   });

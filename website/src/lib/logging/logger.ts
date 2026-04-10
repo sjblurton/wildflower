@@ -1,5 +1,6 @@
 import type { LogEvent } from './events';
 import { isRecord } from '../primitives/guards';
+import chalk from 'chalk';
 
 type LogLevel = 'info' | 'warn' | 'error';
 
@@ -28,6 +29,12 @@ interface LogEntry extends LogPayload {
   timestamp: string;
 }
 
+const levelColor = {
+  info: chalk.blue.bold,
+  warn: chalk.yellow.bold,
+  error: chalk.red.bold,
+};
+
 const emit = (level: LogLevel, payload: LogPayload) => {
   const entry: LogEntry = {
     level,
@@ -35,17 +42,19 @@ const emit = (level: LogLevel, payload: LogPayload) => {
     ...payload,
   };
 
+  const title = levelColor[level](`[${level.toUpperCase()}:${payload.event.toUpperCase()}]`);
+
   if (level === 'error') {
-    console.error(entry);
+    console.error(title, entry);
     return;
   }
 
   if (level === 'warn') {
-    console.warn(entry);
+    console.warn(title, entry);
     return;
   }
 
-  console.info(entry);
+  console.info(title, entry);
 };
 
 export const logger = {

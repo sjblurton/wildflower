@@ -1,5 +1,5 @@
-import { urlFor } from '../../../../lib/cms/sanity';
-import type { SanityImage } from '../../../../lib/schemas/shared/primitives';
+import { urlFor } from '../../../../../lib/cms/sanity';
+import type { SanityImage } from '../../../../../lib/schemas/shared/primitives';
 
 export interface SanityImageRenderOptions {
   image?: SanityImage;

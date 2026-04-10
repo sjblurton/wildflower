@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { sanityImageSchema } from '../../../lib/schemas/shared/primitives';
-import { pageSeoSchema } from '../../../lib/schemas/content/seo';
+import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
+import { pageSeoSchema } from '../../../../lib/schemas/content/seo';
 
 export const siteSeoSchema = z.object({
   siteTitle: z.string(),
