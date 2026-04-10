@@ -39,6 +39,10 @@ Deliver the approved slice safely and clearly, aligned to architecture decisions
 ## Quality Expectations
 
 - Maintain consistency with existing patterns and naming.
+- Before handing off to the next stage or declaring clean commit ready, you must:
+  - Run and validate all quality gates: lint, typecheck, style checks, tests, and coverage.
+  - If any gate fails, halt and report the errors to the orchestrator; do not proceed.
+  - Only declare clean commit ready if all gates pass.
 - Reduce duplication where practical without over-abstraction.
 - Apply SOLID principles pragmatically.
 - Add or update tests only where needed to support downstream Tester validation.
