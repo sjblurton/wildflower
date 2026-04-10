@@ -6,21 +6,47 @@ export const sectionSchema = z.discriminatedUnion('_type', [imageSectionSchema])
 
 export type Section = z.infer<typeof sectionSchema>;
 
-export const contentSchema = z.array(z.unknown()).transform((arr) =>
-  arr
+type ValidationError = {
+  index: number;
+  issues: string;
+  type: string;
+};
+
+export const contentSchema = z.array(z.unknown()).transform((arr) => {
+  const numberOfSections = Array.isArray(arr) ? arr.length : 0;
+  const errors: ValidationError[] = [];
+
+  const cleanSections = arr
     .map((item, idx) => {
       const result = sectionSchema.safeParse(item);
+      const itemType: string =
+        typeof item === 'object' &&
+        item !== null &&
+        '_type' in item &&
+        typeof item._type === 'string'
+          ? item._type
+          : 'unknown';
+
       if (!result.success) {
-        logger?.error?.({
-          area: 'section',
-          event: 'section.validation_failed',
-          message: `Section at index ${idx} failed validation and will be skipped.`,
-          meta: { error: z.prettifyError(result.error), item },
+        errors.push({
+          index: idx,
+          issues: z.prettifyError(result.error),
+          type: itemType,
         });
         return undefined;
       }
       return item;
     })
-    .filter(Boolean),
-);
+    .filter(Boolean);
+
+  if (cleanSections.length < numberOfSections) {
+    logger.error({
+      area: 'page',
+      event: 'page.validation_failed',
+      message: `Some sections failed validation and were skipped. ${cleanSections.length} out of ${numberOfSections} sections will be rendered.`,
+      meta: { errors },
+    });
+  }
+  return cleanSections as Section[];
+});
 export type Content = z.infer<typeof contentSchema>;

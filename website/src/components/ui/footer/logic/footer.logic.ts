@@ -53,6 +53,11 @@ export const loadFooterSettings = async ({
   const parseResult = footerSettingsSchema.safeParse(rawPayload);
 
   if (parseResult.success) {
+    logger.info({
+      event: LogEvents.footer.footerLoaded,
+      area: 'footer',
+      message: 'Footer settings loaded and validated successfully.',
+    });
     return parseResult.data;
   }
 

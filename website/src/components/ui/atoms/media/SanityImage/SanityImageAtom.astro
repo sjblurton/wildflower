@@ -13,7 +13,6 @@ interface Props {
   loading?: 'lazy' | 'eager'
   decoding?: 'async' | 'sync' | 'auto'
   fetchpriority?: 'high' | 'low' | 'auto'
-  decorative?: boolean
 }
 
 const {
@@ -27,7 +26,6 @@ const {
   loading = 'lazy',
   decoding = 'async',
   fetchpriority,
-  decorative = false,
 } = Astro.props
 
 const {
@@ -42,7 +40,6 @@ const {
   height,
   sizes,
   quality,
-  decorative,
 })
 ---
 
@@ -56,6 +53,5 @@ const {
     loading={loading}
     decoding={decoding}
     fetchpriority={fetchpriority}
-    aria-hidden={decorative ? 'true' : undefined}
   />
 )}

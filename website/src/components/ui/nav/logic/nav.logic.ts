@@ -129,6 +129,11 @@ export const loadNavSettings = async ({
   const parseResult = NavSettingsSchema.safeParse(rawPayload);
 
   if (parseResult.success) {
+    logger.info({
+      event: LogEvents.nav.navLoaded,
+      area: 'navigation',
+      message: 'Nav settings loaded and validated successfully.',
+    });
     return buildFallbackNav(parseResult.data);
   }
 

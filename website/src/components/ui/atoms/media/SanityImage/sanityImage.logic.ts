@@ -8,7 +8,6 @@ export interface SanityImageRenderOptions {
   height?: number;
   sizes?: string;
   quality?: number;
-  decorative?: boolean;
 }
 
 export interface SanityImageRenderResult {
@@ -40,14 +39,13 @@ export function buildSanityImageRenderData({
   height,
   sizes,
   quality,
-  decorative = false,
 }: SanityImageRenderOptions): SanityImageRenderResult {
   const hasImage = Boolean(image?.asset?._ref);
 
   if (!hasImage || !image) {
     return {
       src: null,
-      altText: decorative ? '' : (alt ?? image?.alt ?? ''),
+      altText: '',
     };
   }
 
@@ -77,6 +75,6 @@ export function buildSanityImageRenderData({
     src,
     srcSet,
     sizes: sizes ?? (width <= 80 ? `${width}px` : `(min-width: 1024px) ${width}px, 100vw`),
-    altText: decorative ? '' : (alt ?? image.alt ?? ''),
+    altText: alt ?? image.alt ?? '',
   };
 }

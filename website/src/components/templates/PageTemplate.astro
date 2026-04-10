@@ -1,6 +1,6 @@
 ---
 import type { Page } from '../../lib/schemas/content/page';
-import { getSectionComponent, parseSections } from '../sections/SectionSelector';
+import { getSectionComponent } from '../sections/SectionSelector';
 
 interface Props {
   page: Page;
@@ -11,7 +11,8 @@ const { page } = Astro.props;
 
 {page.content && page.content.length > 0 ? (
   <>
-    {parseSections(page.content).map((section) => {
+    {
+    page.content.map((section) => {
       const Section = getSectionComponent(section);
       return Section ? <Section.Component {...Section.props}  /> : null;
     })}

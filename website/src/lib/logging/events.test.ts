@@ -8,6 +8,7 @@ describe('LogEvents', () => {
       fetchFailed: 'nav.fetch_failed',
       validationFailed: 'nav.validation_failed',
       fallbackApplied: 'nav.fallback_applied',
+      navLoaded: 'nav.nav_loaded',
     });
   });
 });

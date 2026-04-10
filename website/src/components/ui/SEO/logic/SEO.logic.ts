@@ -74,6 +74,11 @@ const buildFallbackSeoSiteSettings = async (): Promise<SiteSeoSettings> => {
 
     return fallbackData;
   }
+  logger.info({
+    event: LogEvents.seo.siteDocumentLoaded,
+    area: 'seo',
+    message: 'SEO site settings document loaded.',
+  });
   return siteSettings.data;
 };
 
@@ -115,6 +120,12 @@ const buildFallbackSeoPageDocument = async (slug: string): Promise<PageSeoDocume
 
     return fallbackData;
   }
+
+  logger.info({
+    event: LogEvents.seo.pageDocumentLoaded,
+    area: 'seo',
+    message: `SEO page document loaded for slug "${slug}".`,
+  });
   return pageDocument.data;
 };
 

@@ -36,25 +36,27 @@ const levelColor = {
 };
 
 const emit = (level: LogLevel, payload: LogPayload) => {
+  const { meta, ...rest } = payload;
   const entry: LogEntry = {
     level,
     timestamp: new Date().toISOString(),
-    ...payload,
+    ...rest,
   };
 
   const title = levelColor[level](`[${level.toUpperCase()}:${payload.event.toUpperCase()}]`);
 
   if (level === 'error') {
     console.error(title, entry);
-    return;
-  }
-
-  if (level === 'warn') {
+  } else if (level === 'warn') {
     console.warn(title, entry);
-    return;
+  } else {
+    console.info(title, entry);
   }
 
-  console.info(title, entry);
+  if (meta) {
+    console.info(levelColor[level](`${title}-METADATA`));
+    console.dir(meta, { depth: null, colors: true });
+  }
 };
 
 export const logger = {
