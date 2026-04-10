@@ -1,0 +1,16 @@
+---
+import  {type ProductSection } from '../../../lib/schemas/sections/productsSection';
+
+export type Props = ProductSection;
+
+const { products, title } = Astro.props;
+---
+
+<section class="products-section">
+  {title && <h2 class="products-section__title">{title}</h2>}
+  <div>
+    {products && (
+        <pre>{JSON.stringify(products, null, 2)}</pre>)
+      || <p>No products available.</p>}
+  </div>
+</section>
