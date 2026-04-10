@@ -1,11 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import SeoShow from './SeoShow.astro';
+import type { AstroComponentFactory } from 'astro/runtime/server/render/astro/index.js';
 
 describe('SeoShow.astro', () => {
   it('renders all meta tags with full props', async () => {
+    const Component = SeoShow as AstroComponentFactory;
     const container = await AstroContainer.create();
-    const html = await container.renderToString(SeoShow, {
+    const html = await container.renderToString(Component, {
       props: {
         title: 'Test Title',
         description: 'Test Desc',
