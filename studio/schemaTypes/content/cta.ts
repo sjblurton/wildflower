@@ -118,6 +118,7 @@ export const ctaType = defineType({
           to: [{type: 'page'}],
         }),
       ],
+      validation: (Rule) => Rule.required().min(1),
     }),
   ],
   preview: {
