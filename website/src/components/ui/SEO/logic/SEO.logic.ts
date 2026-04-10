@@ -1,6 +1,5 @@
-import { sanityClient, urlFor } from '../../../../lib/cms/sanity';
+import { urlFor } from '../../../../lib/cms/sanity';
 import { toTrimmedString } from '../../../../lib/primitives/strings';
-import { pageSeoBySlugQuery, siteSeoQuery } from '../data/seo.query';
 import {
   pageSeoDocumentSchema,
   siteSeoSchema,
@@ -14,6 +13,8 @@ import z from 'zod';
 interface LoadSeoInput {
   pageSlug?: string;
   pathname: string;
+  fetchSeoSettings: () => Promise<unknown>;
+  fetchPageSeoDocument: (slug: string) => Promise<unknown>;
 }
 
 export interface SeoMetadata {
@@ -40,8 +41,10 @@ const buildCanonicalUrl = (siteUrl: string | null, path: string) => {
   }
 };
 
-const buildFallbackSeoSiteSettings = async (): Promise<SiteSeoSettings> => {
-  const siteSettings = await siteSeoSchema.safeParseAsync(await sanityClient.fetch(siteSeoQuery));
+const buildFallbackSeoSiteSettings = async (
+  fetch: () => Promise<unknown>,
+): Promise<SiteSeoSettings> => {
+  const siteSettings = await siteSeoSchema.safeParseAsync(await fetch());
 
   if (!siteSettings.success) {
     logger.error({
@@ -82,10 +85,11 @@ const buildFallbackSeoSiteSettings = async (): Promise<SiteSeoSettings> => {
   return siteSettings.data;
 };
 
-const buildFallbackSeoPageDocument = async (slug: string): Promise<PageSeoDocument> => {
-  const pageDocument = await pageSeoDocumentSchema.safeParseAsync(
-    await sanityClient.fetch(pageSeoBySlugQuery, { slug }),
-  );
+const buildFallbackSeoPageDocument = async (
+  fetch: (slug: string) => Promise<unknown>,
+  slug: string,
+): Promise<PageSeoDocument> => {
+  const pageDocument = await pageSeoDocumentSchema.safeParseAsync(await fetch(slug));
 
   if (!pageDocument.success) {
     logger.error({
@@ -132,9 +136,11 @@ const buildFallbackSeoPageDocument = async (slug: string): Promise<PageSeoDocume
 export const loadSeoMetadata = async ({
   pageSlug,
   pathname,
+  fetchSeoSettings,
+  fetchPageSeoDocument,
 }: LoadSeoInput): Promise<SeoMetadata> => {
-  const siteSettings = await buildFallbackSeoSiteSettings();
-  const pageDocument = await buildFallbackSeoPageDocument(pageSlug ?? '');
+  const siteSettings = await buildFallbackSeoSiteSettings(fetchSeoSettings);
+  const pageDocument = await buildFallbackSeoPageDocument(fetchPageSeoDocument, pageSlug ?? '');
 
   const ogImage = pageDocument?.seo?.ogImage ?? siteSettings.defaultOgImage;
   const ogImageUrl = ogImage?.asset?._ref
