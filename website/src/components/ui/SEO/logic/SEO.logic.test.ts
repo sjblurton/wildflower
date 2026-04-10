@@ -138,4 +138,46 @@ describe('loadSeoMetadata', () => {
     expect(result.title).toBe('Default Title');
     expect(result.description).toBe('Default Desc');
   });
+
+  it('returns undefined canonicalUrl if buildCanonicalUrl throws', async () => {
+    const fetchSeoSettings = vi.fn().mockResolvedValue({
+      ...validSiteSettings,
+      siteUrl: 'not a valid url',
+    });
+    const fetchPageSeoDocument = vi.fn().mockResolvedValue(validPageDocument);
+    const result = await loadSeoMetadata({
+      pageSlug: 'page',
+      pathname: '::bad',
+      fetchSeoSettings,
+      fetchPageSeoDocument,
+    });
+    expect(result.canonicalUrl).toBeUndefined();
+  });
+
+  it('returns "Wildflower" as title if all title fields are missing', async () => {
+    const fetchSeoSettings = vi.fn().mockResolvedValue({
+      siteTitle: null,
+      siteUrl: 'https://example.com',
+      defaultMetaTitle: null,
+      defaultMetaDescription: null,
+      defaultOgImage: null,
+      noIndexByDefault: false,
+    });
+    const fetchPageSeoDocument = vi.fn().mockResolvedValue({
+      title: null,
+      slug: 'page',
+      seo: {
+        metaTitle: null,
+        metaDescription: null,
+        ogImage: null,
+      },
+    });
+    const result = await loadSeoMetadata({
+      pageSlug: 'page',
+      pathname: '/foo',
+      fetchSeoSettings,
+      fetchPageSeoDocument,
+    });
+    expect(result.title).toBe('Wildflower');
+  });
 });
