@@ -24,6 +24,10 @@ Use this output structure exactly:
 - User-visible changes:
 - Maintainer-facing changes:
 - Constraints to document:
+- DRY/code reuse findings (must check entire codebase for reuse opportunities):
+- Container/presentation split (required):
+- Tailwind-only styling (CSS only if justified):
+- Data/logic/render folders (as needed):
 
 ## Testing And Risk Notes
 

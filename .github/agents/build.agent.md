@@ -1,6 +1,6 @@
 ---
 description: "Use when implementing an approved vertical slice, translating architecture decisions into code without scope creep, and preparing work for testing."
-tools: [read, search, todo]
+tools: [read, search, edit]
 user-invocable: true
 agents: []
 ---
@@ -29,9 +29,10 @@ Deliver the approved slice safely and clearly, aligned to architecture decisions
 
 ## Architecture Alignment
 
-- Respect container versus presentation boundaries.
+- Always implement both a container and a presentation Astro component for each feature/slice.
+- Use Tailwind CSS for all styling. Do not create or update CSS files unless explicitly justified in the architecture handoff.
+- For complex features, create `/data`, `/logic`, and `/render` folders as specified by the architect.
 - Keep business logic out of presentation components.
-- Use `data`, `render`, and `logic` separation where complexity requires it.
 - Place reusable utilities in `src/lib`.
 - Place shared, non-feature-specific UI in `src/components`.
 

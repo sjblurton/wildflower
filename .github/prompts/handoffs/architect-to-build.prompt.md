@@ -16,14 +16,19 @@ Use this output structure exactly:
 
 ## Proposed Structure
 
-- Files to add:
+- Files to add (must include both container and presentation Astro components; add /data, /logic, /render folders if needed):
 - Files to update:
 - Files to avoid changing:
 
+## Styling Requirements
+
+- All styling must use Tailwind CSS. If any CSS file is proposed, provide explicit justification below:
+- CSS justification (if any):
+
 ## Boundaries
 
-- Container versus presentation split:
-- Data, render, logic split:
+- Container versus presentation split (required for all components):
+- Data, render, logic split (use /data, /logic, /render folders as needed):
 - Shared placement decisions (`src/lib` versus `src/components`):
 
 ## Quality Constraints

@@ -18,6 +18,9 @@ Use this output structure exactly:
 - What changed:
 - Why it changed:
 - What did not change:
+- Container/presentation split (required):
+- Tailwind-only styling (CSS only if justified):
+- Data/logic/render folders (as needed):
 
 ## Behaviour Delta
 

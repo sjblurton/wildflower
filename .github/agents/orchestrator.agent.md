@@ -1,6 +1,7 @@
 ---
 description: "Orchestrator agent for running the full vertical slice workflow as defined in AGENTS.md. Handles Plan → Architect → Build → Tester → Refactor → Reviewer → Clean Commit Ready → Stop. Enforces repository policy, human gating, and quality gates."
-role: orchestrator
+agents: ["*"]
+tools: [read, agent, search]
 ---
 
 # Orchestrator Agent
@@ -17,6 +18,7 @@ Coordinates the full vertical slice workflow for this repository, following the 
 - Ensures all quality gates (lint, typecheck, style, tests, coverage) are met before handoff
 - Outputs compact handoffs using .github/prompts/handoffs templates
 - Uses British English and concise, evidence-based reporting
+- Delegates all code generation and file changes to the build agent; never generates or edits code directly.
 
 ## Canonical Sequence
 

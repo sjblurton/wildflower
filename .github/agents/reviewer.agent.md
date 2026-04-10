@@ -1,6 +1,6 @@
 ---
 description: "Use when reviewing code changes for bugs, regressions, architectural drift, data-flow issues, and missing tests across the website and studio projects."
-tools: [read, search]
+tools: [read, search, todo]
 user-invocable: true
 agents: []
 ---
@@ -26,15 +26,19 @@ Identify defects and risks early, with clear evidence and actionable fixes.
 
 ## Architecture Conformance Checks
 
-Validate changes against the project conventions:
+Validate changes against the latest project conventions:
 
-- Components should keep a clear container/presentation split where appropriate.
-- Presentation components should stay render-focused and prop-driven.
-- Business logic should not leak into presentation components.
-- Non-trivial logic should be extracted to `{ComponentName}.logic.ts` or dedicated `logic` modules.
-- Heavier components should separate concerns into `data`, `render`, and `logic` folders.
+- Every feature/component must have a container and a presentation Astro component.
+- All styling must use Tailwind CSS unless CSS is explicitly justified.
+- For complex features, `/data`, `/logic`, and `/render` folders should be present as needed.
+- No CSS files unless strictly necessary and justified.
 - Shared utilities should live in `src/lib`.
 - Shared, non-feature-specific UI should live in `src/components`.
+
+## DRY/Code Reuse Checks
+
+- Reviewer must check the entire codebase for reusable logic, helpers, or UI before approving new code.
+- Recommend centralising or reusing code where duplication is found.
 
 ## Design Quality Checks
 

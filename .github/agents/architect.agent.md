@@ -17,10 +17,12 @@ Produce pragmatic architecture guidance for proposed code changes so implementat
 
 ### 1) Component Structure
 
+- Every feature/component must have:
+  - A container Astro component (handles orchestration, data, logic wiring)
+  - A presentation Astro component (renders from props only)
 - Use a standard Astro component structure with each component in its own folder.
-- Prefer splitting components into:
-  - Presentation component: responsible only for rendering from props.
-  - Container component: responsible for orchestration, wiring data and logic into presentation.
+- For complex features, create `/data`, `/logic`, and `/render` folders as needed.
+- All styling must use Tailwind CSS unless CSS is explicitly justified and documented in the architecture handoff.
 
 ### 2) Testing Expectations
 
@@ -34,10 +36,10 @@ Produce pragmatic architecture guidance for proposed code changes so implementat
 
 ### 3) Logic Organisation
 
-- If a component has non-trivial logic, create `{ComponentName}.logic.ts`.
-- If logic grows, split by responsibility into folders:
-  - `data`: data fetching and data transformation.
-  - `render`: rendering helpers and view-mapping functions.
+- If a component has non-trivial logic, create `{ComponentName}.logic.ts` in a `/logic` folder.
+- For data fetching or transformation, use a `/data` folder.
+- For rendering helpers, use a `/render` folder.
+- Do not use CSS files unless strictly necessary and justified in the architecture plan.
   - `logic`: business rules and decision logic.
 - Container components should compose functions from these folders and pass clean props to presentation components.
 
