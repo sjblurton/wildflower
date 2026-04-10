@@ -1,0 +1,30 @@
+---
+import type { ProductCard } from '../../../lib/schemas/cards/productCard';
+import SanityImage from '../atoms/media/SanityImage/SanityImage.astro';
+
+export type Prop = ProductCard
+
+const {description,title,cta,image} = Astro.props as Prop;
+---
+
+<div class="card bg-base-100 w-96 shadow-sm">
+  <figure>
+    <SanityImage
+      image={image}
+      class="w-full h-auto block"
+      loading="lazy"
+      decoding="async"
+    />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">{title}</h2>
+    <p>{description}</p>
+    <div class="card-actions justify-end">
+        {cta &&
+            cta.map(() => {
+            const classNames = ['btn'];
+           return (<button class={classNames.join(' ')}>Default</button>)
+            })}
+    </div>
+  </div>
+</div>

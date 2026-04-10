@@ -14,6 +14,7 @@ const { page } = Astro.props;
     {
     page.content.map((section) => {
       const Section = getSectionComponent(section);
+      // @ts-expect-error - I'll come back to this error later, it's related to the dynamic nature of the sections and how I'm passing props to them.
       return Section ? <Section.Component {...Section.props}  /> : null;
     })}
   </>
