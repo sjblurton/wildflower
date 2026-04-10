@@ -1,8 +1,12 @@
 import { z } from 'zod';
 import { imageSectionSchema } from '../sections/imageSection';
 import { logger } from '../../logging/logger';
+import { productSectionSchema } from '../sections/productsSection';
 
-export const sectionSchema = z.discriminatedUnion('_type', [imageSectionSchema]);
+export const sectionSchema = z.discriminatedUnion('_type', [
+  imageSectionSchema,
+  productSectionSchema,
+]);
 
 export type Section = z.infer<typeof sectionSchema>;
 

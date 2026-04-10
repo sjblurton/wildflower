@@ -26,5 +26,11 @@ export const sanityImageSchema = z.object({
   asset: sanityAssetRefSchema,
 });
 
+export const referanceTypeSchema = z.object({
+  _ref: z.string().min(1),
+  _type: z.string().min(1),
+  _key: z.string().min(1),
+});
+
 export type SanityImage = z.infer<typeof sanityImageSchema>;
 export type DaisyTheme = z.infer<typeof daisyThemeSchema>;
