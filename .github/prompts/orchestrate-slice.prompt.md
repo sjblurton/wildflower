@@ -1,6 +1,6 @@
 ---
 description: "Single-entry orchestration prompt: preview plan first, then execute full stage chain after explicit approval."
-agent: "ask"
+agent: "orchestrator"
 ---
 
 Orchestrate one vertical slice using the repository workflow.
