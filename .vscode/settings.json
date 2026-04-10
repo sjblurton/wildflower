@@ -8,6 +8,5 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
-  "stylelint.validate": ["css"],
-  "cSpell.words": ["primatives"]
+  "stylelint.validate": ["css"]
 }
