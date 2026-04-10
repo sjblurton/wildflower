@@ -18,7 +18,12 @@ export interface SanityImageRenderResult {
   altText: string;
 }
 
-function buildUrl(image: SanityImage, width?: number, height?: number, quality?: number): string {
+export function buildUrl(
+  image: SanityImage,
+  width?: number,
+  height?: number,
+  quality?: number,
+): string {
   let builder = urlFor(image).auto('format');
 
   if (width) builder = builder.width(width);
