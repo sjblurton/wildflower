@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildUrl, buildSanityImageRenderData } from '../sanityImage.logic';
+import { buildUrl, buildSanityImageRenderData } from './sanityImage.logic';
 
 describe('sanityImage.logic', () => {
   const validAssetRef = 'image-Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000-jpg';
