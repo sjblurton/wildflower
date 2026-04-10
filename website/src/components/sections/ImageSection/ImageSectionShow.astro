@@ -2,6 +2,7 @@
 import SanityImage from '../../ui/atoms/media/SanityImage/SanityImage.astro';
 import type { SanityImage as SanityImageType } from '../../../lib/schemas/shared/primitives';
 import { getImageSectionLogic } from './ImageSection.logic';
+import { logger } from '../../../lib/logging/logger';
 
 export interface Props {
   image: SanityImageType;
@@ -11,6 +12,18 @@ export interface Props {
 
 const { image, overlayTitle,  overlayOpacity } = Astro.props as Props;
 const logic = getImageSectionLogic({ image,  overlayOpacity });
+logger.info({
+  event: 'INFO',
+  area: 'ImageSection',
+  message: 'Rendering ImageSection with provided props and logic.',
+  meta: {
+    image,
+    overlayTitle,
+    overlayOpacity,
+    isTestImage: logic.isTestImage,
+    tailwindOpacity: logic.tailwindOpacity,
+  },
+});
 ---
 <section class="relative flex items-center justify-center overflow-hidden min-h-75">
   {image?.asset ? (
