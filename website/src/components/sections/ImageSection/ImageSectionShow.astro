@@ -1,13 +1,9 @@
 ---
 import SanityImage from '../../ui/atoms/media/SanityImage/SanityImage.astro';
-import type { SanityImage as SanityImageType } from '../../../lib/schemas/shared/primitives';
 import { getImageSectionLogic } from './ImageSection.logic';
+import type { ImageSection } from '../../../lib/schemas/sections/imageSection';
 
-export interface Props {
-  image: SanityImageType;
-  overlayTitle?: string;
-  overlayOpacity: number;
-}
+export type Props = ImageSection;
 
 const { image, overlayTitle,  overlayOpacity } = Astro.props as Props;
 const logic = getImageSectionLogic({ image,  overlayOpacity });

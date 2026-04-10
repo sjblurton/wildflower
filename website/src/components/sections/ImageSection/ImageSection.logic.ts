@@ -1,7 +1,4 @@
-// Accept both Sanity and test image shapes
-export type ImageSectionAsset =
-  | { _ref: string; _type: 'reference' } // Sanity
-  | string; // test
+export type ImageSectionAsset = { _ref: string; _type: 'reference' } | string; // test
 
 export interface ImageSectionImage {
   _type: 'image';
