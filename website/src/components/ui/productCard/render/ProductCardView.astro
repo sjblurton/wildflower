@@ -3,7 +3,7 @@ import type { SanityImage as SanityImageType } from '../../../../lib/schemas/sha
 import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro';
 import type { CtaProps } from '../logic/ProductCard.logic';
 
-export type ProductCardViewProps = {
+type ProductCardViewProps = {
   description: string;
   title: string;
   image?: SanityImageType | null;
