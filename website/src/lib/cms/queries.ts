@@ -1,8 +1,7 @@
-import { contactLinkProjection } from './projections/links';
 import { imageProjection } from './projections/primatives';
 
 export const referenceIdToNavLinkQuery = /* groq */ `
-  *[_type == "referenceId" && _id == $id][0]{
+  *[_id == $id][0]{
     _id,
     _type,
     slug
@@ -10,9 +9,7 @@ export const referenceIdToNavLinkQuery = /* groq */ `
 `;
 
 export const referenceIdToContactLinkQuery = /* groq */ `
-  *[_type == "referenceId" && _id == $id][0]{
-    ${contactLinkProjection}
-  }
+  *[_id == $id][0]
 `;
 
 export const pageSlugListQuery = /* groq */ `

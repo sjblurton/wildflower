@@ -35,7 +35,20 @@ const levelColor = {
   error: chalk.red.bold,
 };
 
-const emit = (level: LogLevel, payload: LogPayload) => {
+/**
+ * Global logging control. Set to false to disable all logging output.
+ * Use logger.setEnabled(false) to turn off, logger.setEnabled(true) to turn on.
+ */
+let loggingEnabled = false;
+
+/**
+ * Emit a log entry. If logging is globally disabled, only emits if force is true.
+ * @param level LogLevel
+ * @param payload LogPayload
+ * @param force Optional. If true, emits even if logging is disabled (for critical errors).
+ */
+const emit = (level: LogLevel, payload: LogPayload, force = false) => {
+  if (!loggingEnabled && !force) return;
   const { meta, ...rest } = payload;
   const entry: LogEntry = {
     level,
@@ -59,8 +72,21 @@ const emit = (level: LogLevel, payload: LogPayload) => {
   }
 };
 
+/**
+ * Logger interface with global enable/disable and per-call force override.
+ *
+ * Example usage:
+ *   logger.setEnabled(false); // disables all logging
+ *   logger.error(payload, true); // logs error even if disabled
+ */
 export const logger = {
+  /** Enable or disable all logging globally */
+  setEnabled: (enabled: boolean) => {
+    loggingEnabled = enabled;
+  },
+  /** Returns current logging enabled state */
+  isEnabled: () => loggingEnabled,
   info: (payload: LogPayload) => emit('info', payload),
   warn: (payload: LogPayload) => emit('warn', payload),
-  error: (payload: LogPayload) => emit('error', payload),
+  error: (payload: LogPayload, force = true) => emit('error', payload, force),
 };
