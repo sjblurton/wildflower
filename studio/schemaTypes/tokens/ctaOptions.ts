@@ -22,7 +22,7 @@ const ctaOptions = {
   width: {
     full: {title: 'Full width', value: 'full'},
     wide: {title: 'Wide', value: 'wide'},
-    responsive: {title: 'Responsive', value: 'responsive'},
+    default: {title: 'Default', value: 'default'},
   },
   iconPosition: directionOptions,
 } as const
@@ -41,7 +41,7 @@ export const ctaDefaults = {
   style: ctaOptions.style.contained.value,
   colour: colourOptions.primary.value,
   size: ctaOptions.size.medium.value,
-  width: ctaOptions.width.responsive.value,
+  width: ctaOptions.width.default.value,
   hasIcon: false,
   iconPosition: directionOptions.left.value,
 } as const

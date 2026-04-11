@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {directionOptions} from '../tokens/directionOptions'
 
 export const productsSectionType = defineType({
   name: 'productsSection',
@@ -9,6 +10,16 @@ export const productsSectionType = defineType({
       name: 'title',
       title: 'Section title',
       type: 'string',
+    }),
+    defineField({
+      name: 'alignTitle',
+      title: 'Align title',
+      type: 'string',
+      options: {
+        list: [directionOptions.left, directionOptions.right, directionOptions.center],
+      },
+      initialValue: directionOptions.center.value,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'products',

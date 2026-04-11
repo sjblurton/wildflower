@@ -17,8 +17,6 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "stylelint": "stylelint \"src/**/*.css\"",
-    "stylelint:fix": "stylelint \"src/**/*.css\" --fix",
     "typecheck": "astro check && tsc --noEmit",
     "checkastro": "astro check"
   },
@@ -31,10 +29,6 @@
     "eslint-plugin-astro": "^1.3.1",
     "globals": "^16.0.0",
     "prettier": "^3.6.2",
-    "stylelint": "^16.26.1",
-    "stylelint-config-clean-order": "^8.0.1",
-    "stylelint-config-standard": "^39.0.1",
-    "stylelint-order": "^7.0.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.30.1",
     "vitest": "^3.2.4"
@@ -44,10 +38,10 @@
     "@sanity/client": "^7.20.0",
     "@sanity/image-url": "^2.1.1",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.1.3",
+    "astro": "^6.1.5",
+    "tailwindcss": "^4.2.2",
     "chalk": "^5.6.2",
     "daisyui": "^5.5.19",
-    "tailwindcss": "^4.2.2",
     "zod": "^4.3.6"
   }
 }

@@ -19,6 +19,7 @@ export const ctaType = defineType({
       title: 'Button label',
       type: 'string',
       description: 'Label for the CTA buttons. e.g. "Learn more" or "Buy now".',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'style',
