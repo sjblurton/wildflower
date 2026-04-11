@@ -1,14 +1,10 @@
 ---
-
 import type { ImageSection } from '../../../lib/schemas/sections/imageSection';
 import ImageSectionShow from './ImageSectionShow.astro';
 
-export type Props = ImageSection
+export type Props = ImageSection;
 
 const props = Astro.props as Props;
-
 ---
 
-<ImageSectionShow
-  {...props}
-/>
+<ImageSectionShow {...props} />

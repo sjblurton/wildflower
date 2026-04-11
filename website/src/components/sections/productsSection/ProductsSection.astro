@@ -1,16 +1,30 @@
 ---
-import  {type ProductSection } from '../../../lib/schemas/sections/productsSection';
+import { type ProductSection } from '../../../lib/schemas/sections/productsSection';
+import { getTextClassNames } from '../../../styles/text-map';
+import ProductCard from '../../ui/productCard/ProductCard.astro';
+import { fetchLinkReference } from '../../../lib/links/fetchLinkReference';
 
 export type Props = ProductSection;
 
-const { products, title } = Astro.props;
+const { products, title, alignTitle } = Astro.props;
 ---
 
-<section class="products-section">
-  {title && <h2 class="products-section__title">{title}</h2>}
-  <div>
-    {products && (
-        <pre>{JSON.stringify(products, null, 2)}</pre>)
-      || <p>No products available.</p>}
+<section class="flex justify-center overflow-hidden max-w-5xl mx-auto px-2 py-8 flex-col">
+  {
+    title && (
+      <h2
+        class={`text-3xl font-bold tracking-tight text-heading md:text-4xl lg:text-5xl mb-4 ${getTextClassNames({ align: alignTitle })}`}
+      >
+        {title}
+      </h2>
+    )
+  }
+  <div class="flex flex-wrap gap-6 justify-center items-center">
+    {
+      products &&
+        products.map((product) => (
+          <ProductCard {...product} fetchLinkReference={fetchLinkReference} />
+        ))
+    }
   </div>
 </section>

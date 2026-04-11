@@ -10,9 +10,7 @@ export async function getStaticPaths() {
   const rawSlugs = await sanityClient.fetch(pageSlugListQuery);
   const slugItems = z.array(pageSlugListItemSchema).parse(rawSlugs);
 
-  return slugItems
-    .filter(({ slug }) => slug !== 'home')
-    .map(({ slug }) => ({ params: { slug } }));
+  return slugItems.filter(({ slug }) => slug !== 'home').map(({ slug }) => ({ params: { slug } }));
 }
 
 const slugParam = Astro.params.slug;

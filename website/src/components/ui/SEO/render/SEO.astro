@@ -10,7 +10,12 @@ interface Props {
 }
 
 const { pageSlug, pathname } = Astro.props as Props;
-const meta = await loadSeoMetadata({ pageSlug, pathname, fetchSeoSettings: () => sanityClient.fetch(siteSeoQuery), fetchPageSeoDocument: (slug: string) => sanityClient.fetch(pageSeoBySlugQuery, { slug }) });
+const meta = await loadSeoMetadata({
+  pageSlug,
+  pathname,
+  fetchSeoSettings: () => sanityClient.fetch(siteSeoQuery),
+  fetchPageSeoDocument: (slug: string) => sanityClient.fetch(pageSeoBySlugQuery, { slug }),
+});
 ---
 
 <SeoShow {...meta} />

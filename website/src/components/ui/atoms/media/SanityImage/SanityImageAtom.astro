@@ -1,18 +1,18 @@
 ---
-import type { SanityImage } from '../../../../../lib/schemas/shared/primitives'
-import { buildSanityImageRenderData } from './sanityImage.logic'
+import type { SanityImage } from '../../../../../lib/schemas/shared/primitives';
+import { buildSanityImageRenderData } from './sanityImage.logic';
 
 interface Props {
-  image?: SanityImage
-  alt?: string
-  class?: string
-  width?: number
-  height?: number
-  sizes?: string
-  quality?: number
-  loading?: 'lazy' | 'eager'
-  decoding?: 'async' | 'sync' | 'auto'
-  fetchpriority?: 'high' | 'low' | 'auto'
+  image?: SanityImage;
+  alt?: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  sizes?: string;
+  quality?: number;
+  loading?: 'lazy' | 'eager';
+  decoding?: 'async' | 'sync' | 'auto';
+  fetchpriority?: 'high' | 'low' | 'auto';
 }
 
 const {
@@ -26,7 +26,7 @@ const {
   loading = 'lazy',
   decoding = 'async',
   fetchpriority,
-} = Astro.props
+} = Astro.props;
 
 const {
   src,
@@ -40,18 +40,20 @@ const {
   height,
   sizes,
   quality,
-})
+});
 ---
 
-{src && (
-  <img
-    src={src}
-    srcset={srcSet}
-    sizes={resolvedSizes}
-    alt={altText}
-    class={className}
-    loading={loading}
-    decoding={decoding}
-    fetchpriority={fetchpriority}
-  />
-)}
+{
+  src && (
+    <img
+      src={src}
+      srcset={srcSet}
+      sizes={resolvedSizes}
+      alt={altText}
+      class={className}
+      loading={loading}
+      decoding={decoding}
+      fetchpriority={fetchpriority}
+    />
+  )
+}

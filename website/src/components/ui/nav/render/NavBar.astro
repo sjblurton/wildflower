@@ -1,13 +1,13 @@
 ---
-import { sanityClient } from '../../../../lib/cms/sanity'
-import { loadNavSettings } from '../logic/nav.logic'
-import { navSettingsQuery } from '../data/nav.query'
-import NavBarView from './NavBarView.astro'
+import { sanityClient } from '../../../../lib/cms/sanity';
+import { loadNavSettings } from '../logic/nav.logic';
+import { navSettingsQuery } from '../data/nav.query';
+import NavBarView from './NavBarView.astro';
 
 const nav = await loadNavSettings({
-	fetchNavSettings: () => sanityClient.fetch(navSettingsQuery),
-	queryName: 'navSettingsQuery',
-})
+  fetchNavSettings: () => sanityClient.fetch(navSettingsQuery),
+  queryName: 'navSettingsQuery',
+});
 ---
 
 <NavBarView nav={nav} />

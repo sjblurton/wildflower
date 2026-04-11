@@ -1,53 +1,57 @@
 ---
-import LogoLink from '../../atoms/LogoLink/LogoLink.astro'
-import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro'
-import type { NavSettings } from '../data/nav.schema'
+import LogoLink from '../../atoms/LogoLink/LogoLink.astro';
+import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro';
+import type { NavSettings } from '../data/nav.schema';
 
 interface Props {
-  nav: NavSettings
+  nav: NavSettings;
 }
 
-const {nav} = Astro.props
+const { nav } = Astro.props;
 const links = Array.isArray(nav?.navLinks)
   ? nav.navLinks.filter((link) => link?.label?.trim() && link?.slug?.trim())
-  : []
-const siteName = nav?.navSiteName?.trim() || null
-const hasLogo = Boolean(nav?.navLogo?.asset?._ref)
-const hasLogoAlt = Boolean(nav?.navLogo?.alt?.trim())
-const hasSiteName = Boolean(siteName)
-const showFallbackName = !hasLogo && !hasSiteName
+  : [];
+const siteName = nav?.navSiteName?.trim() || null;
+const hasLogo = Boolean(nav?.navLogo?.asset?._ref);
+const hasLogoAlt = Boolean(nav?.navLogo?.alt?.trim());
+const hasSiteName = Boolean(siteName);
+const showFallbackName = !hasLogo && !hasSiteName;
 ---
 
 <nav class={`navbar border-b bg-base-200 border-base-300 px-4`}>
   <div class="max-w-6xl flex flex-direction-row items-center justify-between w-full mx-auto">
     <div class="navbar-start gap-3">
-      {showFallbackName ? (
-        <LogoLink href="/" />
-      ) : (
-        <a href="/" class="font-semibold text-lg flex items-center gap-2">
-          {hasLogo && (
-            <SanityImage
-              image={nav.navLogo}
-              alt={hasLogoAlt ? nav.navLogo?.alt : siteName ?? 'Wildflower'}
-              class="h-8 w-auto"
-              width={120}
-            />
-          )}
-          {hasSiteName && <span>{siteName}</span>}
-        </a>
-      )}
+      {
+        showFallbackName ? (
+          <LogoLink href="/" />
+        ) : (
+          <a href="/" class="font-semibold text-lg flex items-center gap-2">
+            {hasLogo && (
+              <SanityImage
+                image={nav.navLogo}
+                alt={hasLogoAlt ? nav.navLogo?.alt : (siteName ?? 'Wildflower')}
+                class="h-8 w-auto"
+                width={120}
+              />
+            )}
+            {hasSiteName && <span>{siteName}</span>}
+          </a>
+        )
+      }
     </div>
 
     <div class="navbar-end">
       <ul class="menu menu-horizontal px-1 gap-1">
-        {links.map((link) => {
-          const href = link.slug
-          return (
-            <li>
-              <a href={href}>{link.label}</a>
-            </li>
-          )
-        })}
+        {
+          links.map((link) => {
+            const href = link.slug;
+            return (
+              <li>
+                <a href={href}>{link.label}</a>
+              </li>
+            );
+          })
+        }
       </ul>
     </div>
   </div>

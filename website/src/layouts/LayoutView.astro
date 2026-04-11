@@ -1,36 +1,33 @@
 ---
-import '../styles/global.css'
-import Footer from '../components/ui/footer/render/Footer.astro'
-import NavBar from '../components/ui/nav/render/NavBar.astro'
-import SEO from '../components/ui/SEO/render/SEO.astro'
-import type { DaisyTheme } from '../lib/schemas/shared/primitives'
+import '../styles/global.css';
+import Footer from '../components/ui/footer/render/Footer.astro';
+import NavBar from '../components/ui/nav/render/NavBar.astro';
+import SEO from '../components/ui/SEO/render/SEO.astro';
+import type { DaisyTheme } from '../lib/schemas/shared/primitives';
 
-interface Props  {
-  activeTheme: DaisyTheme
-	pageSlug?: string
-	pathname: string
+interface Props {
+  activeTheme: DaisyTheme;
+  pageSlug?: string;
+  pathname: string;
 }
 
-const {activeTheme, pageSlug, pathname} = Astro.props as Props
+const { activeTheme, pageSlug, pathname } = Astro.props as Props;
 ---
 
 <!doctype html>
 <html lang="en" data-theme={activeTheme}>
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<SEO pageSlug={pageSlug} pathname={pathname} />
-	</head>
-	<body class="min-h-screen flex flex-col bg-base-100 text-base-content">
-		<NavBar />
-		<main class="flex-1">
-			<slot />
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <SEO pageSlug={pageSlug} pathname={pathname} />
+  </head>
+  <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
+    <NavBar />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>
-
-
-

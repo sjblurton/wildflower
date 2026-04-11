@@ -1,20 +1,19 @@
 ---
-
-import type { DaisyTheme } from '../lib/schemas/shared/primitives'
-import { sanityClient } from 'sanity:client'
-import { siteThemeQuery } from './siteTheme.query'
-import { siteThemeSchema } from './siteTheme.schema'
-import LayoutView from './LayoutView.astro'
+import type { DaisyTheme } from '../lib/schemas/shared/primitives';
+import { sanityClient } from 'sanity:client';
+import { siteThemeQuery } from './siteTheme.query';
+import { siteThemeSchema } from './siteTheme.schema';
+import LayoutView from './LayoutView.astro';
 
 interface Props {
-	pageSlug?: string
+  pageSlug?: string;
 }
 
-const { pageSlug } = Astro.props as Props
-const siteSettings = await siteThemeSchema.parseAsync(await sanityClient.fetch(siteThemeQuery))
-const activeTheme: DaisyTheme = siteSettings.theme
+const { pageSlug } = Astro.props as Props;
+const siteSettings = await siteThemeSchema.parseAsync(await sanityClient.fetch(siteThemeQuery));
+const activeTheme: DaisyTheme = siteSettings.theme;
 ---
 
 <LayoutView activeTheme={activeTheme} pageSlug={pageSlug} pathname={Astro.url.pathname}>
-	<slot />
+  <slot />
 </LayoutView>

@@ -9,26 +9,25 @@ interface Props {
 const { page } = Astro.props;
 ---
 
-{page.content && page.content.length > 0 ? (
-  <>
-    {
-    page.content.map((section) => {
-      const Section = getSectionComponent(section);
-      // @ts-expect-error - I'll come back to this error later, it's related to the dynamic nature of the sections and how I'm passing props to them.
-      return Section ? <Section.Component {...Section.props}  /> : null;
-    })}
-  </>
-) : (
-  <section class="max-w-4xl mx-auto py-20 px-4">
-    <div class="card bg-base-200 shadow-sm border border-base-300">
-      <div class="card-body">
-        <h1 class="card-title text-3xl">{page.title}</h1>
-        <p class="text-base-content/60 text-sm">
-          {page.slug === 'home' ? '/' : `/${page.slug}`}
-        </p>
-        <h1>Welcome to {page.title}</h1>
-        <p>Page content coming soon.</p>
+{
+  page.content && page.content.length > 0 ? (
+    <>
+      {page.content.map((section) => {
+        const Section = getSectionComponent(section);
+        // @ts-expect-error - I'll come back to this error later, it's related to the dynamic nature of the sections and how I'm passing props to them.
+        return Section ? <Section.Component {...Section.props} /> : null;
+      })}
+    </>
+  ) : (
+    <section class="max-w-4xl mx-auto py-20 px-4">
+      <div class="card bg-base-200 shadow-sm border border-base-300">
+        <div class="card-body">
+          <h1 class="card-title text-3xl">{page.title}</h1>
+          <p class="text-base-content/60 text-sm">{page.slug === 'home' ? '/' : `/${page.slug}`}</p>
+          <h1>Welcome to {page.title}</h1>
+          <p>Page content coming soon.</p>
+        </div>
       </div>
-    </div>
-  </section>
-)}
+    </section>
+  )
+}

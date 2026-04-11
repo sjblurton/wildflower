@@ -1,73 +1,91 @@
 ---
-import type { FooterSettings } from '../data/footer.schema'
-import { getContactHref, getIconForContactLink, getLabelForContactLink } from '../../../../lib/links/contact-links'
-import './footer.css'
-import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro'
-import LogoLink from '../../atoms/LogoLink/LogoLink.astro'
-import { mapFooterItemToContactLink } from '../logic/footer.load.utils'
+import type { FooterSettings } from '../data/footer.schema';
+import {
+  getContactHref,
+  getIconForContactLink,
+  getLabelForContactLink,
+} from '../../../../lib/links/contact-links';
+import './footer.css';
+import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro';
+import LogoLink from '../../atoms/LogoLink/LogoLink.astro';
+import { mapFooterItemToContactLink } from '../logic/footer.load.utils';
 
 interface Props {
-  footer: FooterSettings
+  footer: FooterSettings;
 }
 
-const {footer} = Astro.props
-const hasLogo = Boolean(footer.footerLogo?.asset?._ref)
-const hasSiteName = Boolean(footer.footerSiteName)
-const hasCopyright = Boolean(footer.footerCopyrightText)
-const hasNavLinks = footer.footerNavLinks.length > 0
-const hasContactLinks = footer.footerContactLinks.length > 0
+const { footer } = Astro.props;
+const hasLogo = Boolean(footer.footerLogo?.asset?._ref);
+const hasSiteName = Boolean(footer.footerSiteName);
+const hasCopyright = Boolean(footer.footerCopyrightText);
+const hasNavLinks = footer.footerNavLinks.length > 0;
+const hasContactLinks = footer.footerContactLinks.length > 0;
 ---
 
-<footer class=`border-t bg-base-200 border-base-300 mt-16` >
+<footer class=`border-t bg-base-200 border-base-300 mt-16`>
   <div class="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
     <section>
-      {hasLogo ? (
-        <a href="/">
-          <SanityImage
-            image={footer.footerLogo}
-            alt={footer.footerLogo?.alt || footer.footerSiteName || 'Wildflower'}
-            class="h-10 w-auto mb-4"
-            width={150}
-          />
-        </a>
-      ) : (
-        <LogoLink href='/' />
-      )}
+      {
+        hasLogo ? (
+          <a href="/">
+            <SanityImage
+              image={footer.footerLogo}
+              alt={footer.footerLogo?.alt || footer.footerSiteName || 'Wildflower'}
+              class="h-10 w-auto mb-4"
+              width={150}
+            />
+          </a>
+        ) : (
+          <LogoLink href="/" />
+        )
+      }
       {hasSiteName && <h2 class="font-semibold text-lg">{footer.footerSiteName}</h2>}
       {hasCopyright && <p class="text-sm opacity-80 mt-2">{footer.footerCopyrightText}</p>}
     </section>
 
-    {hasNavLinks && (
-      <section>
-        <h3 class="font-medium mb-3">Pages</h3>
-        <ul class="space-y-2 text-sm">
-          {footer.footerNavLinks.map((item) => (
-            <li>
-              <a href={item.slug} class="link link-hover">{item.label}</a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+    {
+      hasNavLinks && (
+        <section>
+          <h3 class="font-medium mb-3">Pages</h3>
+          <ul class="space-y-2 text-sm">
+            {footer.footerNavLinks.map((item) => (
+              <li>
+                <a href={item.slug} class="link link-hover">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
-    {hasContactLinks && (
-      <section>
-        <h3 class="font-medium mb-3">Connect</h3>
-        <ul class="space-y-2 text-sm">
-          {footer.footerContactLinks.map((item) => (
-            <li>
-              <a
-                href={getContactHref(mapFooterItemToContactLink(item))}
-                class="link link-hover inline-flex items-center gap-2"
-                aria-label={getLabelForContactLink(mapFooterItemToContactLink(item))}
-              >
-                {<span class="footer-icon" aria-hidden="true" set:html={getIconForContactLink(mapFooterItemToContactLink(item))} />}
-                {getLabelForContactLink(mapFooterItemToContactLink(item))}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )}
+    {
+      hasContactLinks && (
+        <section>
+          <h3 class="font-medium mb-3">Connect</h3>
+          <ul class="space-y-2 text-sm">
+            {footer.footerContactLinks.map((item) => (
+              <li>
+                <a
+                  href={getContactHref(mapFooterItemToContactLink(item))}
+                  class="link link-hover inline-flex items-center gap-2"
+                  aria-label={getLabelForContactLink(mapFooterItemToContactLink(item))}
+                >
+                  {
+                    <span
+                      class="footer-icon"
+                      aria-hidden="true"
+                      set:html={getIconForContactLink(mapFooterItemToContactLink(item))}
+                    />
+                  }
+                  {getLabelForContactLink(mapFooterItemToContactLink(item))}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </div>
 </footer>

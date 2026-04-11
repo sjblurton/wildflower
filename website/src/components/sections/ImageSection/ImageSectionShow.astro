@@ -6,34 +6,37 @@ import { BG_CLASS_MAPS } from '../../../styles/bg-maps';
 
 export type Props = ImageSection;
 
-const { image, overlayTitle,  overlayOpacity } = Astro.props as Props;
-const logic = getImageSectionLogic({ image,  overlayOpacity });
+const { image, overlayTitle, overlayOpacity } = Astro.props as Props;
+const logic = getImageSectionLogic({ image, overlayOpacity });
 ---
+
 <section class="relative flex items-center justify-center overflow-hidden min-h-75">
-  {image?.asset ? (
-    logic.isTestImage ? (
-      <img src={typeof image.asset === 'string' ? image.asset : ''} alt={image.alt} class="w-full h-auto block" />
+  {
+    image?.asset ? (
+      logic.isTestImage ? (
+        <img
+          src={typeof image.asset === 'string' ? image.asset : ''}
+          alt={image.alt}
+          class="w-full h-auto block"
+        />
+      ) : (
+        <SanityImage image={image} class="w-full h-auto block" loading="lazy" decoding="async" />
+      )
     ) : (
-      <SanityImage
-        image={image}
-        class="w-full h-auto block"
-        loading="lazy"
-        decoding="async"
-      />
+      <div class="w-full h-auto block">Image unavailable</div>
     )
-  ) : (
-    <div class="w-full h-auto block">Image unavailable</div>
-  )}
-  {overlayTitle && (<>
-  <div
-    class={`absolute inset-0 pointer-events-none transition-colors duration-200 ${BG_CLASS_MAPS.OPACITY[logic.tailwindOpacity]}`}
-    aria-hidden="true"
-  />
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 text-center text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">
-      {overlayTitle}
-    </div>
-
-  </>
-  )}
-
+  }
+  {
+    overlayTitle && (
+      <>
+        <div
+          class={`absolute inset-0 pointer-events-none transition-colors duration-200 ${BG_CLASS_MAPS.OPACITY[logic.tailwindOpacity]}`}
+          aria-hidden="true"
+        />
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 text-center text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">
+          {overlayTitle}
+        </div>
+      </>
+    )
+  }
 </section>
