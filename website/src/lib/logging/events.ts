@@ -1,4 +1,4 @@
-export const LogEvents = {
+export const LOG_EVENTS = {
   nav: {
     navLoaded: 'nav.nav_loaded',
     fetchFailed: 'nav.fetch_failed',
@@ -32,11 +32,20 @@ export const LogEvents = {
     pageDocumentParseFailed: 'seo.page_document_parse_failed',
     fallbackApplied: 'seo.fallback_applied',
   },
+  cta: {
+    linkValidationFailed: 'cta.link_validation_failed',
+    linkFetchFailed: 'cta.link_fetch_failed',
+  },
+  dev: {
+    testEvent: 'DEV_TEST_EVENT',
+  },
 } as const;
 
 export type LogEvent =
-  | (typeof LogEvents.nav)[keyof typeof LogEvents.nav]
-  | (typeof LogEvents.footer)[keyof typeof LogEvents.footer]
-  | (typeof LogEvents.section)[keyof typeof LogEvents.section]
-  | (typeof LogEvents.page)[keyof typeof LogEvents.page]
-  | (typeof LogEvents.seo)[keyof typeof LogEvents.seo];
+  | (typeof LOG_EVENTS.nav)[keyof typeof LOG_EVENTS.nav]
+  | (typeof LOG_EVENTS.footer)[keyof typeof LOG_EVENTS.footer]
+  | (typeof LOG_EVENTS.section)[keyof typeof LOG_EVENTS.section]
+  | (typeof LOG_EVENTS.page)[keyof typeof LOG_EVENTS.page]
+  | (typeof LOG_EVENTS.seo)[keyof typeof LOG_EVENTS.seo]
+  | (typeof LOG_EVENTS.cta)[keyof typeof LOG_EVENTS.cta]
+  | (typeof LOG_EVENTS.dev)[keyof typeof LOG_EVENTS.dev];
