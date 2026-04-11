@@ -26,11 +26,12 @@ export const sanityImageSchema = z.object({
   asset: sanityAssetRefSchema,
 });
 
-export const referanceTypeSchema = z.object({
+export const linkReferenceTypeSchema = z.object({
   _ref: z.string().min(1),
-  _type: z.string().min(1),
+  _type: z.enum(['contactLinkReference', 'pageLinkReference']),
   _key: z.string().min(1),
 });
 
+export type LinkReferenceType = z.infer<typeof linkReferenceTypeSchema>;
 export type SanityImage = z.infer<typeof sanityImageSchema>;
 export type DaisyTheme = z.infer<typeof daisyThemeSchema>;
