@@ -3,6 +3,7 @@ import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import ProductCardView from './ProductCardView.astro';
 import type { ProductCardViewProps } from './ProductCardView.astro';
 import type { MappedProductCardIcon, ProductCardButton } from '../logic/ProductCard.logic';
+import type { AstroComponentFactory } from 'astro/runtime/server/render/astro/index.js';
 
 const sanityImageMock = {
   alt: 'test alt',
@@ -45,11 +46,13 @@ const iconPositions = ['left', 'right', undefined];
 
 const nullish = [null, undefined, ''];
 
+const ProductCardComponent = ProductCardView as unknown as AstroComponentFactory;
+
 for (const icon of iconTypes) {
   for (const iconPosition of iconPositions) {
     it(`renders with icon type=${icon?._type ?? 'undefined'} and position=${iconPosition ?? 'undefined'}`, async () => {
       const container = await AstroContainer.create();
-      const html = await container.renderToString(ProductCardView, {
+      const html = await container.renderToString(ProductCardComponent, {
         props: {
           ...minimalProps,
           icon,
@@ -68,7 +71,7 @@ for (const icon of iconTypes) {
 describe('ProductCardView', () => {
   it('renders with minimal props', async () => {
     const container = await AstroContainer.create();
-    const html = await container.renderToString(ProductCardView, { props: minimalProps });
+    const html = await container.renderToString(ProductCardComponent, { props: minimalProps });
     expect(html).toContain('Test Product');
     expect(html).toContain('A product description');
     expect(html).toContain('data-testid="sanity-image-product-card"');
@@ -76,14 +79,14 @@ describe('ProductCardView', () => {
 
   it('renders with all props', async () => {
     const container = await AstroContainer.create();
-    const html = await container.renderToString(ProductCardView, { props: allProps });
+    const html = await container.renderToString(ProductCardComponent, { props: allProps });
     expect(html).toContain('data-testid="product-card-internal-icon"');
     expect(html).toContain('Buy');
   });
 
   it('renders with no buttons', async () => {
     const container = await AstroContainer.create();
-    const html = await container.renderToString(ProductCardView, {
+    const html = await container.renderToString(ProductCardComponent, {
       props: { ...minimalProps, buttons: [] },
     });
     // No <button> or <a> with role="button" or role="link"
@@ -93,7 +96,7 @@ describe('ProductCardView', () => {
 
   it('renders with one button', async () => {
     const container = await AstroContainer.create();
-    const html = await container.renderToString(ProductCardView, {
+    const html = await container.renderToString(ProductCardComponent, {
       props: { ...minimalProps, buttons: [{ label: 'Buy', href: '/buy', style: 'primary' }] },
     });
     expect(html).toContain('Buy');
@@ -116,7 +119,7 @@ describe('ProductCardView', () => {
       ...minimalProps,
       cta: [{ _key: 'cta1', label: 'Learn more', buttons }],
     } satisfies ProductCardViewProps;
-    const html = await container.renderToString(ProductCardView, {
+    const html = await container.renderToString(ProductCardComponent, {
       props,
     });
     expect(html).toContain('Buy');
@@ -126,7 +129,7 @@ describe('ProductCardView', () => {
   it('handles null/empty/invalid props gracefully', async () => {
     for (const val of nullish) {
       const container = await AstroContainer.create();
-      const html = await container.renderToString(ProductCardView, {
+      const html = await container.renderToString(ProductCardComponent, {
         props: {
           title: val,
           description: val,
@@ -141,7 +144,7 @@ describe('ProductCardView', () => {
 
   it('meets accessibility requirements', async () => {
     const container = await AstroContainer.create();
-    const html = await container.renderToString(ProductCardView, { props: allProps });
+    const html = await container.renderToString(ProductCardComponent, { props: allProps });
     expect(html).toMatch(/<h[1-6][^>]*>\s*Test Product\s*<\/h[1-6]>/);
     expect(html).toContain('data-testid="sanity-image-product-card"');
     expect(html).toContain('Buy');
