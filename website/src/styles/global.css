@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-
 @plugin "daisyui" {
   themes:
     lofi --default,
@@ -28,7 +27,7 @@ body {
   fill: none;
 }
 
-.global-icon :is(path, circle, ellipse, polygon) {
+.global-icon-colour :is(path, circle, ellipse, polygon) {
   fill: currentcolor;
   stroke: currentcolor;
 }
