@@ -29,8 +29,6 @@
     "format:staged": "lint-staged",
     "typecheck": "npm --prefix website run typecheck && npm --prefix studio run typecheck",
     "astrocheck": "npm --prefix website run checkastro",
-    "stylelint": "npm --prefix website run stylelint",
-    "stylelint:fix": "npm --prefix website run stylelint:fix",
     "precommit:checks": "npm run lint && npm run typecheck && npm run stylelint && npm run astrocheck",
     "precommit:fixes": "npm run format:staged"
   },
@@ -47,8 +45,7 @@
       "sh -c 'npm --prefix studio run lint:fix'"
     ],
     "website/src/**/*.css": [
-      "prettier --write --ignore-unknown",
-      "sh -c 'npm --prefix website run stylelint:fix'"
+      "prettier --write --ignore-unknown"
     ]
   }
 }
