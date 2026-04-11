@@ -71,8 +71,8 @@ describe('Footer', () => {
     expect(fetchMock).toHaveBeenCalledWith(footerSettingsQuery);
     expect(html).toContain('href="/"');
     expect(html).toContain('href="/contact"');
-    expect(html).toContain('>Home<');
-    expect(html).toContain('>Contact<');
+    expect(html).toMatch(/>\s*Home\s*</);
+    expect(html).toMatch(/>\s*Contact\s*</);
     expect(html).not.toContain('Connect');
   });
 });
