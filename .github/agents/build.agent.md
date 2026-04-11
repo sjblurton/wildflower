@@ -1,6 +1,6 @@
 ---
 description: "Use when implementing an approved vertical slice, translating architecture decisions into code without scope creep, and preparing work for testing."
-tools: [read, search, edit]
+tools: [read, search, edit, execute]
 user-invocable: true
 agents: []
 ---
