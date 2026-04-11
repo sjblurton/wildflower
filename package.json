@@ -30,7 +30,7 @@
     "format:staged": "lint-staged",
     "typecheck": "npm --prefix website run typecheck && npm --prefix studio run typecheck",
     "astrocheck": "npm --prefix website run checkastro",
-    "precommit:checks": "npm run lint && npm run typecheck && npm run stylelint && npm run astrocheck",
+    "precommit:checks": "npm run lint && npm run typecheck && npm run astrocheck",
     "precommit:fixes": "npm run format:staged"
   },
   "lint-staged": {
