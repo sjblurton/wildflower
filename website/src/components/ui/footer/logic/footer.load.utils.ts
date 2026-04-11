@@ -1,8 +1,9 @@
 import { isRecord } from '../../../../lib/primitives/guards';
 import { normaliseSlug, toTrimmedString } from '../../../../lib/primitives/strings';
-import { contactTypeSchema } from '../../../../lib/schemas/links/contactLinks';
+import { footerContactTypeSchema, type FooterContactLink } from './footerContactLinks.schema';
 import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
 import type { FooterSettings } from '../data/footer.schema';
+import type { ContactLink } from '../../../../lib/links/contact-links.interface';
 
 export const FALLBACK_FOOTER_LINKS: FooterSettings['footerNavLinks'] = [
   {
@@ -49,7 +50,7 @@ const normaliseContactLinks = (value: unknown): FooterSettings['footerContactLin
 
   return value
     .map((entry) => {
-      const parseResult = contactTypeSchema.safeParse(entry);
+      const parseResult = footerContactTypeSchema.safeParse(entry);
       return parseResult.success ? parseResult.data : null;
     })
     .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
@@ -98,4 +99,49 @@ export const normaliseInvalidFooter = (value: unknown): FooterSettings => {
     footerCopyrightText: toTrimmedString(value.footerCopyrightText),
     title: toTrimmedString(value.title),
   });
+};
+
+export const mapFooterItemToContactLink = (item: FooterContactLink): ContactLink => {
+  switch (item.type) {
+    case 'whatsapp':
+      return {
+        _key: item._key,
+        type: 'whatsapp',
+        title: item.title,
+        value: item.phoneNumber,
+        prefillMessage: item.prefillMessage,
+      };
+    case 'email':
+      return {
+        _key: item._key,
+        type: 'email',
+        title: item.title,
+        value: item.emailAddress,
+        subject: item.subject,
+        body: item.body,
+      };
+    case 'tiktok':
+      return {
+        _key: item._key,
+        type: 'tiktok',
+        title: item.title,
+        value: item.url,
+      };
+    case 'instagram':
+      return {
+        _key: item._key,
+        type: 'instagram',
+        title: item.title,
+        value: item.url,
+      };
+    case 'phone':
+      return {
+        _key: item._key,
+        type: 'phone',
+        title: item.title,
+        value: item.phoneNumber,
+      };
+    default:
+      throw new Error(`Unsupported contact link type`);
+  }
 };

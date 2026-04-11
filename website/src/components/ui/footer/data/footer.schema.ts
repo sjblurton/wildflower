@@ -1,12 +1,12 @@
 import z from 'zod';
-import { contactTypeSchema } from '../../../../lib/schemas/links/contactLinks';
+import { footerContactTypeSchema } from '../logic/footerContactLinks.schema';
 import { navLinkSchema } from '../../../../lib/schemas/links/navLink';
 import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
 
 export const footerSettingsSchema = z.object({
   _id: z.string(),
   _type: z.literal('footerSettings'),
-  footerContactLinks: contactTypeSchema.array(),
+  footerContactLinks: footerContactTypeSchema.array(),
   footerCopyrightText: z.string().optional(),
   footerLogo: sanityImageSchema.nullable().optional(),
   footerNavLinks: navLinkSchema.array(),

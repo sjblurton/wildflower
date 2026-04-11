@@ -1,9 +1,10 @@
 ---
 import type { FooterSettings } from '../data/footer.schema'
-import { getContactHref, getIconForContactLink, getLabelForContactLink } from '../logic/footer.contact-links'
+import { getContactHref, getIconForContactLink, getLabelForContactLink } from '../../../../lib/links/contact-links'
 import './footer.css'
 import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro'
 import LogoLink from '../../atoms/LogoLink/LogoLink.astro'
+import { mapFooterItemToContactLink } from '../logic/footer.load.utils'
 
 interface Props {
   footer: FooterSettings
@@ -56,12 +57,12 @@ const hasContactLinks = footer.footerContactLinks.length > 0
           {footer.footerContactLinks.map((item) => (
             <li>
               <a
-                href={getContactHref(item)}
+                href={getContactHref(mapFooterItemToContactLink(item))}
                 class="link link-hover inline-flex items-center gap-2"
-                aria-label={getLabelForContactLink(item)}
+                aria-label={getLabelForContactLink(mapFooterItemToContactLink(item))}
               >
-                {<span class="footer-icon" aria-hidden="true" set:html={getIconForContactLink(item)} />}
-                {getLabelForContactLink(item)}
+                {<span class="footer-icon" aria-hidden="true" set:html={getIconForContactLink(mapFooterItemToContactLink(item))} />}
+                {getLabelForContactLink(mapFooterItemToContactLink(item))}
               </a>
             </li>
           ))}

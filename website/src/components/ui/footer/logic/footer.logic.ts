@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { LogEvents } from '../../../../lib/logging/events';
+import { LOG_EVENTS } from '../../../../lib/logging/events';
 import { logger, summarisePayload, type LogPayload } from '../../../../lib/logging/logger';
 import { footerSettingsSchema, type FooterSettings } from '../data/footer.schema';
 import { buildFallbackFooter, normaliseInvalidFooter } from './footer.load.utils';
@@ -26,7 +26,7 @@ export const loadFooterSettings = async ({
     rawPayload = await fetchFooterSettings();
   } catch (error) {
     log.error({
-      event: LogEvents.footer.fetchFailed,
+      event: LOG_EVENTS.footer.fetchFailed,
       area: 'footer',
       message: 'Failed to fetch footer settings from Sanity; using fallback footer settings.',
       meta: {
@@ -41,7 +41,7 @@ export const loadFooterSettings = async ({
     const fallback = buildFallbackFooter();
 
     log.warn({
-      event: LogEvents.footer.fallbackApplied,
+      event: LOG_EVENTS.footer.fallbackApplied,
       area: 'footer',
       message: 'Applied fallback footer settings due to fetch failure.',
       meta: { reason: 'fetch_failed', queryName },
@@ -54,7 +54,7 @@ export const loadFooterSettings = async ({
 
   if (parseResult.success) {
     logger.info({
-      event: LogEvents.footer.footerLoaded,
+      event: LOG_EVENTS.footer.footerLoaded,
       area: 'footer',
       message: 'Footer settings loaded and validated successfully.',
     });
@@ -64,7 +64,7 @@ export const loadFooterSettings = async ({
   const fallback = normaliseInvalidFooter(rawPayload);
 
   log.warn({
-    event: LogEvents.footer.validationFailed,
+    event: LOG_EVENTS.footer.validationFailed,
     area: 'footer',
     message: 'Footer settings validation failed; using fallback-safe footer settings.',
     meta: {
@@ -80,7 +80,7 @@ export const loadFooterSettings = async ({
   });
 
   log.warn({
-    event: LogEvents.footer.fallbackApplied,
+    event: LOG_EVENTS.footer.fallbackApplied,
     area: 'footer',
     message: 'Applied fallback-safe footer settings after validation failure.',
     meta: { reason: 'validation_failed', queryName },
