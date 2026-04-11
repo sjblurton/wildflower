@@ -1,9 +1,9 @@
-import type { CtaButton } from '../../../lib/schemas/buttons/ctaButtonSchema';
-import { getBtnClassNames } from '../../../styles/btn-maps';
-import { mapLinkReferences } from './logic/mapLinkReferences';
-import type { SanityImage } from '../../../lib/schemas/shared/primitives';
-import type { ContactLinkReference } from '../../../lib/links/contact-links.schema';
-import type { NavLinkSlug } from '../../../lib/schemas/links/navLink';
+import type { CtaButton } from '../../../../lib/schemas/buttons/ctaButtonSchema';
+import { getBtnClassNames } from '../../../../styles/btn-maps';
+import { mapLinkReferences } from './mapLinkReferences';
+import type { SanityImage } from '../../../../lib/schemas/shared/primitives';
+import type { ContactLinkReference } from '../../../../lib/links/contact-links.schema';
+import type { NavLinkSlug } from '../../../../lib/schemas/links/navLink';
 
 type MappedIcon =
   | {

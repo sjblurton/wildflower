@@ -1,6 +1,6 @@
 ---
 description: "Use when designing and validating tests for changed behaviour, coverage requirements, and justified test exceptions before review."
-tools: [read, search, todo]
+tools: [read, search, todo, execute]
 user-invocable: true
 agents: []
 ---

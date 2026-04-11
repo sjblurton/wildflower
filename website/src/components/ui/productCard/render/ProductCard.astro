@@ -1,9 +1,9 @@
 ---
-import type { ContactLinkReference } from '../../../lib/links/contact-links.schema';
-import type { ProductCard } from '../../../lib/schemas/cards/productCard';
-import { getCtaProps } from './ProductCard.logic';
+import type { ContactLinkReference } from '../../../../lib/links/contact-links.schema';
+import type { ProductCard } from '../../../../lib/schemas/cards/productCard';
+import { getCtaProps } from '../logic/ProductCard.logic';
 import ProductCardView from './ProductCardView.astro';
-import type { NavLinkSlug } from '../../../lib/schemas/links/navLink';
+import type { NavLinkSlug } from '../../../../lib/schemas/links/navLink';
 
 export interface ProductCardProps extends ProductCard {
   fetchLinkReference: {
