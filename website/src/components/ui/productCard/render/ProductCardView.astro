@@ -3,19 +3,20 @@ import type { SanityImage as SanityImageType } from '../../../../lib/schemas/sha
 import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro';
 import type { CtaProps } from '../logic/ProductCard.logic';
 
-type Props = {
+export type ProductCardViewProps = {
   description: string;
   title: string;
   image?: SanityImageType | null;
-  buttons: CtaProps[] | null;
+  cta: CtaProps[] | null;
 };
 
-const { description, title, image, buttons }: Props = Astro.props;
+const { description, title, image, cta } = Astro.props as ProductCardViewProps;
 ---
 
 <div class="card bg-base-100 w-80 shadow-sm">
   <figure>
     <SanityImage
+      data-testid="sanity-image-product-card"
       image={image}
       class="w-80 block h-56 object-cover"
       loading="lazy"
@@ -27,14 +28,21 @@ const { description, title, image, buttons }: Props = Astro.props;
     <p>{description}</p>
     <div class="card-actions justify-end">
       {
-        buttons &&
-          buttons.map(({ buttons }) =>
+        cta &&
+          cta.map(({ buttons }) =>
             buttons.map(({ label, url, class: className, icon, iconPosition }) => {
               if (icon?._type === 'image') {
-                icon = <SanityImage image={icon} class="w-4 h-4 inline-block mr-1" />;
+                icon = (
+                  <SanityImage
+                    data-testid="sanity-image-product-card-icon"
+                    image={icon}
+                    class="w-4 h-4 inline-block mr-1"
+                  />
+                );
               } else if (icon?._type === 'internal') {
                 icon = (
                   <span
+                    data-testid="product-card-internal-icon"
                     class={`global-icon-colour w-4 h-4 inline-block mr-1`}
                     set:html={icon.link}
                   />

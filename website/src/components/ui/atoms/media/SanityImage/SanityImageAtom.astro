@@ -26,6 +26,7 @@ const {
   loading = 'lazy',
   decoding = 'async',
   fetchpriority,
+  ...rest
 } = Astro.props;
 
 const {
@@ -54,6 +55,7 @@ const {
       loading={loading}
       decoding={decoding}
       fetchpriority={fetchpriority}
+      {...rest}
     />
   )
 }

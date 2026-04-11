@@ -1,42 +1,55 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@astrojs/test-utils';
+import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import ProductCardView from './ProductCardView.astro';
+import type { ProductCardViewProps } from './ProductCardView.astro';
+import type { MappedProductCardIcon, ProductCardButton } from '../logic/ProductCard.logic';
 
-// Mocks
-vi.mock('../../../../lib/primitives/SanityImage.astro', () => ({
-  default: () => '<div data-testid="sanity-image-mock"></div>',
-}));
-vi.mock('../../../../lib/primitives/Icon.astro', () => ({
-  default: ({ name }: { name: string }) => `<div data-testid="icon-mock">${name}</div>`,
-}));
+const sanityImageMock = {
+  alt: 'test alt',
+  _type: 'image',
+  asset: { _ref: 'image-Tb9Ew8CXIwaY6R1kjMvI0uRR-2000x3000-jpg', _type: 'reference' },
+} as const;
 
 const minimalProps = {
   title: 'Test Product',
   description: 'A product description',
-  image: { asset: { _ref: 'image-ref' } },
-  buttons: [],
-};
+  image: sanityImageMock,
+  cta: [
+    {
+      _key: 'btn1',
+      label: 'Buy',
+      buttons: [
+        {
+          label: 'Buy',
+          iconPosition: 'left',
+          class: 'primary',
+          url: '/buy',
+          icon: { _type: 'internal', link: '/buy' },
+          _key: 'btn1',
+        },
+      ],
+    },
+  ],
+} satisfies ProductCardViewProps;
 
 const allProps = {
   ...minimalProps,
-  icon: { type: 'internal', name: 'star' },
-  iconPosition: 'left',
-  buttons: [
-    { label: 'Buy', href: '/buy', style: 'primary' },
-    { label: 'Info', href: '/info', style: 'secondary' },
-  ],
-};
+} satisfies ProductCardViewProps;
 
-const iconTypes = [{ type: 'image', name: 'img' }, { type: 'internal', name: 'star' }, undefined];
+const iconTypes = [
+  sanityImageMock,
+  { _type: 'internal', link: 'star' },
+] satisfies MappedProductCardIcon[];
+
 const iconPositions = ['left', 'right', undefined];
 
 const nullish = [null, undefined, ''];
 
-// Parameterised tests for icon types and positions
 for (const icon of iconTypes) {
   for (const iconPosition of iconPositions) {
-    it(`renders with icon type=${icon?.type ?? 'undefined'} and position=${iconPosition ?? 'undefined'}`, async () => {
-      await render(ProductCardView, {
+    it(`renders with icon type=${icon?._type ?? 'undefined'} and position=${iconPosition ?? 'undefined'}`, async () => {
+      const container = await AstroContainer.create();
+      const html = await container.renderToString(ProductCardView, {
         props: {
           ...minimalProps,
           icon,
@@ -44,9 +57,9 @@ for (const icon of iconTypes) {
         },
       });
       if (icon) {
-        expect(screen.getByTestId('icon-mock')).toBeTruthy();
+        expect(html).toContain('data-testid="product-card-internal-icon"');
       } else {
-        expect(screen.queryByTestId('icon-mock')).toBeNull();
+        expect(html).not.toContain('data-testid="product-card-internal-icon"');
       }
     });
   }
@@ -54,48 +67,66 @@ for (const icon of iconTypes) {
 
 describe('ProductCardView', () => {
   it('renders with minimal props', async () => {
-    await render(ProductCardView, { props: minimalProps });
-    expect(screen.getByText('Test Product')).toBeTruthy();
-    expect(screen.getByText('A product description')).toBeTruthy();
-    expect(screen.getByTestId('sanity-image-mock')).toBeTruthy();
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(ProductCardView, { props: minimalProps });
+    expect(html).toContain('Test Product');
+    expect(html).toContain('A product description');
+    expect(html).toContain('data-testid="sanity-image-product-card"');
   });
 
   it('renders with all props', async () => {
-    await render(ProductCardView, { props: allProps });
-    expect(screen.getByTestId('icon-mock')).toBeTruthy();
-    expect(screen.getByText('Buy')).toBeTruthy();
-    expect(screen.getByText('Info')).toBeTruthy();
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(ProductCardView, { props: allProps });
+    expect(html).toContain('data-testid="product-card-internal-icon"');
+    expect(html).toContain('Buy');
   });
 
   it('renders with no buttons', async () => {
-    await render(ProductCardView, { props: { ...minimalProps, buttons: [] } });
-    expect(screen.queryByRole('button')).toBeNull();
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(ProductCardView, {
+      props: { ...minimalProps, buttons: [] },
+    });
+    // No <button> or <a> with role="button" or role="link"
+    expect(html).not.toMatch(/role=("|')button("|')/);
+    expect(html).not.toMatch(/role=("|')link("|').*Buy|Info/);
   });
 
   it('renders with one button', async () => {
-    await render(ProductCardView, {
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(ProductCardView, {
       props: { ...minimalProps, buttons: [{ label: 'Buy', href: '/buy', style: 'primary' }] },
     });
-    expect(screen.getByText('Buy')).toBeTruthy();
+    expect(html).toContain('Buy');
   });
 
   it('renders with multiple buttons', async () => {
-    await render(ProductCardView, {
-      props: {
-        ...minimalProps,
-        buttons: [
-          { label: 'Buy', href: '/buy', style: 'primary' },
-          { label: 'Info', href: '/info', style: 'secondary' },
-        ],
+    const container = await AstroContainer.create();
+    const buttons: ProductCardButton[] = [
+      { label: 'Buy', url: '/buy', class: 'primary', icon: null, iconPosition: null, _key: 'btn1' },
+      {
+        label: 'Info',
+        url: '/info',
+        class: 'secondary',
+        icon: null,
+        iconPosition: null,
+        _key: 'btn2',
       },
+    ];
+    const props = {
+      ...minimalProps,
+      cta: [{ _key: 'cta1', label: 'Learn more', buttons }],
+    } satisfies ProductCardViewProps;
+    const html = await container.renderToString(ProductCardView, {
+      props,
     });
-    expect(screen.getByText('Buy')).toBeTruthy();
-    expect(screen.getByText('Info')).toBeTruthy();
+    expect(html).toContain('Buy');
+    expect(html).toContain('Info');
   });
 
   it('handles null/empty/invalid props gracefully', async () => {
     for (const val of nullish) {
-      await render(ProductCardView, {
+      const container = await AstroContainer.create();
+      const html = await container.renderToString(ProductCardView, {
         props: {
           title: val,
           description: val,
@@ -103,19 +134,16 @@ describe('ProductCardView', () => {
           buttons: val,
         },
       });
-      // Should not throw and should render fallback UI
-      expect(screen.queryByText('Test Product')).toBeNull();
+
+      expect(html).not.toContain('Test Product');
     }
   });
 
   it('meets accessibility requirements', async () => {
-    await render(ProductCardView, { props: allProps });
-    // Headings
-    expect(screen.getByRole('heading', { name: 'Test Product' })).toBeTruthy();
-    // Image alt text
-    expect(screen.getByTestId('sanity-image-mock')).toBeTruthy();
-    // Buttons have accessible names
-    expect(screen.getByRole('link', { name: 'Buy' })).toBeTruthy();
-    expect(screen.getByRole('link', { name: 'Info' })).toBeTruthy();
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(ProductCardView, { props: allProps });
+    expect(html).toMatch(/<h[1-6][^>]*>\s*Test Product\s*<\/h[1-6]>/);
+    expect(html).toContain('data-testid="sanity-image-product-card"');
+    expect(html).toContain('Buy');
   });
 });

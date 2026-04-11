@@ -5,31 +5,31 @@ import type { SanityImage } from '../../../../lib/schemas/shared/primitives';
 import type { ContactLinkReference } from '../../../../lib/links/contact-links.schema';
 import type { NavLinkSlug } from '../../../../lib/schemas/links/navLink';
 
-type MappedIcon =
+export type MappedProductCardIcon =
   | {
       _type: 'internal';
       link: string | null;
     }
   | SanityImage;
 
-type Button = {
+export type ProductCardButton = {
   _key: string;
   label: string;
   url: string;
   class: string;
-  icon: MappedIcon | null;
+  icon: MappedProductCardIcon | null;
   iconPosition: 'left' | 'right' | null;
 };
 
 export type CtaProps = {
   label: string;
-  buttons: Button[];
+  buttons: ProductCardButton[];
   _key: string;
 };
 
 type MappedLinkReference = {
   url: string;
-  icon: MappedIcon | null;
+  icon: MappedProductCardIcon | null;
 };
 
 type FetchLinkReference = {
