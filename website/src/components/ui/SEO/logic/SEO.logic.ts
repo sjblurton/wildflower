@@ -7,7 +7,7 @@ import {
   type SiteSeoSettings,
 } from '../data/seo.schema';
 import { logger, summarisePayload } from '../../../../lib/logging/logger';
-import { LogEvents } from '../../../../lib/logging/events';
+import { LOG_EVENTS } from '../../../../lib/logging/events';
 import z from 'zod';
 
 interface LoadSeoInput {
@@ -48,7 +48,7 @@ const buildFallbackSeoSiteSettings = async (
 
   if (!siteSettings.success) {
     logger.error({
-      event: LogEvents.seo.siteSettingsParseFailed,
+      event: LOG_EVENTS.seo.siteSettingsParseFailed,
       area: 'seo',
       message: 'Applying fallback SEO site settings due to validation failure.',
       meta: {
@@ -67,7 +67,7 @@ const buildFallbackSeoSiteSettings = async (
     };
 
     logger.info({
-      event: LogEvents.seo.fallbackApplied,
+      event: LOG_EVENTS.seo.fallbackApplied,
       area: 'seo',
       message: 'Fallback SEO site settings applied.',
       meta: {
@@ -78,7 +78,7 @@ const buildFallbackSeoSiteSettings = async (
     return fallbackData;
   }
   logger.info({
-    event: LogEvents.seo.siteDocumentLoaded,
+    event: LOG_EVENTS.seo.siteDocumentLoaded,
     area: 'seo',
     message: 'SEO site settings document loaded.',
   });
@@ -93,7 +93,7 @@ const buildFallbackSeoPageDocument = async (
 
   if (!pageDocument.success) {
     logger.error({
-      event: LogEvents.seo.pageDocumentParseFailed,
+      event: LOG_EVENTS.seo.pageDocumentParseFailed,
       area: 'seo',
       message: `Applying fallback SEO page document for slug "${slug}" due to validation failure.`,
       meta: {
@@ -114,7 +114,7 @@ const buildFallbackSeoPageDocument = async (
     };
 
     logger.info({
-      event: LogEvents.seo.fallbackApplied,
+      event: LOG_EVENTS.seo.fallbackApplied,
       area: 'seo',
       message: `Fallback SEO page document applied for slug "${slug}".`,
       meta: {
@@ -126,7 +126,7 @@ const buildFallbackSeoPageDocument = async (
   }
 
   logger.info({
-    event: LogEvents.seo.pageDocumentLoaded,
+    event: LOG_EVENTS.seo.pageDocumentLoaded,
     area: 'seo',
     message: `SEO page document loaded for slug "${slug}".`,
   });

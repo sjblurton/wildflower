@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { LogEvents } from '../../../../lib/logging/events';
+import { LOG_EVENTS } from '../../../../lib/logging/events';
 import { logger, summarisePayload, type LogPayload } from '../../../../lib/logging/logger';
 import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
 import { isRecord } from '../../../../lib/primitives/guards';
@@ -103,7 +103,7 @@ export const loadNavSettings = async ({
     rawPayload = await fetchNavSettings();
   } catch (error) {
     log.error({
-      event: LogEvents.nav.fetchFailed,
+      event: LOG_EVENTS.nav.fetchFailed,
       area: 'navigation',
       message: 'Failed to fetch nav settings from Sanity; using fallback navigation.',
       meta: {
@@ -117,7 +117,7 @@ export const loadNavSettings = async ({
 
     const fallback = buildFallbackNav();
     log.warn({
-      event: LogEvents.nav.fallbackApplied,
+      event: LOG_EVENTS.nav.fallbackApplied,
       area: 'navigation',
       message: 'Applied fallback nav settings due to fetch failure.',
       meta: { reason: 'fetch_failed', queryName },
@@ -130,7 +130,7 @@ export const loadNavSettings = async ({
 
   if (parseResult.success) {
     logger.info({
-      event: LogEvents.nav.navLoaded,
+      event: LOG_EVENTS.nav.navLoaded,
       area: 'navigation',
       message: 'Nav settings loaded and validated successfully.',
     });
@@ -140,7 +140,7 @@ export const loadNavSettings = async ({
   const fallback = normaliseInvalidNav(rawPayload);
 
   log.warn({
-    event: LogEvents.nav.validationFailed,
+    event: LOG_EVENTS.nav.validationFailed,
     area: 'navigation',
     message: 'Nav settings validation failed; using fallback-safe nav settings.',
     meta: {
@@ -156,7 +156,7 @@ export const loadNavSettings = async ({
   });
 
   log.warn({
-    event: LogEvents.nav.fallbackApplied,
+    event: LOG_EVENTS.nav.fallbackApplied,
     area: 'navigation',
     message: 'Applied fallback-safe nav settings after validation failure.',
     meta: { reason: 'validation_failed', queryName },
