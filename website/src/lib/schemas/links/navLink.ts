@@ -18,3 +18,5 @@ export const navLinkSlugSchema = z.object({
     current: z.string().min(1),
   }),
 });
+
+export type NavLinkSlug = z.infer<typeof navLinkSlugSchema>;

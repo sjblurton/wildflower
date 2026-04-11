@@ -1,0 +1,56 @@
+---
+import type { SanityImage as SanityImageType } from '../../../lib/schemas/shared/primitives';
+import SanityImage from '../atoms/media/SanityImage/SanityImage.astro';
+import type { CtaProps } from './ProductCard.logic';
+
+type Props = {
+  description: string;
+  title: string;
+  image?: SanityImageType | null;
+  buttons: CtaProps[] | null;
+};
+
+const { description, title, image, buttons }: Props = Astro.props;
+---
+
+<div class="card bg-base-100 w-80 shadow-sm">
+  <figure>
+    <SanityImage
+      image={image}
+      class="w-80 block h-56 object-cover"
+      loading="lazy"
+      decoding="async"
+    />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">{title}</h2>
+    <p>{description}</p>
+    <div class="card-actions justify-end">
+      {
+        buttons &&
+          buttons.map(({ buttons }) =>
+            buttons.map(({ label, url, class: className, icon, iconPosition }) => {
+              if (icon?._type === 'image') {
+                icon = <SanityImage image={icon} class="w-4 h-4 inline-block mr-1" />;
+              } else if (icon?._type === 'internal') {
+                icon = (
+                  <span
+                    class={`global-icon-colour w-4 h-4 inline-block mr-1`}
+                    set:html={icon.link}
+                  />
+                );
+              }
+
+              return (
+                <a href={url} type="button" class={className}>
+                  {iconPosition === 'left' && icon}
+                  {label}
+                  {iconPosition === 'right' && icon}
+                </a>
+              );
+            }),
+          )
+      }
+    </div>
+  </div>
+</div>

@@ -1,41 +1,30 @@
 ---
-
 import Layout from '../layouts/Layout.astro';
 import PageTemplate from '../components/templates/PageTemplate.astro';
 import { pageBySlugQuery } from '../lib/cms/queries';
 import { pageSchema } from '../lib/schemas/content/page';
 import { sanityClient } from '../lib/cms/sanity';
-import { logger } from '../lib/logging/logger';
-import z from 'zod';
-import { LogEvents } from '../lib/logging/events';
-
 
 const rawPage = await sanityClient.fetch(pageBySlugQuery, { slug: 'home' });
 
 const result = pageSchema.safeParse(rawPage);
-if (!result.success) {
-  logger.error({
-    area: 'page',
-    event: LogEvents.page.validationFailed,
-    message: 'Page failed schema validation',
-    meta: { error: z.prettifyError(result.error), rawPage },
-  });
-}
 
 const page = result.success ? result.data : null;
 ---
 
 <Layout pageSlug="home">
-  {page ? (
-    <PageTemplate page={page} />
-  ) : (
-    <section class="max-w-4xl mx-auto py-20 px-4">
-      <div class="card bg-base-200 shadow-sm border border-base-300">
-        <div class="card-body">
-          <h1 class="card-title text-3xl">Wildflower</h1>
-          <p>Homepage content coming soon.</p>
+  {
+    page ? (
+      <PageTemplate page={page} />
+    ) : (
+      <section class="max-w-4xl mx-auto py-20 px-4">
+        <div class="card bg-base-200 shadow-sm border border-base-300">
+          <div class="card-body">
+            <h1 class="card-title text-3xl">Wildflower</h1>
+            <p>Homepage content coming soon.</p>
+          </div>
         </div>
-      </div>
-    </section>
-  )}
+      </section>
+    )
+  }
 </Layout>

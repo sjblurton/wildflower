@@ -1,30 +1,21 @@
 ---
+import type { ContactLinkReference } from '../../../lib/links/contact-links.schema';
 import type { ProductCard } from '../../../lib/schemas/cards/productCard';
-import SanityImage from '../atoms/media/SanityImage/SanityImage.astro';
+import { getCtaProps } from './ProductCard.logic';
+import ProductCardView from './ProductCardView.astro';
+import type { NavLinkSlug } from '../../../lib/schemas/links/navLink';
 
-export type Prop = ProductCard
+export interface ProductCardProps extends ProductCard {
+  fetchLinkReference: {
+    page: (id: string) => Promise<{ success: boolean; data: NavLinkSlug }>;
+    contact: (id: string) => Promise<{ success: boolean; data: ContactLinkReference }>;
+  };
+}
 
-const {description,title,cta,image} = Astro.props as Prop;
+const { description, title, ctaButton, image, fetchLinkReference } =
+  Astro.props as ProductCardProps;
+
+const buttons = await getCtaProps(ctaButton, fetchLinkReference);
 ---
 
-<div class="card bg-base-100 w-96 shadow-sm">
-  <figure>
-    <SanityImage
-      image={image}
-      class="w-full h-auto block"
-      loading="lazy"
-      decoding="async"
-    />
-  </figure>
-  <div class="card-body">
-    <h2 class="card-title">{title}</h2>
-    <p>{description}</p>
-    <div class="card-actions justify-end">
-        {cta &&
-            cta.map(() => {
-            const classNames = ['btn'];
-           return (<button class={classNames.join(' ')}>Default</button>)
-            })}
-    </div>
-  </div>
-</div>
+<ProductCardView description={description} title={title} image={image} buttons={buttons} />
