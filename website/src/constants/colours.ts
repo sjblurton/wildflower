@@ -7,4 +7,6 @@ export const COLOURS = {
   SUCCESS: 'success',
   WARNING: 'warning',
   ERROR: 'error',
-};
+} as const;
+
+export type Colours = (typeof COLOURS)[keyof typeof COLOURS];
