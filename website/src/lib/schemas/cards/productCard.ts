@@ -7,7 +7,7 @@ export const productCardSchema = z.object({
   _type: z.literal('productCard'),
   description: z.string().min(1),
   title: z.string().min(1),
-  cta: ctaButtonSchema.array().nullish().optional().default([]),
+  ctaButton: ctaButtonSchema.array().nullish().optional().default([]),
   image: sanityImageSchema.nullish().optional(),
 });
 
