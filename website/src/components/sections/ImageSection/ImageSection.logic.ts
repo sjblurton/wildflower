@@ -1,5 +1,7 @@
 export type ImageSectionAsset = { _ref: string; _type: 'reference' } | string; // test
 
+type TailwindOpacity = 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80;
+
 export interface ImageSectionImage {
   _type: 'image';
   alt: string;
@@ -14,7 +16,7 @@ export interface ImageSectionLogicInput {
 
 export interface ImageSectionLogicOutput {
   isTestImage: boolean;
-  tailwindOpacity: number;
+  tailwindOpacity: TailwindOpacity;
 }
 
 export function getImageSectionLogic({
@@ -22,7 +24,7 @@ export function getImageSectionLogic({
   overlayOpacity,
 }: ImageSectionLogicInput): ImageSectionLogicOutput {
   const isTestImage = image && typeof image.asset === 'string';
-  const tailwindOpacity = overlayOpacity * 10;
+  const tailwindOpacity = (overlayOpacity * 10) as TailwindOpacity;
 
   return {
     isTestImage,

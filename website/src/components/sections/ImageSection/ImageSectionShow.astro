@@ -2,6 +2,7 @@
 import SanityImage from '../../ui/atoms/media/SanityImage/SanityImage.astro';
 import { getImageSectionLogic } from './ImageSection.logic';
 import type { ImageSection } from '../../../lib/schemas/sections/imageSection';
+import { BG_CLASS_MAPS } from '../../../styles/bg-maps';
 
 export type Props = ImageSection;
 
@@ -25,7 +26,7 @@ const logic = getImageSectionLogic({ image,  overlayOpacity });
   )}
   {overlayTitle && (<>
   <div
-    class={`absolute inset-0 pointer-events-none transition-colors duration-200 bg-base-200/${logic.tailwindOpacity}`}
+    class={`absolute inset-0 pointer-events-none transition-colors duration-200 ${BG_CLASS_MAPS.OPACITY[logic.tailwindOpacity]}`}
     aria-hidden="true"
   />
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 text-center text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">
