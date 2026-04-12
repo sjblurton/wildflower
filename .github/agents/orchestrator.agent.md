@@ -14,8 +14,10 @@ Coordinates the full vertical slice workflow for this repository, following the 
 
 - Accepts slice_name, slice_goal, and mode (preview/execute)
 - Runs Tester first to establish and store baseline coverage and quality gate status. If any gate fails, halts and reports errors; no work proceeds until baseline is healthy.
-- Runs Plan, then (if approved) Architect, Build, Tester, Refactor, Reviewer, Clean Commit Ready
+- Runs Plan, then (if approved) Architect, Build, Tester, Refactor, Tester, Reviewer, Documentation, Clean Commit Ready
 - After each edit stage (Build, Refactor), invokes Tester to re-run quality gates and compare coverage to baseline. Reports coverage delta (increase, decrease, unchanged) at each stage.
+- Always invoke the Refactor agent after the post-build Tester stage and before Reviewer.
+- Always invoke the Documentation agent after Reviewer and before Clean Commit Ready.
 - Enforces one-slice-at-a-time, no scope creep, and hard stop at clean commit ready
 - Ensures all quality gates (lint, typecheck, style, tests, coverage) are run and pass before declaring clean commit ready
 - If any gate fails, halt and report errors; do not proceed to clean commit ready
@@ -39,6 +41,7 @@ Tester (baseline) → Plan → Architect → Build → Tester (post-build) → R
 - Second line: Slice: <slice_name>
 - Then stage output
 - At each Tester stage, outputs coverage delta (increase, decrease, unchanged) compared to baseline.
+- Include Refactor and Documentation outputs before declaring clean commit ready.
 
 ## Exceptions
 

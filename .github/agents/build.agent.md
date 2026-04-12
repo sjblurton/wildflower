@@ -84,6 +84,7 @@ Deliver the approved slice safely and clearly, aligned to architecture decisions
 3. Behaviour changes introduced.
 4. Risks or assumptions to validate in Tester stage.
 5. Recommendation for test execution focus.
+6. Your implementation will be reviewed by both the Refactor and Documentation agents before final commit readiness.
 
 ## Communication Style
 

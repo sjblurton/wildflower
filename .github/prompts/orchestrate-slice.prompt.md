@@ -24,6 +24,7 @@ Execution policy:
 
 1. Always follow the canonical sequence:
    Tester (baseline) -> Plan -> Architect -> Build -> Tester (post-build) -> Refactor -> Tester (post-refactor) -> Reviewer -> Documentation -> clean commit ready -> stop
+   The orchestrator must always run Refactor and Documentation agents in sequence after the post-build Tester and Reviewer stages, before Clean Commit Ready.
 2. Enforce one vertical slice only.
 3. Do not allow scope creep without explicit user approval.
 4. Enforce hard stop at clean commit ready.
