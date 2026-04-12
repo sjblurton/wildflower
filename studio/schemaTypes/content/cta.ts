@@ -31,6 +31,7 @@ export const ctaType = defineType({
         layout: 'radio',
       },
       initialValue: ctaDefaults.style,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'colour',
@@ -42,6 +43,7 @@ export const ctaType = defineType({
         layout: 'radio',
       },
       initialValue: ctaDefaults.colour,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'size',
@@ -53,6 +55,7 @@ export const ctaType = defineType({
         layout: 'radio',
       },
       initialValue: ctaDefaults.size,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'width',
@@ -64,6 +67,7 @@ export const ctaType = defineType({
         layout: 'radio',
       },
       initialValue: ctaDefaults.width,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'hasIcon',
@@ -72,6 +76,7 @@ export const ctaType = defineType({
       description:
         'Enable an icon. If no custom icon is uploaded, the frontend will choose a default icon based on the link type.',
       initialValue: ctaDefaults.hasIcon,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'iconPosition',

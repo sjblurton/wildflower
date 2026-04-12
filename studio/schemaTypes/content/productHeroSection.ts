@@ -39,6 +39,7 @@ export const productHeroSectionType = defineType({
           type: 'block',
         }),
       ],
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'imagePositionDesktop',
@@ -51,6 +52,7 @@ export const productHeroSectionType = defineType({
         layout: 'radio',
       },
       initialValue: productHeroDefaults.imagePositionDesktop,
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'images',
