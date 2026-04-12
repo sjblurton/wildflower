@@ -28,14 +28,22 @@ export const productCardType = defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required()
+          .max(25)
+          .warning('Keep product card titles under 25 characters for optimal display.'),
     }),
     defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
       rows: 4,
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required()
+          .max(100)
+          .warning(
+            'Keep product card descriptions around 100 characters for optimal display. Use product hero if you need a longer description.',
+          ),
     }),
     defineField({
       name: 'ctaButton',

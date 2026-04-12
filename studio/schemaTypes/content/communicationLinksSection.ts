@@ -22,11 +22,6 @@ export const communicationLinksSectionType = defineType({
           type: 'reference',
           to: [{type: 'contactLink'}],
         }),
-        defineArrayMember({
-          name: 'pageLinkReference',
-          type: 'reference',
-          to: [{type: 'page'}],
-        }),
       ],
       validation: (Rule) => Rule.required().min(1),
     }),
