@@ -9,4 +9,6 @@ type Props = {
 const { image } = Astro.props as Props;
 ---
 
-<SanityImage data-testid="cta-image-icon" image={image} class="w-4 h-4 inline-block ml-1" />
+<div class="w-auto h-full flex items-center">
+  <SanityImage data-testid="cta-image-icon" image={image} class="w-4.5 h-4.5 inline-block ml-1" />
+</div>

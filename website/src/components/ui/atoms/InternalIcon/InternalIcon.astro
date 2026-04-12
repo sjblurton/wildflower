@@ -6,8 +6,10 @@ type Props = {
 const { link } = Astro.props as Props;
 ---
 
-<span
-  class="global-icon-colour w-4 h-4 inline-block"
-  set:html={link}
-  data-testid="cta-internal-icon"
-/>
+<div class="w-auto h-full flex items-center">
+  <span
+    class="global-icon-colour w-4.5 h-4.5 inline-block"
+    set:html={link}
+    data-testid="cta-internal-icon"
+  />
+</div>

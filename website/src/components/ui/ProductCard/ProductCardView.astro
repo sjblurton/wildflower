@@ -16,8 +16,8 @@ const { description, title, image } = Astro.props as ProductCardViewProps;
     />
   </figure>
   <div class="card-body">
-    <h2 class="card-title">{title}</h2>
-    <p>{description}</p>
+    <h2 class="card-title min-h-18">{title}</h2>
+    <p class="min-h-16">{description}</p>
     <div class="card-actions justify-end">
       <slot name="cta" />
     </div>
