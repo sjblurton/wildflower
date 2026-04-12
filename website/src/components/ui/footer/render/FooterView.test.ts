@@ -20,7 +20,7 @@ const createFooter = (overrides: Partial<FooterSettings> = {}): FooterSettings =
       _type: 'contactLink',
       type: 'email',
       title: 'Email',
-      emailAddress: 'hello@example.com',
+      email: 'hello@example.com',
     },
   ],
   ...overrides,

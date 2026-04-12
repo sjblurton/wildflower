@@ -116,7 +116,7 @@ export const mapFooterItemToContactLink = (item: FooterContactLink): ContactLink
         _key: item._key,
         type: 'email',
         title: item.title,
-        value: item.emailAddress,
+        value: item.email,
         subject: item.subject,
         body: item.body,
       };

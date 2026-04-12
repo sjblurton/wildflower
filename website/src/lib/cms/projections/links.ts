@@ -21,7 +21,7 @@ export const contactLinkProjection = /* groq */ `
     "title": contactType[0].title,
     "url": contactType[0].url,
     "phoneNumber": contactType[0].phoneNumber,
-    "emailAddress": contactType[0].email,
+    "email": contactType[0].email,
     "prefillMessage": contactType[0].message,
     "subject": contactType[0].subject,
     "body": contactType[0].body

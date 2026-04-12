@@ -12,7 +12,7 @@ export const emailLinkSchema = z.object({
   _key: z.string().min(1),
   _type: z.literal('emailLink'),
   title: z.string().min(1),
-  emailAddress: z.email(),
+  email: z.email(),
   subject: z.string().nullish().optional(),
   body: z.string().nullish().optional(),
 });

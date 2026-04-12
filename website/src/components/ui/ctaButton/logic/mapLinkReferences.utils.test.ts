@@ -63,7 +63,7 @@ describe('handleContactLink', () => {
         {
           _type: 'emailLink',
           _key: '1',
-          emailAddress: 'a@b.com',
+          email: 'a@b.com',
           title: 'Email',
           subject: 'Hi',
           body: 'Body',
@@ -162,7 +162,7 @@ describe('mapContactLinksToContactLinks', () => {
     const result = mapContactLinksToContactLinks({
       _type: 'emailLink',
       _key: '1',
-      emailAddress: 'a@b.com',
+      email: 'a@b.com',
       title: 'Email',
       subject: 'Hi',
       body: 'Body',

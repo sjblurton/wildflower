@@ -23,7 +23,7 @@ const fakeContactData = {
     {
       _type: 'emailLink',
       _key: '1',
-      emailAddress: 'a@b.com',
+      email: 'a@b.com',
       title: 'Email',
       subject: 'Hi',
       body: 'Body',

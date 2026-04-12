@@ -22,7 +22,7 @@ describe('footer.load.utils', () => {
           _type: 'contactLink',
           type: 'email',
           title: 'Email',
-          emailAddress: 'hello@example.com',
+          email: 'hello@example.com',
         },
       ],
       footerCopyrightText: '  Copyright  ',
@@ -90,7 +90,7 @@ describe('footer.load.utils', () => {
           _type: 'contactLink',
           type: 'email',
           title: 'Email',
-          emailAddress: 'team@example.com',
+          email: 'team@example.com',
         },
         {
           _key: 'bad-email',
@@ -115,7 +115,7 @@ describe('footer.load.utils', () => {
         _type: 'contactLink',
         type: 'email',
         title: 'Email',
-        emailAddress: 'team@example.com',
+        email: 'team@example.com',
       },
     ]);
     expect(footer.footerCopyrightText).toBe('© Wildflower');

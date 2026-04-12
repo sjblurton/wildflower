@@ -47,7 +47,7 @@ describe('Footer', () => {
           _type: 'contactLink',
           type: 'email',
           title: 'Email',
-          emailAddress: 'hello@example.com',
+          email: 'hello@example.com',
         },
       ],
     });

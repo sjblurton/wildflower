@@ -18,7 +18,7 @@ export const handlePageLink = async (
     logger.error({
       event: LOG_EVENTS.cta.linkValidationFailed,
       area: 'mapLinkReferences',
-      message: `Failed to fetch page link reference for CTA with _ref: ${link._ref}`,
+      message: `Failed to parse page link reference for CTA with _ref: ${link._ref}`,
       meta: { linkRef: link._ref, linkType: 'page', error: data },
     });
     return [null];
@@ -36,7 +36,7 @@ export const handleContactLink = async (
     logger.error({
       event: LOG_EVENTS.cta.linkValidationFailed,
       area: 'mapLinkReferences',
-      message: `Failed to fetch contact link reference for CTA with _ref: ${link._ref}`,
+      message: `Failed to parse contact link reference for CTA with _ref: ${link._ref}`,
       meta: { linkRef: link._ref, linkType: 'contact', error: data },
     });
     return [null];
@@ -79,7 +79,7 @@ export const mapContactLinksToContactLinks = (links: ContactLinkUnionType): Cont
       return {
         _key: links._key,
         type: 'email',
-        value: links.emailAddress,
+        value: links.email,
         title: links.title,
         subject: links.subject,
         body: links.body,
