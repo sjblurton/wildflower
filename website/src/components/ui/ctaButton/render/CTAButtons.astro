@@ -1,0 +1,16 @@
+---
+import CTAButtonView from './CTAButtonView.astro';
+import type { CtaButton } from '../../../../lib/schemas/buttons/ctaButtonSchema';
+import { getCtaProps } from '../logic/CTAButton.logic';
+import { fetchLinkReference } from '../../../../lib/links/fetchLinkReference';
+
+type Props = {
+  cta: CtaButton[];
+};
+
+const { cta } = Astro.props as Props;
+
+const buttons = await getCtaProps(cta, fetchLinkReference);
+---
+
+{buttons ? buttons.map((props) => <CTAButtonView {...props} />) : null}

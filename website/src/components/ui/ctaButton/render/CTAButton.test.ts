@@ -1,9 +1,9 @@
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import { describe, it, expect } from 'vitest';
-import type { CTAButtonViewProps } from './CTAButton.interfaces';
+import type { CTAButtonViewProps } from '../types/CTAButton.interfaces';
 import CTAButtonView from './CTAButtonView.astro';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';
-import type { SanityImage } from '../../../lib/schemas/shared/primitives';
+import type { SanityImage } from '../../../../lib/schemas/shared/primitives';
 
 const baseProps: CTAButtonViewProps = {
   _key: 'test-key',

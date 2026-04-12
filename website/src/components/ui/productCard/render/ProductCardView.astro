@@ -1,9 +1,8 @@
 ---
 import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro';
-import CTAButton from '../../ctaButton/CTAButton.astro';
 import type { ProductCardViewProps } from './ProductCardView.interface';
 
-const { description, title, image, cta } = Astro.props as ProductCardViewProps;
+const { description, title, image } = Astro.props as ProductCardViewProps;
 ---
 
 <div class="card bg-base-100 w-80 shadow-sm">
@@ -20,21 +19,7 @@ const { description, title, image, cta } = Astro.props as ProductCardViewProps;
     <h2 class="card-title">{title}</h2>
     <p>{description}</p>
     <div class="card-actions justify-end">
-      {
-        cta &&
-          cta.map(({ buttons }) =>
-            buttons.map((button) => (
-              <CTAButton
-                _key={button._key}
-                label={button.label}
-                url={button.url}
-                class={button.class}
-                icon={button.icon}
-                iconPosition={button.iconPosition}
-              />
-            )),
-          )
-      }
+      <slot name="cta" />
     </div>
   </div>
 </div>

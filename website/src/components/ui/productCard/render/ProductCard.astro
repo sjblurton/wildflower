@@ -1,21 +1,11 @@
 ---
-import type { ContactLinkReference } from '../../../../lib/links/contact-links.schema';
 import type { ProductCard } from '../../../../lib/schemas/cards/productCard';
-import { getCtaProps } from '../logic/ProductCard.logic';
+import CTAButtons from '../../ctaButton/render/CTAButtons.astro';
 import ProductCardView from './ProductCardView.astro';
-import type { NavLinkSlug } from '../../../../lib/schemas/links/navLink';
 
-export interface ProductCardProps extends ProductCard {
-  fetchLinkReference: {
-    page: (id: string) => Promise<{ success: boolean; data: NavLinkSlug }>;
-    contact: (id: string) => Promise<{ success: boolean; data: ContactLinkReference }>;
-  };
-}
-
-const { description, title, ctaButton, image, fetchLinkReference } =
-  Astro.props as ProductCardProps;
-
-const buttons = await getCtaProps(ctaButton, fetchLinkReference);
+const { ctaButton, ...props } = Astro.props as ProductCard;
 ---
 
-<ProductCardView description={description} title={title} image={image} cta={buttons} />
+<ProductCardView {...props}>
+  <CTAButtons slot="cta" cta={ctaButton ?? []} />
+</ProductCardView>

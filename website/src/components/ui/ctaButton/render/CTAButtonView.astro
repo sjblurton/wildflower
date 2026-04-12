@@ -1,0 +1,12 @@
+---
+import type { CTAButtonViewProps } from '../types/CTAButton.interfaces';
+import IconSelector from '../../atoms/IconSelector/IconSelector.astro';
+
+const { label, url, class: className, icon, iconPosition } = Astro.props as CTAButtonViewProps;
+---
+
+<a href={url} type="button" class={className} data-testid="cta-button">
+  {iconPosition === 'left' && <IconSelector icon={icon} />}
+  {label}
+  {iconPosition === 'right' && <IconSelector icon={icon} />}
+</a>
