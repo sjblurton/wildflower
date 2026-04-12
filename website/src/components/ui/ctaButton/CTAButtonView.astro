@@ -1,0 +1,36 @@
+---
+import type { CTAButtonViewProps } from './CTAButton.interfaces';
+import SanityImage from '../atoms/media/SanityImage/SanityImage.astro';
+
+const { label, url, class: className, icon, iconPosition } = Astro.props as CTAButtonViewProps;
+---
+
+<a href={url} type="button" class={className} data-testid="cta-button">
+  {
+    iconPosition === 'left' &&
+      icon &&
+      (icon._type === 'image' ? (
+        <SanityImage data-testid="cta-image-icon" image={icon} class="w-4 h-4 inline-block mr-1" />
+      ) : icon._type === 'internal' ? (
+        <span
+          data-testid="cta-internal-icon"
+          class="global-icon-colour w-4 h-4 inline-block mr-1"
+          set:html={icon.link}
+        />
+      ) : null)
+  }
+  {label}
+  {
+    iconPosition === 'right' &&
+      icon &&
+      (icon._type === 'image' ? (
+        <SanityImage data-testid="cta-image-icon" image={icon} class="w-4 h-4 inline-block ml-1" />
+      ) : icon._type === 'internal' ? (
+        <span
+          data-testid="cta-internal-icon"
+          class="global-icon-colour w-4 h-4 inline-block ml-1"
+          set:html={icon.link}
+        />
+      ) : null)
+  }
+</a>

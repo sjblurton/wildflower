@@ -71,9 +71,9 @@ for (const icon of iconTypes) {
         },
       });
       if (icon) {
-        expect(html).toContain('data-testid="product-card-internal-icon"');
+        expect(html).toContain('data-testid="cta-internal-icon"');
       } else {
-        expect(html).not.toContain('data-testid="product-card-internal-icon"');
+        expect(html).not.toContain('data-testid="cta-internal-icon"');
       }
     });
   }
@@ -91,7 +91,7 @@ describe('ProductCardView', () => {
   it('renders with all props', async () => {
     const container = await AstroContainer.create();
     const html = await container.renderToString(ProductCardComponent, { props: allProps });
-    expect(html).toContain('data-testid="product-card-internal-icon"');
+    expect(html).toContain('data-testid="cta-internal-icon"');
     expect(html).toContain('Buy');
   });
 

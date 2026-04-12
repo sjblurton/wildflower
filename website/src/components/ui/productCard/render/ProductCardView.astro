@@ -2,6 +2,7 @@
 import type { SanityImage as SanityImageType } from '../../../../lib/schemas/shared/primitives';
 import SanityImage from '../../atoms/media/SanityImage/SanityImage.astro';
 import type { CtaProps } from '../logic/ProductCard.logic';
+import CTAButton from '../../ctaButton/CTAButton.astro';
 
 type ProductCardViewProps = {
   description: string;
@@ -30,33 +31,16 @@ const { description, title, image, cta } = Astro.props as ProductCardViewProps;
       {
         cta &&
           cta.map(({ buttons }) =>
-            buttons.map(({ label, url, class: className, icon, iconPosition }) => {
-              if (icon?._type === 'image') {
-                icon = (
-                  <SanityImage
-                    data-testid="sanity-image-product-card-icon"
-                    image={icon}
-                    class="w-4 h-4 inline-block mr-1"
-                  />
-                );
-              } else if (icon?._type === 'internal') {
-                icon = (
-                  <span
-                    data-testid="product-card-internal-icon"
-                    class={`global-icon-colour w-4 h-4 inline-block mr-1`}
-                    set:html={icon.link}
-                  />
-                );
-              }
-
-              return (
-                <a href={url} type="button" class={className}>
-                  {iconPosition === 'left' && icon}
-                  {label}
-                  {iconPosition === 'right' && icon}
-                </a>
-              );
-            }),
+            buttons.map((button) => (
+              <CTAButton
+                _key={button._key}
+                label={button.label}
+                url={button.url}
+                class={button.class}
+                icon={button.icon}
+                iconPosition={button.iconPosition}
+              />
+            )),
           )
       }
     </div>
