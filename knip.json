@@ -8,7 +8,7 @@
         "src/components/**/*.{astro,ts,tsx}"
       ],
       "project": ["src/**/*.{astro,ts,tsx,js,mjs,cjs}"],
-      "ignoreDependencies": ["daisyui", "tailwindcss"]
+      "ignoreDependencies": ["sanity", "prettier-plugin-astro"]
     },
     "studio": {
       "entry": ["schemaTypes/index.ts"],

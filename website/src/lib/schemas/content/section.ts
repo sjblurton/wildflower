@@ -53,4 +53,3 @@ export const contentSchema = z.array(z.unknown()).transform((arr) => {
   }
   return cleanSections as Section[];
 });
-export type Content = z.infer<typeof contentSchema>;

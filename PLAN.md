@@ -6,6 +6,10 @@ Run reliable, repeatable, single-slice delivery cycles with explicit handoffs an
 
 ## Lifecycle
 
+### Stage 0: Tester (baseline)
+
+- Run all quality gates and record baseline coverage before any work begins. If any gate fails, halt and report; no work proceeds until baseline is healthy.
+
 ### Stage 1: Plan
 
 - Produce slice definition, acceptance criteria, constraints, risks, and explicit out-of-scope items.
@@ -18,36 +22,40 @@ Run reliable, repeatable, single-slice delivery cycles with explicit handoffs an
 
 - Implement approved changes only.
 
-### Stage 4: Tester
+### Stage 4: Tester (post-build)
 
-- Add or update tests for changed behaviour.
-- Validate coverage requirements and any exceptions.
+- Run all quality gates and compare coverage to baseline. Report coverage delta (increase, decrease, unchanged). If any gate fails or coverage regresses, halt and report; do not proceed until all gates pass.
+- Add or update tests for changed behaviour if required.
 
 ### Stage 5: Refactor
 
 - Apply safe structural improvements that increase reuse and consistency.
 
-### Stage 6: Reviewer
+### Stage 6: Tester (post-refactor)
+
+- Run all quality gates and compare coverage to baseline. Report coverage delta (increase, decrease, unchanged). If any gate fails or coverage regresses, halt and report; do not proceed until all gates pass.
+
+### Stage 7: Reviewer
 
 - Perform findings-first review and classify risks by severity.
 
-### Stage 7: Documentation
+### Stage 8: Documentation
 
 - Update concise documentation aligned to final implemented behaviour.
 
-### Stage 8: Handoff
+### Stage 9: Handoff
 
 - Prepare clean commit ready summary and stop.
 
 ## Canonical Sequence
 
-`Plan -> Architect -> Build -> Tester -> Refactor -> Reviewer -> Documentation -> clean commit ready -> stop`
+`Tester (baseline) -> Plan -> Architect -> Build -> Tester (post-build) -> Refactor -> Tester (post-refactor) -> Reviewer -> Documentation -> clean commit ready -> stop`
 
 ## Definition Of Clean Commit Ready
 
 All conditions must hold:
 
-- Required gates complete and passing.
+- Required gates complete and passing, with coverage delta (increase, decrease, unchanged) reported compared to baseline.
 - No unresolved high-severity findings.
 - Any medium findings are either resolved or explicitly accepted by the user.
 - Exceptions are documented with rationale.
@@ -56,18 +64,13 @@ All conditions must hold:
 
 ## Required Validation Commands
 
-- `npm run lint`
-- `npm run typecheck`
-- `npm run stylelint`
-- `npm --prefix website run test`
-- `npm --prefix website run test:coverage`
-- Optional where useful: `npm run knip:ci`
+- `npm run check:all`
 
 ## Refactor Rules
 
 - Default flow includes Refactor after Tester.
 - If mandatory refactor is identified early and lowers risk, use a refactor-first slice.
-- Refactor-first slice must still complete Tester, Reviewer, Documentation, and clean commit ready stop before feature continuation.
+- Refactor-first slice must still complete Tester (baseline and post-refactor), Reviewer, Documentation, and clean commit ready stop before feature continuation.
 
 ## Testing Rules
 
@@ -75,6 +78,8 @@ All conditions must hold:
 - Presentation components require smoke coverage with varied props.
 - Meaningful logic should reach full coverage unless exception is justified.
 - No ignore-list updates without explicit user confirmation.
+- Tester agent runs first and after each edit stage to validate and report coverage delta.
+- If additional tests are required, orchestrator halts and assigns the task to the build or refactor agent. Workflow resumes only when all gates pass.
 
 ## Documentation Rules
 

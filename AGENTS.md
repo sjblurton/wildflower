@@ -19,7 +19,7 @@ Goals:
 
 Default stage order:
 
-`Plan -> Architect -> Build -> Tester -> Reviewer -> Clean Commit Ready -> Stop`
+`Tester (baseline) -> Plan -> Architect -> Build -> Tester (post-build) -> Refactor -> Tester (post-refactor) -> Reviewer -> Clean Commit Ready -> Stop`
 
 ## Stage Contracts
 
@@ -48,9 +48,12 @@ Default stage order:
 
 ### Tester
 
-- Validate changed behaviour with tests.
-- Target 100% coverage for meaningful executable logic.
-- Record any exceptions with explicit rationale.
+- Runs first to establish and store baseline coverage and quality gate status. If any gate fails, halts and reports errors; no work proceeds until baseline is healthy.
+- After each edit stage (Build, Refactor), re-runs all quality gates and compares coverage to baseline. Reports coverage delta (increase, decrease, unchanged) at each stage.
+- Validates changed behaviour with tests.
+- Targets 100% coverage for meaningful executable logic.
+- Records any exceptions with explicit rationale.
+- If additional tests are required, the orchestrator halts and assigns the task to the build or refactor agent. Workflow resumes only when all gates pass.
 
 ### Refactor
 
@@ -92,7 +95,7 @@ Before a slice is considered clean commit ready, require:
 - Typecheck passes.
 - Style checks pass.
 - Tests pass for changed behaviour.
-- Coverage expectations met for meaningful logic.
+- Coverage expectations met for meaningful logic, with coverage delta (increase, decrease, unchanged) reported compared to baseline.
 - Exceptions documented and justified.
 
 ## Coverage Exception Policy
@@ -107,6 +110,7 @@ Before a slice is considered clean commit ready, require:
 - Use British English spelling and phrasing in all user-facing output.
 - Keep reports concise, specific, and evidence-based.
 - Prefer actionable recommendations over stylistic commentary.
+- At each tester stage, output the coverage delta (increase, decrease, unchanged) compared to baseline.
 
 ## Operational Safeguards
 

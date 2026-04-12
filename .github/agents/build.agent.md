@@ -1,5 +1,5 @@
 ---
-description: "Use when implementing an approved vertical slice, translating architecture decisions into code without scope creep, and preparing work for testing."
+description: 'Use when implementing an approved vertical slice, translating architecture decisions into code without scope creep, and preparing work for testing.'
 tools: [read, search, edit, execute]
 user-invocable: true
 agents: []
@@ -39,8 +39,19 @@ Deliver the approved slice safely and clearly, aligned to architecture decisions
 ## Quality Expectations
 
 - Maintain consistency with existing patterns and naming.
+- **Automated Quality Gates:**
+  - Before making any changes, run the following commands to establish a baseline:
+    - `npm run check:all`
+  - If any fail or coverage is below target, do not proceed—reject the build and send a report to the orchestrator for remediation planning.
+  - After implementation, re-run all the above commands. If any fail or coverage drops, fix the issues before handover. Only proceed if all pass and coverage is not reduced. If unable to resolve, halt and report to the orchestrator.
+- **Component Testing Pattern:**
+  - If a component contains logic, split it into:
+    - A presentor component (`{ComponentName}View`) that takes only props and is easy to test with different prop combinations.
+    - A container component (`{ComponentName}`) that adds logic and composes the presentor. The container should be smoke tested to ensure it renders.
+  - Presentor components should be tested with a variety of props for coverage.
+  - For Astro components, use `import { experimental_AstroContainer as AstroContainer } from 'astro/container';` for testing. See `website/src/components/ui/nav/render/NavBarView.test.ts` for an example.
 - Before handing off to the next stage or declaring clean commit ready, you must:
-  - Run and validate all quality gates: lint, typecheck, style checks, tests, and coverage.
+  - Run and validate all quality gates: `npm run check:all:fix`.
   - If any gate fails, halt and report the errors to the orchestrator; do not proceed.
   - Only declare clean commit ready if all gates pass.
 - Reduce duplication where practical without over-abstraction.

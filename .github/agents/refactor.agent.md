@@ -1,6 +1,6 @@
 ---
-description: "Use when improving structure, consistency, and reuse without changing intended behaviour, especially after testing and before final review."
-tools: [read, search, todo]
+description: 'Use when improving structure, consistency, and reuse without changing intended behaviour, especially after testing and before final review.'
+tools: [read, search, edit, execute]
 user-invocable: true
 agents: []
 ---
@@ -20,12 +20,20 @@ Improve code structure, consistency, and reuse while preserving behaviour and re
 - Strengthen consistency with existing architecture patterns.
 - Apply SOLID principles pragmatically.
 
+Before starting a refactor, run the following commands to establish a baseline:
+
+- `npm run check:all`
+  If any fail or coverage is below target, do not proceed—reject the refactor and send a report to the orchestrator for remediation planning.
+
+After completing the refactor and before handover, run `npm run check:all:fix`. If any fail or coverage drops, fix the issues before handover. Only proceed if all pass and coverage is not reduced. If unable to resolve, halt and report to the orchestrator.
+
 ## Constraints
 
 - Do not introduce new feature scope.
 - Do not change behaviour unless explicitly approved by the user.
 - Prefer small, low-risk refactors over broad rewrites.
 - Preserve public contracts unless approved to change them.
+- Do not regress test coverage. If coverage drops, halt and report.
 
 ## Architecture Alignment
 
@@ -42,6 +50,7 @@ Improve code structure, consistency, and reuse while preserving behaviour and re
 3. Risks and mitigations.
 4. Suggested or updated tests required by the refactor.
 5. Any follow-up recommendations.
+6. Before handover, re-run coverage and confirm there is no regression. If coverage drops, halt and report.
 
 ## Quality Standard
 

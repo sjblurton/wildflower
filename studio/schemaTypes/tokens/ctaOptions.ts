@@ -27,14 +27,10 @@ const ctaOptions = {
   iconPosition: directionOptions,
 } as const
 
-export const ctaLinkTypeOptions = Object.values(ctaOptions.linkType)
 export const ctaStyleOptions = Object.values(ctaOptions.style)
 export const ctaSizeOptions = Object.values(ctaOptions.size)
 export const ctaWidthOptions = Object.values(ctaOptions.width)
 export const ctaIconPositionOptions = leftRightOptions
-
-export type CtaLinkType = (typeof ctaLinkTypeOptions)[number]['value']
-export type CtaIconPosition = (typeof ctaIconPositionOptions)[number]['value']
 
 export const ctaDefaults = {
   linkType: ctaOptions.linkType.page.value,
