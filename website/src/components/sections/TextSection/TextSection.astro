@@ -1,0 +1,13 @@
+---
+import type { TextSection } from '../../../lib/schemas/sections/textSection';
+import CTAButtons from '../../ui/ctaButton/render/CTAButtons.astro';
+import TextSectionView from './TextSectionView.astro';
+
+type Props = TextSection;
+
+const { ctaButtons, ...props } = Astro.props as Props;
+---
+
+<TextSectionView {...props}>
+  <CTAButtons slot="cta" cta={ctaButtons ?? []} />
+</TextSectionView>

@@ -1,0 +1,33 @@
+---
+import './TextSection.css';
+import type { TextSection } from '../../../lib/schemas/sections/textSection';
+import { PortableText } from 'astro-portabletext';
+
+type Props = Omit<TextSection, 'ctaButtons'>;
+
+const { header, items } = Astro.props as Props;
+---
+
+<section class="relative flex items-center justify-center overflow-hidden min-h-75">
+  <div class="container max-w-5xl mx-auto">
+    {
+      header && (
+        <h2 class="text-3xl font-bold tracking-tight text-heading md:text-4xl lg:text-5xl text-center mb-12">
+          {header}
+        </h2>
+      )
+    }
+    <div class="mx-auto text-section mb-4 flex flex-wrap gap-8">
+      {
+        items.map((item) => (
+          <div class="mx-4 flex-1 min-w-75 sm:max-w-full md:max-w-[50%] lg:max-w-[33%]">
+            <PortableText value={item.body} />
+          </div>
+        ))
+      }
+    </div>
+    <div class="m-4 flex justify-center gap-4">
+      <slot name="cta" />
+    </div>
+  </div>
+</section>
