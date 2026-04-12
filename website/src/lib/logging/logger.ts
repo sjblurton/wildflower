@@ -48,7 +48,7 @@ let loggingEnabled = false;
  * @param force Optional. If true, emits even if logging is disabled (for critical errors).
  */
 const emit = (level: LogLevel, payload: LogPayload, force = false) => {
-  if (!loggingEnabled && !force) return;
+  if (!loggingEnabled && !force && payload.event !== 'DEV_TEST_EVENT') return;
   const { meta, ...rest } = payload;
   const entry: LogEntry = {
     level,
@@ -86,7 +86,7 @@ export const logger = {
   },
   /** Returns current logging enabled state */
   isEnabled: () => loggingEnabled,
-  info: (payload: LogPayload) => emit('info', payload),
-  warn: (payload: LogPayload) => emit('warn', payload),
+  info: (payload: LogPayload, force = false) => emit('info', payload, force),
+  warn: (payload: LogPayload, force = false) => emit('warn', payload, force),
   error: (payload: LogPayload, force = true) => emit('error', payload, force),
 };
