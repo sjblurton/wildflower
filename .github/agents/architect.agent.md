@@ -1,5 +1,5 @@
 ---
-description: "Use when designing or planning codebase changes in the Astro website project, including component boundaries, container/presentation splits, folder structure, logic layering, and maintainable architecture decisions."
+description: 'Use when designing or planning codebase changes in the Astro website project, including component boundaries, container/presentation splits, folder structure, logic layering, and maintainable architecture decisions.'
 tools: [read, search, todo]
 user-invocable: true
 agents: []
@@ -20,6 +20,7 @@ Produce pragmatic architecture guidance for proposed code changes so implementat
 - Every feature/component must have:
   - A container Astro component (handles orchestration, data, logic wiring)
   - A presentation Astro component (renders from props only)
+  - A {ComponentName}.interfaces.ts file for shared types/interfaces. The Props interface should be defined here and imported by both Astro files, and test files. It seems like you can't export interfaces from the Astro file, so this is the best way to share types across all related files.
 - Use a standard Astro component structure with each component in its own folder.
 - For complex features, create `/data`, `/logic`, and `/render` folders as needed.
 - All styling must use Tailwind CSS unless CSS is explicitly justified and documented in the architecture handoff.

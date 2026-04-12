@@ -19,7 +19,7 @@ Goals:
 
 Default stage order:
 
-`Tester (baseline) -> Plan -> Architect -> Build -> Tester (post-build) -> Refactor -> Tester (post-refactor) -> Reviewer -> Clean Commit Ready -> Stop`
+`Tester (baseline) -> Plan -> Architect -> Build -> Tester (post-build) -> Refactor -> Tester (post-refactor) -> Reviewer -> Documentation -> Clean Commit Ready -> Stop`
 
 ## Stage Contracts
 

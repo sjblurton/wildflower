@@ -50,6 +50,25 @@ Deliver the approved slice safely and clearly, aligned to architecture decisions
     - A container component (`{ComponentName}`) that adds logic and composes the presentor. The container should be smoke tested to ensure it renders.
   - Presentor components should be tested with a variety of props for coverage.
   - For Astro components, use `import { experimental_AstroContainer as AstroContainer } from 'astro/container';` for testing. See `website/src/components/ui/nav/render/NavBarView.test.ts` for an example.
+  - Do not use '@testing-library/astro'. only astro/container.
+  - the component in the test will need to be typed with asertion `const ProductCardComponent = ProductCardView as unknown as AstroComponentFactory;`
+  - example use would be:
+
+  ```
+   const container = await AstroContainer.create();
+      const html = await container.renderToString(ProductCardComponent, {
+        props: {
+          ...minimalProps,
+          icon,
+          iconPosition,
+        },
+      });
+  ```
+
+  - type all the props within the test to make sure there are correctly typed and comprehensive test cases.
+    - Create a {ComponentName}.interfaces.ts file for shared types/interfaces. The Props interface should be defined here and imported by both Astro files, and test files. It seems like you can't export interfaces from the Astro file, so this is the best way to share types across all related files.
+  - We might want to create a {ComponentName}.interfaces.ts file for the prop types if they are shared between the container and presentor, or if they are complex enough to warrant separation.
+
 - Before handing off to the next stage or declaring clean commit ready, you must:
   - Run and validate all quality gates: `npm run check:all:fix`.
   - If any gate fails, halt and report the errors to the orchestrator; do not proceed.
