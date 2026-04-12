@@ -20,7 +20,7 @@ const { header, items } = Astro.props as Props;
     <div class="mx-auto text-section mb-4 flex flex-wrap gap-8">
       {
         items.map((item) => (
-          <div class="mx-4 flex-1 min-w-75 sm:max-w-full md:max-w-[50%] lg:max-w-[33%]">
+          <div class="mx-4 flex-1 min-w-75 sm:max-w-full md:max-w-[50%]">
             <PortableText value={item.body} />
           </div>
         ))
