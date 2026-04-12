@@ -85,8 +85,6 @@ All conditions must hold:
 
 - Keep updates concise and useful for maintainers and CMS users.
 - Record any changed usage expectations.
-- Capture Storybook relevance notes when components are affected.
-- Storybook publishing process is intentionally deferred.
 
 ## Handoff Template Per Stage
 

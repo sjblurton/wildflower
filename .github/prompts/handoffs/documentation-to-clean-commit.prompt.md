@@ -1,6 +1,6 @@
 ---
-description: "Stage handoff template: Documentation to clean commit ready with final evidence pack."
-agent: "documentation"
+description: 'Stage handoff template: Documentation to clean commit ready with final evidence pack.'
+agent: 'documentation'
 ---
 
 Create a stage handoff from Documentation to clean commit ready.
@@ -17,7 +17,6 @@ Use this output structure exactly:
 
 - Developer documentation updated:
 - User-facing documentation updated:
-- Storybook context notes updated:
 
 ## Final Evidence Pack
 

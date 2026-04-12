@@ -1,6 +1,6 @@
 ---
-description: "Stage handoff template: Reviewer to Documentation with approved changes and caveats."
-agent: "reviewer"
+description: 'Stage handoff template: Reviewer to Documentation with approved changes and caveats.'
+agent: 'reviewer'
 ---
 
 Create a stage handoff from Reviewer to Documentation.
@@ -38,7 +38,6 @@ Use this output structure exactly:
 ## Documentation Targets
 
 - Files or sections to update:
-- Storybook context notes needed:
 
 ## Recommendation
 

@@ -73,7 +73,7 @@ Default stage order:
 
 ### Documentation
 
-(Removed: Documentation phase is no longer required. Usage notes should be included in Reviewer or Clean Commit Ready summaries if needed. All Storybook references removed.)
+- no comments in code files without explicit justification. - any comments determined to be needed should be jsdoc style and provide value beyond what is obvious from the code.
 
 ## Stop And Approval Rules
 
