@@ -1,6 +1,6 @@
 ---
-import type { ProductCard } from '../../../../lib/schemas/cards/productCard';
-import CTAButtons from '../../ctaButton/render/CTAButtons.astro';
+import type { ProductCard } from '../../../lib/schemas/cards/productCard';
+import CTAButtons from '../ctaButton/render/CTAButtons.astro';
 import ProductCardView from './ProductCardView.astro';
 
 const { ctaButton, ...props } = Astro.props as ProductCard;
