@@ -1,20 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { experimental_AstroContainer as AstroContainer } from 'astro/container';
 import ProductCardView from './ProductCardView.astro';
-import type {
-  CtaProps,
-  MappedProductCardIcon,
-  ProductCardButton,
-} from '../logic/ProductCard.logic';
+import type { MappedProductCardIcon, ProductCardButton } from '../logic/ProductCard.logic';
 import type { AstroComponentFactory } from 'astro/runtime/server/render/astro/index.js';
-import type { SanityImage } from '../../../../lib/schemas/shared/primitives';
-
-type ProductCardViewProps = {
-  description: string;
-  title: string;
-  image?: SanityImage | null;
-  cta: CtaProps[] | null;
-};
+import type { ProductCardViewProps } from './ProductCardView.interface';
 
 const sanityImageMock = {
   alt: 'test alt',
