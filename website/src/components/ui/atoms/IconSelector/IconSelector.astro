@@ -1,0 +1,19 @@
+---
+import type { SanityImage } from '../../../../lib/schemas/shared/primitives';
+import CustomIcon from '../CustomIcon/CustomIcon.astro';
+import InternalIcon from '../InternalIcon/InternalIcon.astro';
+
+type Props = {
+  icon: { _type: 'internal'; link: string | null } | SanityImage | null;
+};
+
+const { icon } = Astro.props as Props;
+---
+
+{
+  icon?._type === 'image' ? (
+    <CustomIcon image={icon} />
+  ) : icon?._type === 'internal' ? (
+    <InternalIcon link={icon.link} />
+  ) : null
+}

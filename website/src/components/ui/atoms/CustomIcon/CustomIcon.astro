@@ -1,0 +1,12 @@
+---
+import type { SanityImage as SanityImageType } from '../../../../lib/schemas/shared/primitives';
+import SanityImage from '../media/SanityImage/SanityImage.astro';
+
+type Props = {
+  image: SanityImageType;
+};
+
+const { image } = Astro.props as Props;
+---
+
+<SanityImage data-testid="cta-image-icon" image={image} class="w-4 h-4 inline-block ml-1" />

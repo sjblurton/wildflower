@@ -1,0 +1,13 @@
+---
+type Props = {
+  link: string | null;
+};
+
+const { link } = Astro.props as Props;
+---
+
+<span
+  class="global-icon-colour w-4 h-4 inline-block"
+  set:html={link}
+  data-testid="cta-internal-icon"
+/>
