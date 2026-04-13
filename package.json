@@ -24,7 +24,7 @@
     "knip:website": "knip --workspace website",
     "knip:studio": "knip --workspace studio",
     "build": "npm run build:studio && npm run build:website",
-    "build:studio": "git rev-parse HEAD^ >/dev/null 2>&1 && git diff --quiet HEAD^ HEAD studio || (npm --workspace studio run build && rsync -a --delete studio/dist/ website/public/studio/)",
+    "build:studio": "npm --workspace studio run build && rsync -a --delete studio/dist/ website/public/studio",
     "build:website": "npm --workspace website run build",
     "preview:website": "npm --prefix website run preview",
     "start:studio": "npm --prefix studio run start",
