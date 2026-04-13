@@ -11,6 +11,10 @@
     "prettier-plugin-groq": "^0.2.5",
     "typescript": "^6.0.2"
   },
+  "workspaces": [
+    "studio",
+    "website"
+  ],
   "scripts": {
     "prepare": "husky",
     "dev:website": "npm --prefix website run dev",
@@ -19,9 +23,9 @@
     "knip:ci": "knip --no-progress",
     "knip:website": "knip --workspace website",
     "knip:studio": "knip --workspace studio",
-    "build": "npm run build:website && npm run build:studio",
-    "build:website": "npm --prefix website run build",
-    "build:studio": "npm --prefix studio run build",
+    "build": "npm run build:studio && npm run build:website",
+    "build:studio": "git rev-parse HEAD^ >/dev/null 2>&1 && git diff --quiet HEAD^ HEAD studio || (npm --workspace studio run build && rsync -a --delete studio/dist/ website/public/studio/)",
+    "build:website": "npm --workspace website run build",
     "preview:website": "npm --prefix website run preview",
     "start:studio": "npm --prefix studio run start",
     "test": "npm --prefix website run test",
