@@ -10,20 +10,25 @@ const { image, overlayTitle, overlayOpacity } = Astro.props as Props;
 const logic = getImageSectionLogic({ image, overlayOpacity });
 ---
 
-<section class="relative flex items-center justify-center overflow-hidden min-h-75">
+<section class="relative flex items-center justify-center overflow-hidden h-screen">
   {
     image?.asset ? (
       logic.isTestImage ? (
         <img
           src={typeof image.asset === 'string' ? image.asset : ''}
           alt={image.alt}
-          class="w-full h-auto block"
+          class="w-full h-full block object-cover"
         />
       ) : (
-        <SanityImage image={image} class="w-full h-auto block" loading="lazy" decoding="async" />
+        <SanityImage
+          image={image}
+          class="w-full h-full block object-cover"
+          loading="lazy"
+          decoding="async"
+        />
       )
     ) : (
-      <div class="w-full h-auto block">Image unavailable</div>
+      <div class="w-full h-full block">Image unavailable</div>
     )
   }
   {
