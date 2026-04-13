@@ -3,6 +3,7 @@ import {
   productHeroDefaults,
   productHeroImagePositionDesktopOptions,
 } from '../tokens/productHeroOptions'
+import {colourOptions} from '../tokens/colourOptions'
 
 export const productHeroSectionType = defineType({
   name: 'productHeroSection',
@@ -18,6 +19,10 @@ export const productHeroSectionType = defineType({
       name: 'media',
       title: 'Media',
     },
+    {
+      name: 'styling',
+      title: 'Styling',
+    },
   ],
   fields: [
     defineField({
@@ -25,8 +30,8 @@ export const productHeroSectionType = defineType({
       title: 'Title',
       type: 'string',
       group: 'content',
-      description:
-        'Optional main heading for the product hero section. This will be above the image block. Or create a custom heading within the body field using the block editor.',
+      description: 'Main heading for the product hero section',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'body',
@@ -78,7 +83,7 @@ export const productHeroSectionType = defineType({
           ],
         }),
       ],
-      validation: (Rule) => Rule.required().min(1).max(6),
+      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'ctaButtons',
@@ -91,6 +96,19 @@ export const productHeroSectionType = defineType({
           type: 'cta',
         }),
       ],
+    }),
+    defineField({
+      name: 'backgroundColour',
+      title: 'Background colour',
+      type: 'string',
+      description:
+        'Background colour for this section. The background colour comes from the theme and can be either light or dark. This can be a good way to visually separate this section from others on the page.',
+      options: {
+        list: [colourOptions.light, colourOptions.dark],
+      },
+      initialValue: colourOptions.light.value,
+      validation: (Rule) => Rule.required(),
+      group: 'styling',
     }),
   ],
   preview: {
@@ -113,7 +131,7 @@ export const productHeroSectionType = defineType({
         ctaCount > 0 ? `CTA set (${ctaCount} button${ctaCount === 1 ? '' : 's'})` : 'No CTA'
 
       return {
-        title: title || 'Product hero section',
+        title: title + '- Product hero section',
         subtitle: `${imageCount} image${imageCount === 1 ? '' : 's'} • ${ctaState}`,
         media,
       }

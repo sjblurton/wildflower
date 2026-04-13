@@ -4,7 +4,6 @@ import {pageType} from './content/page'
 import {productCardType} from './content/productCard'
 import {productHeroSectionType} from './content/productHeroSection'
 import {productsSectionType} from './content/productsSection'
-import {communicationLinksSectionType} from './content/communicationLinksSection'
 import {textSectionType} from './content/textSection'
 import {contactLinkType} from './links/contactLink'
 import {instagramLinkType} from './links/instagramLink'
@@ -27,7 +26,6 @@ export const schemaTypes = [
   productCardType,
   productHeroSectionType,
   productsSectionType,
-  communicationLinksSectionType,
   siteSettingsType,
   textSectionType,
   instagramLinkType,

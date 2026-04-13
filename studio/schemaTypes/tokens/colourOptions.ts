@@ -10,6 +10,8 @@ export const colourOptions = {
   success: {title: 'Success', value: 'success'},
   warning: {title: 'Warning', value: 'warning'},
   error: {title: 'Error', value: 'error'},
+  light: {title: 'Light', value: 'light'},
+  dark: {title: 'Dark', value: 'dark'},
 } as const
 
 export const daisyThemeOptions = [

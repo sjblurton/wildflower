@@ -1,5 +1,6 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {directionOptions} from '../tokens/directionOptions'
+import {colourOptions} from '../tokens/colourOptions'
 
 export const productsSectionType = defineType({
   name: 'productsSection',
@@ -27,6 +28,18 @@ export const productsSectionType = defineType({
       type: 'array',
       of: [defineArrayMember({type: 'productCard'})],
       validation: (Rule) => Rule.required().min(1),
+    }),
+    defineField({
+      name: 'backgroundColour',
+      title: 'Background colour',
+      type: 'string',
+      description:
+        'Background colour for this section. The background colour comes from the theme and can be either light or dark. This can be a good way to visually separate this section from others on the page.',
+      options: {
+        list: [colourOptions.light, colourOptions.dark],
+      },
+      initialValue: colourOptions.light.value,
+      validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {

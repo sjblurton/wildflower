@@ -44,7 +44,6 @@ export const pageType = defineType({
       group: 'content',
       of: [
         defineArrayMember({type: 'imageSection'}),
-        defineArrayMember({type: 'communicationLinksSection'}),
         defineArrayMember({type: 'textSection'}),
         defineArrayMember({type: 'productHeroSection'}),
         defineArrayMember({type: 'productsSection'}),
