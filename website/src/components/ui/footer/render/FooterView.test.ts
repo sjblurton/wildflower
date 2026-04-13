@@ -14,6 +14,7 @@ const createFooter = (overrides: Partial<FooterSettings> = {}): FooterSettings =
   footerLogo: null,
   footerCopyrightText: 'All rights reserved',
   footerNavLinks: [{ _key: 'home', _type: 'navLink', label: 'Home', slug: '/' }],
+  backgroundColour: 'light',
   footerContactLinks: [
     {
       _key: 'email-1',
