@@ -37,7 +37,7 @@ export const getBtnClassNames = ({
   width,
   style,
 }: {
-  colour: Colours;
+  colour: Exclude<Colours, 'light' | 'dark'>;
   size: Sizes;
   width: Widths;
   style: Variants;

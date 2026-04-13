@@ -9,4 +9,8 @@ export const BG_CLASS_MAPS = {
     70: 'bg-base-200/70',
     80: 'bg-base-200/80',
   },
+  COLOR: {
+    light: 'bg-base-100',
+    dark: 'bg-base-200',
+  },
 } as const;
