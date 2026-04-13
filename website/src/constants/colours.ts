@@ -7,6 +7,8 @@ export const COLOURS = {
   SUCCESS: 'success',
   WARNING: 'warning',
   ERROR: 'error',
+  LIGHT: 'light',
+  DARK: 'dark',
 } as const;
 
 export type Colours = (typeof COLOURS)[keyof typeof COLOURS];

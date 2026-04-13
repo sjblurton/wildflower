@@ -1,18 +1,8 @@
 import z from 'zod';
 import { ctaButtonSchema } from '../buttons/ctaButtonSchema';
 import { COMPONENT_TYPES } from '../../../constants/components-types';
-
-const textBlockSchema = z.looseObject({
-  _type: z.literal('block'),
-  _key: z.string().min(1),
-  children: z.array(
-    z.looseObject({
-      _type: z.string(),
-      _key: z.string().min(1),
-      text: z.string().optional().nullable(),
-    }),
-  ),
-});
+import { textBlockSchema } from '../shared/primitives';
+import { sectionColoursSchema } from './sectionColours';
 
 const textItemSchema = z.object({
   _key: z.string().min(1),
@@ -26,6 +16,7 @@ export const textSectionSchema = z.object({
   ctaButtons: ctaButtonSchema.array().default([]),
   header: z.string().nullable().default(null),
   items: textItemSchema.array().default([]),
+  backgroundColour: sectionColoursSchema,
 });
 
 export type TextSection = z.infer<typeof textSectionSchema>;

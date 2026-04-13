@@ -2,6 +2,7 @@ import z from 'zod';
 import { COMPONENT_TYPES } from '../../../constants/components-types';
 import { productCardSchema } from '../cards/productCard';
 import { DIRECTIONS } from '../../../constants/directions';
+import { sectionColoursSchema } from './sectionColours';
 
 export const productSectionSchema = z.object({
   _key: z.string().min(1),
@@ -12,6 +13,7 @@ export const productSectionSchema = z.object({
     .optional()
     .default(DIRECTIONS.CENTER),
   products: productCardSchema.array().optional(),
+  backgroundColour: sectionColoursSchema,
 });
 
 export type ProductSection = z.infer<typeof productSectionSchema>;

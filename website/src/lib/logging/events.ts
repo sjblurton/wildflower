@@ -16,6 +16,7 @@ export const LOG_EVENTS = {
     fetchFailed: 'section.fetch_failed',
     validationFailed: 'section.validation_failed',
     fallbackApplied: 'section.removed_due_to_validation_failure',
+    unknownSectionType: 'section.unknown_section_type',
   },
   page: {
     pageLoaded: 'page.page_loaded',

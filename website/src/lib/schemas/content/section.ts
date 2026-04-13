@@ -3,11 +3,13 @@ import { imageSectionSchema } from '../sections/imageSection';
 import { logger } from '../../logging/logger';
 import { productSectionSchema } from '../sections/productsSection';
 import { textSectionSchema } from '../sections/textSection';
+import { productHeroSectionSchema } from '../sections/productHeroSection';
 
 export const sectionSchema = z.discriminatedUnion('_type', [
   imageSectionSchema,
   productSectionSchema,
   textSectionSchema,
+  productHeroSectionSchema,
 ]);
 
 export type Section = z.infer<typeof sectionSchema>;

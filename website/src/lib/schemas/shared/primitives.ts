@@ -32,6 +32,18 @@ export const linkReferenceTypeSchema = z.object({
   _key: z.string().min(1),
 });
 
+export const textBlockSchema = z.looseObject({
+  _type: z.literal('block'),
+  _key: z.string().min(1),
+  children: z.array(
+    z.looseObject({
+      _type: z.string(),
+      _key: z.string().min(1),
+      text: z.string().optional().nullable(),
+    }),
+  ),
+});
+
 export type LinkReferenceType = z.infer<typeof linkReferenceTypeSchema>;
 export type SanityImage = z.infer<typeof sanityImageSchema>;
 export type DaisyTheme = z.infer<typeof daisyThemeSchema>;
