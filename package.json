@@ -35,12 +35,11 @@
     "lint:fix": "npm --prefix website run lint:fix && npm --prefix studio run lint:fix",
     "format:check": "npm --prefix website run format:check && npm --prefix studio run format:check",
     "format": "npm --prefix website run format && npm --prefix studio run format",
-    "check:all": "npm run format:check && npm run lint && npm run typecheck && npm run astrocheck && npm run test:coverage && npm run knip",
-    "check:all:fix": "npm run format && npm run lint:fix && npm run typecheck && npm run astrocheck && npm run test:coverage",
+    "check:all": "npm run format:check && npm run lint && npm run typecheck && npm run test:coverage && npm run knip",
+    "check:all:fix": "npm run format && npm run lint:fix && npm run typecheck && npm run test:coverage",
     "format:staged": "lint-staged",
     "typecheck": "npm --prefix website run typecheck && npm --prefix studio run typecheck",
-    "astrocheck": "npm --prefix website run checkastro",
-    "precommit:checks": "npm run lint && npm run typecheck && npm run astrocheck",
+    "precommit:checks": "npm run lint && npm run typecheck",
     "precommit:fixes": "npm run format:staged"
   },
   "lint-staged": {

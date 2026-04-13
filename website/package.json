@@ -17,8 +17,7 @@
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "typecheck": "astro check && tsc --noEmit",
-    "checkastro": "astro check"
+    "typecheck": "astro check && tsc --noEmit"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.8",

@@ -32,3 +32,4 @@ pnpm-debug.log*
 
 # coverage output
 website/coverage/
+website/public/studio

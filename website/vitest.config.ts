@@ -15,6 +15,8 @@ export default getViteConfig({
         '**/queries.ts',
         '**/*.config.*',
         '**/fixtures.ts',
+        'public',
+        'dist',
       ],
     },
   },
