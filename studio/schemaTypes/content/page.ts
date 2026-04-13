@@ -30,14 +30,6 @@ export const pageType = defineType({
       validation: (Rule) => [Rule.required()],
     }),
     defineField({
-      name: 'Header',
-      type: 'string',
-      title: 'Header',
-      group: 'content',
-      description: 'Optional header for the top of the page.',
-    }),
-
-    defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
