@@ -1,48 +1,42 @@
-# Astro Starter Kit: Basics
+# Website
 
-```sh
-npm create astro@latest -- --template basics
-```
+This directory contains the public-facing website, built with Astro and Tailwind CSS.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+## Overview
 
-Inside of your Astro project, you'll see the following folders and files:
+For a full project overview, setup, and deployment instructions, see the [root README](../README.md).
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+---
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Usage
 
-## 🧞 Commands
+All commands should be run from this directory unless otherwise noted.
 
-All commands are run from the root of the project, from a terminal:
+| Command           | Action                                  |
+| ----------------- | --------------------------------------- |
+| `npm install`     | Installs dependencies                   |
+| `npm run dev`     | Starts the local development server     |
+| `npm run build`   | Builds the production site to `./dist/` |
+| `npm run preview` | Previews the production build locally   |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run test`            | Run unit tests with Vitest                       |
-| `npm run test:watch`      | Run Vitest in watch mode                         |
-| `npm run test:coverage`   | Run tests with coverage output                   |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+---
+
+## Deployment
+
+Deploy the built output from `website/dist` to your production host (e.g., Vercel, Netlify, or your preferred static host). This repository is intended for **production-only deployments**.
+
+---
+
+## Further Information
+
+For shared setup, maintenance, and contact details, see the [root README](../README.md).
+| `npm run test` | Run unit tests with Vitest |
+| `npm run test:watch` | Run Vitest in watch mode |
+| `npm run test:coverage` | Run tests with coverage output |
+| `npm run astro ...` | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI |
 
 ## Navigation Resilience
 
