@@ -76,6 +76,7 @@ export const buildFallbackFooter = (seed?: FooterFallbackSeed): FooterSettings =
   return {
     _id: seed?._id ?? 'footerSettings-fallback',
     _type: 'footerSettings',
+    backgroundColour: 'light',
     footerSiteName: toTrimmedString(seed?.footerSiteName) ?? null,
     footerLogo: safeLogo.success ? safeLogo.data : null,
     footerNavLinks: navLinks,
