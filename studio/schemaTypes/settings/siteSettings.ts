@@ -75,12 +75,11 @@ export const siteSettingsType = defineType({
       group: 'seo',
     }),
     defineField({
-      name: 'noIndexByDefault',
-      title: 'Noindex by default',
+      name: 'globalWebIndex',
+      title: 'Index this page',
       type: 'boolean',
       description:
-        'Enable this if pages should default to not being indexed by search engines unless you explicitly override that behavior later.',
-      initialValue: false,
+        'Global default for whether search engines should index pages. Individual pages can override this setting.',
       group: 'seo',
     }),
     defineField({

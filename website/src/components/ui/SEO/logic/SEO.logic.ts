@@ -63,7 +63,7 @@ const buildFallbackSeoSiteSettings = async (
       defaultMetaTitle: null,
       defaultMetaDescription: null,
       defaultOgImage: null,
-      noIndexByDefault: false,
+      globalWebIndex: false,
     };
 
     logger.info({
@@ -157,7 +157,11 @@ export const loadSeoMetadata = async ({
     toTrimmedString(siteSettings.defaultMetaDescription);
   const canonicalUrl = buildCanonicalUrl(siteSettings.siteUrl, pathname);
   const ogImageAlt = toTrimmedString(ogImage?.alt);
-  const noIndex = siteSettings.noIndexByDefault;
+  const pageWebIndex = pageDocument?.seo?.webIndex;
+  const noIndex =
+    pageWebIndex !== null && pageWebIndex !== undefined
+      ? !pageWebIndex
+      : !siteSettings.globalWebIndex;
 
   return {
     title,

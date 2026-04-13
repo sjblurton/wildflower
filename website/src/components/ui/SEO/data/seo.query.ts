@@ -4,7 +4,7 @@ export const siteSeoQuery = /* groq */ `
     siteUrl,
     defaultMetaTitle,
     defaultMetaDescription,
-    noIndexByDefault,
+    globalWebIndex,
     defaultOgImage{
       _type,
       alt,
@@ -20,6 +20,7 @@ export const pageSeoBySlugQuery = /* groq */ `
     seo{
       metaTitle,
       metaDescription,
+      webIndex,
       ogImage{
         _type,
         alt,

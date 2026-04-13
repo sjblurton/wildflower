@@ -6,6 +6,7 @@ export const pageSeoSchema = z
     metaTitle: z.string().nullable().optional(),
     metaDescription: z.string().nullable().optional(),
     ogImage: sanityImageSchema.nullable().optional(),
+    webIndex: z.boolean().nullable().optional(),
   })
   .nullable()
   .optional();

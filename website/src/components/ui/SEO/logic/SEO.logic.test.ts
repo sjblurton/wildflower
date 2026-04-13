@@ -16,7 +16,7 @@ describe('loadSeoMetadata', () => {
       asset: { _ref: imageRef, _type: 'reference' },
       alt: 'alt',
     },
-    noIndexByDefault: false,
+    globalWebIndex: false,
   } satisfies SiteSeoSettings;
   const validPageDocument = {
     title: 'Page Title',
@@ -60,7 +60,7 @@ describe('loadSeoMetadata', () => {
     expect(result.title).toBe('Page Meta');
     expect(result.description).toBe('Page Desc');
     expect(result.canonicalUrl).toContain('/foo');
-    expect(result.robotsContent).toBe('index, follow');
+    expect(result.robotsContent).toBe('noindex, nofollow');
     expect(result.twitterCard).toBe('summary_large_image');
     expect(loggerInfo).toHaveBeenCalled();
   });
@@ -104,7 +104,7 @@ describe('loadSeoMetadata', () => {
       fetchPageSeoDocument,
     });
     expect(result.title).toBe('Wildflower');
-    expect(result.robotsContent).toBe('index, follow');
+    expect(result.robotsContent).toBe('noindex, nofollow');
     expect(loggerError).toHaveBeenCalled();
     expect(loggerInfo).toHaveBeenCalled();
   });
@@ -161,7 +161,7 @@ describe('loadSeoMetadata', () => {
       defaultMetaTitle: null,
       defaultMetaDescription: null,
       defaultOgImage: null,
-      noIndexByDefault: false,
+      globalWebIndex: true,
     });
     const fetchPageSeoDocument = vi.fn().mockResolvedValue({
       title: null,
