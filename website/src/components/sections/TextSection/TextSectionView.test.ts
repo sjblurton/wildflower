@@ -8,6 +8,7 @@ const minimalProps: Omit<TextSection, 'ctaButtons'> = {
   _key: 'section1',
   _type: 'textSection',
   header: 'Sample Header',
+  backgroundColour: 'light',
   items: [
     {
       _key: 'item1',

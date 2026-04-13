@@ -1,14 +1,17 @@
 ---
-import './TextSection.css';
+import '../../../styles/text-section.css';
 import type { TextSection } from '../../../lib/schemas/sections/textSection';
 import { PortableText } from 'astro-portabletext';
+import { BG_CLASS_MAPS } from '../../../styles/bg-maps';
 
 type Props = Omit<TextSection, 'ctaButtons'>;
 
-const { header, items } = Astro.props as Props;
+const { header, items, backgroundColour } = Astro.props as Props;
 ---
 
-<section class="relative flex items-center justify-center overflow-hidden min-h-75">
+<section
+  class=`relative flex items-center justify-center overflow-hidden min-h-75 ${BG_CLASS_MAPS.COLOR[backgroundColour]} py-8`
+>
   <div class="container max-w-5xl mx-auto">
     {
       header && (
@@ -26,7 +29,7 @@ const { header, items } = Astro.props as Props;
         ))
       }
     </div>
-    <div class="m-4 flex justify-center gap-4">
+    <div class="m-4 flex justify-center gap-4 flex-wrap">
       <slot name="cta" />
     </div>
   </div>

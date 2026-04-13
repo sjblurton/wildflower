@@ -1,0 +1,13 @@
+---
+import type { ProductHeroSection } from '../../../lib/schemas/sections/productHeroSection';
+import CTAButtons from '../../ui/ctaButton/render/CTAButtons.astro';
+import ProductHeroSectionView from './ProductHeroSectionView.astro';
+
+type Props = ProductHeroSection;
+
+const { ctaButtons, ...props } = Astro.props;
+---
+
+<ProductHeroSectionView {...props}>
+  <CTAButtons slot="cta" cta={ctaButtons ?? []} />
+</ProductHeroSectionView>

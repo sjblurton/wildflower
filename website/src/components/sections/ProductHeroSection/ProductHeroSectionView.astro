@@ -1,0 +1,31 @@
+---
+import '../../../styles/text-section.css';
+import Carousel from '../../ui/Carousel/Carousel.astro';
+import type { ProductHeroSection } from '../../../lib/schemas/sections/productHeroSection';
+import { BG_CLASS_MAPS } from '../../../styles/bg-maps';
+import { PortableText } from 'astro-portabletext';
+
+type Props = Omit<ProductHeroSection, 'ctaButtons'>;
+
+const { backgroundColour, body, title, images, imagePositionDesktop } = Astro.props;
+
+const imagePositionClassMap = {
+  left: 'lg:flex-row',
+  right: 'lg:flex-row-reverse',
+};
+---
+
+<section
+  class=`flex justify-center w-full hero min-h-100 h-auto ${BG_CLASS_MAPS.COLOR[backgroundColour]}`
+>
+  <div class={`hero-content flex-col ${imagePositionClassMap[imagePositionDesktop]} max-w-5xl`}>
+    <Carousel images={images} />
+    <div class="max-w-lg">
+      <h1 class="text-5xl font-bold">{title}</h1>
+      <div class="py-6">
+        <PortableText value={body} />
+      </div>
+      <slot name="cta" />
+    </div>
+  </div>
+</section>

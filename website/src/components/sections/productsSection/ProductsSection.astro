@@ -3,13 +3,16 @@ import { type ProductSection } from '../../../lib/schemas/sections/productsSecti
 import { getTextClassNames } from '../../../styles/text-map';
 import ProductCard from '../../ui/ProductCard/ProductCard.astro';
 import { fetchLinkReference } from '../../../lib/links/fetchLinkReference';
+import { BG_CLASS_MAPS } from '../../../styles/bg-maps';
 
 export type Props = ProductSection;
 
-const { products, title, alignTitle } = Astro.props;
+const { products, title, alignTitle, backgroundColour } = Astro.props;
 ---
 
-<section class="flex justify-center overflow-hidden max-w-5xl mx-auto px-2 py-8 flex-col">
+<section
+  class=`flex justify-center overflow-hidden max-w-5xl mx-auto px-2 py-8 flex-col ${BG_CLASS_MAPS.COLOR[backgroundColour]}`
+>
   {
     title && (
       <h2

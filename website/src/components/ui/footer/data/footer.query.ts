@@ -5,6 +5,7 @@ export const footerSettingsQuery = /* groq */ `
   *[_type == "footerSettings" && _id == "footerSettings"][0]{
     _id,
     _type,
+    backgroundColour,
     footerSiteName,
     footerLogo{
       ${imageProjection}
