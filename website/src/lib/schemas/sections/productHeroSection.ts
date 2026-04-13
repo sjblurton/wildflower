@@ -3,7 +3,7 @@ import { sanityImageSchema, textBlockSchema } from '../shared/primitives';
 import { ctaButtonSchema } from '../buttons/ctaButtonSchema';
 import { DIRECTIONS } from '../../../constants/directions';
 import { COMPONENT_TYPES } from '../../../constants/components-types';
-import { sectionColoursSchema } from './sectionColours';
+import { sectionColoursSchema } from '../shared/primitives';
 
 export const productHeroSectionSchema = z.object({
   title: z.string().optional().nullable(),

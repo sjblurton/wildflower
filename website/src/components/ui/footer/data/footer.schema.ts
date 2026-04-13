@@ -1,7 +1,7 @@
 import z from 'zod';
 import { footerContactTypeSchema } from '../logic/footerContactLinks.schema';
 import { navLinkSchema } from '../../../../lib/schemas/links/navLink';
-import { sanityImageSchema } from '../../../../lib/schemas/shared/primitives';
+import { sanityImageSchema, sectionColoursSchema } from '../../../../lib/schemas/shared/primitives';
 
 export const footerSettingsSchema = z.object({
   _id: z.string(),
@@ -12,6 +12,7 @@ export const footerSettingsSchema = z.object({
   footerNavLinks: navLinkSchema.array(),
   footerSiteName: z.string().nullable().optional(),
   title: z.string().optional(),
+  backgroundColour: sectionColoursSchema,
 });
 
 export type FooterSettings = z.infer<typeof footerSettingsSchema>;

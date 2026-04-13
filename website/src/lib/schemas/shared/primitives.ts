@@ -44,6 +44,8 @@ export const textBlockSchema = z.looseObject({
   ),
 });
 
+export const sectionColoursSchema = z.enum(['light', 'dark']).default('light');
+
 export type LinkReferenceType = z.infer<typeof linkReferenceTypeSchema>;
 export type SanityImage = z.infer<typeof sanityImageSchema>;
 export type DaisyTheme = z.infer<typeof daisyThemeSchema>;

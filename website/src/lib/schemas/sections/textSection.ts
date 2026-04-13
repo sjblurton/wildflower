@@ -1,8 +1,7 @@
 import z from 'zod';
 import { ctaButtonSchema } from '../buttons/ctaButtonSchema';
 import { COMPONENT_TYPES } from '../../../constants/components-types';
-import { textBlockSchema } from '../shared/primitives';
-import { sectionColoursSchema } from './sectionColours';
+import { textBlockSchema, sectionColoursSchema } from '../shared/primitives';
 
 const textItemSchema = z.object({
   _key: z.string().min(1),

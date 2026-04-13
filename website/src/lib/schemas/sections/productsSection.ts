@@ -2,7 +2,7 @@ import z from 'zod';
 import { COMPONENT_TYPES } from '../../../constants/components-types';
 import { productCardSchema } from '../cards/productCard';
 import { DIRECTIONS } from '../../../constants/directions';
-import { sectionColoursSchema } from './sectionColours';
+import { sectionColoursSchema } from '../shared/primitives';
 
 export const productSectionSchema = z.object({
   _key: z.string().min(1),
