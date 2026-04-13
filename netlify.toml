@@ -6,6 +6,3 @@ publish = "website/dist"
 NODE_VERSION = "22"
 NPM_FLAGS = "--prefer-offline --no-audit --progress=false"
 HUSKY = "0"
-
-[[plugins]]
-package = "@netlify/plugin-cache"
