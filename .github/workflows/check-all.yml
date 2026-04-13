@@ -19,4 +19,8 @@ jobs:
           node-version: 20
           cache: 'npm'
       - run: npm ci
+      - name: Write .env for website
+        run: |
+          echo "PUBLIC_SANITY_PROJECT_ID=$PUBLIC_SANITY_PROJECT_ID" > website/.env
+          echo "PUBLIC_SANITY_DATASET=$PUBLIC_SANITY_DATASET" >> website/.env
       - run: npm run check:all
