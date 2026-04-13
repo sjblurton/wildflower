@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {colourOptions} from '../tokens/colourOptions'
 
 export const footerSettingsType = defineType({
   name: 'footerSettings',
@@ -13,6 +14,14 @@ export const footerSettingsType = defineType({
     {
       name: 'logo',
       title: 'Logo',
+    },
+    {
+      name: 'styling',
+      title: 'Styling',
+    },
+    {
+      name: 'links',
+      title: 'Links',
     },
   ],
   fields: [
@@ -100,7 +109,7 @@ export const footerSettingsType = defineType({
           },
         }),
       ],
-      group: 'content',
+      group: 'links',
       validation: (Rule) =>
         Rule.unique().error('Each page can only be linked once in the footer navigation'),
     }),
@@ -110,9 +119,22 @@ export const footerSettingsType = defineType({
       type: 'array',
       of: [{type: 'reference', to: [{type: 'contactLink'}]}],
       description: 'Contact links to display in the footer.',
-      group: 'content',
+      group: 'links',
       validation: (Rule) =>
         Rule.unique().error('Each contact link can only be used once in the footer'),
+    }),
+    defineField({
+      name: 'backgroundColour',
+      title: 'Background colour',
+      type: 'string',
+      description:
+        'Background colour for this section. The background colour comes from the theme and can be either light or dark. This can be a good way to visually separate this section from others on the page.',
+      options: {
+        list: [colourOptions.light, colourOptions.dark],
+      },
+      initialValue: colourOptions.dark.value,
+      validation: (Rule) => Rule.required(),
+      group: 'styling',
     }),
   ],
   preview: {
