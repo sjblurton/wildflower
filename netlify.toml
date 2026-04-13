@@ -6,3 +6,8 @@ publish = "website/dist"
 NODE_VERSION = "22"
 NPM_FLAGS = "--prefer-offline --no-audit --progress=false"
 HUSKY = "0"
+
+[[redirects]]
+from = "/studio/*"
+to = "/studio/index.html"
+status = 200
