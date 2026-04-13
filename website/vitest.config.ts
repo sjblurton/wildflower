@@ -4,6 +4,7 @@ export default getViteConfig({
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],
+    setupFiles: './vitest.setup.ts',
     coverage: {
       thresholds: {
         branches: 90,
