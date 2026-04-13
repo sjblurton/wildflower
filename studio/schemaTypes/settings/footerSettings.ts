@@ -9,7 +9,6 @@ export const footerSettingsType = defineType({
     {
       name: 'content',
       title: 'Content',
-      default: true,
     },
     {
       name: 'logo',
@@ -22,6 +21,7 @@ export const footerSettingsType = defineType({
     {
       name: 'links',
       title: 'Links',
+      default: true,
     },
   ],
   fields: [

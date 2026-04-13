@@ -8,7 +8,7 @@ export const siteSeoSchema = z.object({
   defaultMetaTitle: z.string().nullable().default(null),
   defaultMetaDescription: z.string().nullable().default(null),
   defaultOgImage: sanityImageSchema.nullable().default(null),
-  noIndexByDefault: z.boolean().default(false),
+  globalWebIndex: z.boolean().nullable().optional().default(false),
 });
 
 export const pageSeoDocumentSchema = z

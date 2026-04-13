@@ -1,14 +1,8 @@
 ---
-interface Props {
-  title: string;
-  description?: string;
-  canonicalUrl?: string;
-  ogImageUrl?: string;
-  ogImageAlt?: string;
-  robotsContent: string;
-  twitterCard: 'summary' | 'summary_large_image';
-}
-const { title, description, canonicalUrl, ogImageUrl, ogImageAlt, robotsContent, twitterCard } =
+import type { SeoMetadata } from '../logic/SEO.logic';
+
+type Props = SeoMetadata;
+const { title, description, canonicalUrl, ogImageUrl, ogImageAlt, twitterCard, robotsContent } =
   Astro.props as Props;
 ---
 

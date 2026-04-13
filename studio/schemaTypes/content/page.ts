@@ -70,6 +70,13 @@ export const pageType = defineType({
             Rule.max(160).warning('Keep meta descriptions under 160 characters'),
         }),
         defineField({
+          name: 'webIndex',
+          title: 'Index this page',
+          type: 'boolean',
+          description:
+            'Override the global indexing setting for this page. Enable to allow search engines to index this page; disable to prevent indexing even when the global default is index.',
+        }),
+        defineField({
           name: 'ogImage',
           title: 'Open Graph image',
           type: 'image',
