@@ -24,7 +24,7 @@
     "knip:website": "knip --workspace website",
     "knip:studio": "knip --workspace studio",
     "build": "npm run build:studio && npm run build:website",
-    "build:studio": "npm --workspace studio run build && rsync -a --delete studio/dist/ website/public/studio",
+    "build:studio": "npm --workspace studio run build",
     "build:website": "npm --workspace website run build",
     "preview:website": "npm --prefix website run preview",
     "start:studio": "npm --prefix studio run start",

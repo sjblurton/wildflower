@@ -14,10 +14,9 @@ const singletonDocuments = {
 export default defineConfig({
   name: 'default',
   title: 'wildflower',
-  basePath: '/studio',
+  basePath: '/',
   projectId: 'rocap12l',
   dataset: 'production',
-
   plugins: [
     structureTool({
       structure: (S) =>
