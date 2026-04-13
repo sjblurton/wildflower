@@ -4,10 +4,25 @@ import PageTemplate from '../components/templates/PageTemplate.astro';
 import { pageBySlugQuery } from '../lib/cms/queries';
 import { pageSchema } from '../lib/schemas/content/page';
 import { sanityClient } from '../lib/cms/sanity';
+import { logger } from '../lib/logging/logger';
+import { LOG_EVENTS } from '../lib/logging/events';
+import z from 'zod';
 
 const rawPage = await sanityClient.fetch(pageBySlugQuery, { slug: 'home' });
 
 const result = pageSchema.safeParse(rawPage);
+
+if (!result.success) {
+  logger.error({
+    message: 'Failed to parse homepage data',
+    area: 'Homepage',
+    event: LOG_EVENTS.page.validationFailed,
+    meta: {
+      errors: z.prettifyError(result.error),
+      query: pageBySlugQuery,
+    },
+  });
+}
 
 const page = result.success ? result.data : null;
 ---

@@ -5,6 +5,8 @@ import PageTemplate from '../components/templates/PageTemplate.astro';
 import { pageBySlugQuery, pageSlugListQuery } from '../lib/cms/queries';
 import { pageSchema, pageSlugListItemSchema } from '../lib/schemas/content/page';
 import { sanityClient } from '../lib/cms/sanity';
+import { logger } from '../lib/logging/logger';
+import { LOG_EVENTS } from '../lib/logging/events';
 
 export async function getStaticPaths() {
   const rawSlugs = await sanityClient.fetch(pageSlugListQuery);
@@ -24,6 +26,16 @@ const rawPage = await sanityClient.fetch(pageBySlugQuery, { slug });
 const result = pageSchema.safeParse(rawPage);
 
 if (!result.success) {
+  logger.error({
+    message: 'Failed to parse page data',
+    area: 'Page',
+    event: LOG_EVENTS.page.validationFailed,
+    meta: {
+      errors: z.prettifyError(result.error),
+      query: pageBySlugQuery,
+      slug,
+    },
+  });
   return new Response(null, { status: 404, statusText: 'Not found' });
 }
 
