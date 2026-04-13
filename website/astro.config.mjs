@@ -16,7 +16,7 @@ export default defineConfig({
     }),
   ],
   redirects: {
-    '/studio': '/studio/index.html',
+    '/studio/*': '/studio/index.html',
   },
   vite: {
     plugins: [tailwindcss()],
