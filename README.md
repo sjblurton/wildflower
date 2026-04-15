@@ -24,7 +24,7 @@ All code, configuration, and documentation are centralised here for ease of main
 
 ### Installation
 
-1. Clone the repository: `git clone https://github.com/your-org/wildflower.git && cd wildflower`
+1. Clone the repository: `git clone https://github.com/sjblurton/wildflower.git && cd wildflower`
 2. Install dependencies for all projects: `shn npm install`
 
 ---
@@ -56,8 +56,8 @@ All environment variables and secrets should be managed securely outside of the 
 
 ## Live Links
 
-- [Production Website](https://your-production-website.com)
-- [Sanity Studio](https://your-sanity-studio.com)
+- [Production Website](https://wildflower-website.netlify.app/)
+- [Sanity Studio](https://wildflower-studio.netlify.app/structure)
 
 ---
 
