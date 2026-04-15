@@ -6,24 +6,17 @@ import { BG_CLASS_MAPS } from '../../../styles/bg-maps';
 
 type Props = Omit<TextSection, 'ctaButtons'>;
 
-const { header, items, backgroundColour } = Astro.props as Props;
+const { items, backgroundColour } = Astro.props as Props;
 ---
 
 <section
-  class=`relative flex items-center justify-center overflow-hidden min-h-75 ${BG_CLASS_MAPS.COLOR[backgroundColour]} py-8`
+  class=`relative flex justify-center overflow-hidden min-h-75 ${BG_CLASS_MAPS.COLOR[backgroundColour]} py-8`
 >
-  <div class="container max-w-5xl mx-auto">
-    {
-      header && (
-        <h2 class="text-3xl font-bold tracking-tight text-heading md:text-4xl lg:text-5xl text-center mb-12">
-          {header}
-        </h2>
-      )
-    }
-    <div class="mx-auto text-section mb-4 flex flex-wrap gap-8 justify-center items-center">
+  <div class="container w-xl mx-auto px-4">
+    <div class="flex flex-col text-section mb-4 gap-4">
       {
         items.map((item) => (
-          <div class="mx-4 flex-1 min-w-75 sm:max-w-full md:max-w-[50%]">
+          <div class="mx-1 w-full">
             <PortableText value={item.body} />
           </div>
         ))

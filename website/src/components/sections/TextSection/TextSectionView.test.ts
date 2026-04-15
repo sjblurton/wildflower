@@ -7,7 +7,6 @@ import { describe, it, expect } from 'vitest';
 const minimalProps: Omit<TextSection, 'ctaButtons'> = {
   _key: 'section1',
   _type: 'textSection',
-  header: 'Sample Header',
   backgroundColour: 'light',
   items: [
     {
@@ -27,7 +26,7 @@ const minimalProps: Omit<TextSection, 'ctaButtons'> = {
 const TextSectionViewComponent = TextSectionView as unknown as AstroComponentFactory;
 
 describe('TextSectionView', () => {
-  it('renders header and items', async () => {
+  it('renders items and not internal header', async () => {
     const container = await AstroContainer.create();
     const html = await container.renderToString(TextSectionViewComponent, {
       props: minimalProps,
@@ -35,21 +34,9 @@ describe('TextSectionView', () => {
         cta: '<button>CTA</button>',
       },
     });
-    expect(html).toContain('Sample Header');
-    expect(html).toContain('Hello world');
-    expect(html).toContain('CTA');
-  });
-
-  it('does not render header if not provided', async () => {
-    const container = await AstroContainer.create();
-    const html = await container.renderToString(TextSectionViewComponent, {
-      props: { ...minimalProps, header: null },
-      slots: {
-        cta: '<button>CTA</button>',
-      },
-    });
     expect(html).not.toContain('Sample Header');
     expect(html).toContain('Hello world');
+    expect(html).toContain('CTA');
   });
 
   it('renders multiple items', async () => {
