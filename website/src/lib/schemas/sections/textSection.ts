@@ -13,7 +13,6 @@ export const textSectionSchema = z.object({
   _key: z.string().min(1),
   _type: z.literal(COMPONENT_TYPES.TEXT_SECTION),
   ctaButtons: ctaButtonSchema.array().default([]),
-  header: z.string().nullable().default(null),
   items: textItemSchema.array().default([]),
   backgroundColour: sectionColoursSchema,
 });

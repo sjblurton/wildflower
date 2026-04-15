@@ -54,6 +54,7 @@
 
   p {
     text-align: justify;
+    margin-block: 0.5rem;
   }
 
   blockquote {

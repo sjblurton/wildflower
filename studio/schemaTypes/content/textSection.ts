@@ -9,9 +9,10 @@ export const textSectionType = defineType({
   fields: [
     defineField({
       name: 'header',
-      title: 'Header',
+      title: 'Internal name',
       type: 'string',
-      description: 'Optional header for the text section',
+      description:
+        'Optional internal name for the text section, to help to find it in the list of sections on the page.',
     }),
     defineField({
       name: 'items',
