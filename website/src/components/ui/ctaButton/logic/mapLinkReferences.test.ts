@@ -5,6 +5,7 @@ import type { LinkReferenceType } from '../../../../lib/schemas/shared/primitive
 import type { NavLinkSlug } from '../../../../lib/schemas/links/navLink';
 import type { ContactLinkReference } from '../../../../lib/links/contact-links.schema';
 import type { FetchLinkReference } from '../../../../lib/links/fetchLinkReference';
+import type { UrlLink } from '../../../../lib/schemas/links/urlLink';
 
 vi.mock('../../../../lib/logging/logger', () => {
   return { logger: { error: vi.fn() } };
@@ -31,11 +32,19 @@ const fakeContactData = {
   ],
 } satisfies ContactLinkReference;
 
+const fakeUrlLinkData = {
+  _type: 'urlLinkReference' as const,
+  title: 'Example',
+  url: 'https://example.com',
+} satisfies UrlLink;
+
 const fetchLinkReference = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   page: vi.fn(async (_ref: string) => ({ success: true as const, data: fakePageData })),
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   contact: vi.fn(async (_ref: string) => ({ success: true as const, data: fakeContactData })),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  url: vi.fn(async (_ref: string) => ({ success: true as const, data: fakeUrlLinkData })),
 } satisfies FetchLinkReference;
 
 describe('mapLinkReferences', () => {

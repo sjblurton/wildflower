@@ -10,6 +10,7 @@ import type { MappedLinkReference } from '../types/CTAButton.interfaces';
 
 export const handleUrlLink = async (
   link: LinkReferenceType,
+  iconProp: IconProp | null | undefined,
   fetchLinkReference: FetchLinkReference,
 ): Promise<(MappedLinkReference | null)[]> => {
   const { success, data } = await fetchLinkReference.url(link._ref);
@@ -22,7 +23,7 @@ export const handleUrlLink = async (
     });
     return [null];
   }
-  return [{ url: data.url, icon: null }];
+  return [{ url: data.url, icon: iconProp ?? null }];
 };
 
 export const handlePageLink = async (

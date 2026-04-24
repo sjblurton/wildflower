@@ -12,6 +12,35 @@ const createLoggerSpy = () => {
 };
 
 describe('loadNavSettings', () => {
+  it('parses urlLinkReference nav links', async () => {
+    const log = createLoggerSpy();
+
+    const nav = await loadNavSettings({
+      fetchNavSettings: async () => ({
+        _id: 'navSettings',
+        _type: 'navSettings',
+        navLinks: [
+          {
+            _key: 'external',
+            _type: 'urlLinkReference',
+            label: 'External',
+            url: 'https://example.com',
+          },
+        ],
+      }),
+      log,
+    });
+
+    expect(nav.navLinks).toEqual([
+      {
+        _key: 'external',
+        _type: 'urlLinkReference',
+        label: 'External',
+        url: 'https://example.com',
+      },
+    ]);
+  });
+
   it('returns parsed nav data when payload is valid', async () => {
     const log = createLoggerSpy();
 
@@ -56,7 +85,9 @@ describe('loadNavSettings', () => {
       log,
     });
 
-    expect(nav.navLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      nav.navLinks.map((link) => (link._type !== 'urlLinkReference' ? link.slug : undefined)),
+    ).toEqual(['/', '/contact']);
     expect(log.error).toHaveBeenCalledWith(
       expect.objectContaining({
         event: 'nav.fetch_failed',
@@ -91,7 +122,9 @@ describe('loadNavSettings', () => {
     });
 
     expect(nav.navSiteName).toBe('Wildflower');
-    expect(nav.navLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      nav.navLinks.map((link) => (link._type !== 'urlLinkReference' ? link.slug : undefined)),
+    ).toEqual(['/', '/contact']);
 
     expect(log.warn).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -122,7 +155,9 @@ describe('loadNavSettings', () => {
       log,
     });
 
-    expect(nav.navLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      nav.navLinks.map((link) => (link._type !== 'urlLinkReference' ? link.slug : undefined)),
+    ).toEqual(['/', '/contact']);
     expect(log.error).toHaveBeenCalledWith(
       expect.objectContaining({
         event: 'nav.fetch_failed',
@@ -142,7 +177,9 @@ describe('loadNavSettings', () => {
     });
 
     expect(nav.navSiteName).toBeNull();
-    expect(nav.navLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      nav.navLinks.map((link) => (link._type !== 'urlLinkReference' ? link.slug : undefined)),
+    ).toEqual(['/', '/contact']);
 
     expect(log.warn).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -193,7 +230,9 @@ describe('loadNavSettings', () => {
       log,
     });
 
-    expect(nav.navLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      nav.navLinks.map((link) => (link._type !== 'urlLinkReference' ? link.slug : undefined)),
+    ).toEqual(['/', '/contact']);
   });
 
   it('salvages valid links from malformed payload and normalises slugs', async () => {

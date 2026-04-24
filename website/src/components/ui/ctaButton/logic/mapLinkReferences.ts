@@ -16,7 +16,7 @@ export const mapLinkReferences = async (
     return handleContactLink(link, iconProp, fetchLinkReference);
   }
   if (link._type === 'urlLinkReference') {
-    return handleUrlLink(link, fetchLinkReference);
+    return handleUrlLink(link, iconProp, fetchLinkReference);
   }
   return [null];
 };

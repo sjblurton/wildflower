@@ -20,13 +20,11 @@ const sanityAssetRefSchema = z.object({
   _type: z.literal('reference'),
 });
 
-export const sanityImageSchema = z
-  .object({
-    _type: z.literal('image'),
-    alt: z.string().min(1),
-    asset: sanityAssetRefSchema.nullable(),
-  })
-  .transform((img) => (img.asset ? img : null));
+export const sanityImageSchema = z.object({
+  _type: z.literal('image'),
+  alt: z.string().min(1),
+  asset: sanityAssetRefSchema.nullable(),
+});
 
 export const linkReferenceTypeSchema = z.object({
   _ref: z.string().min(1),
@@ -49,5 +47,7 @@ export const textBlockSchema = z.looseObject({
 export const sectionColoursSchema = z.enum(['light', 'dark']).default('light');
 
 export type LinkReferenceType = z.infer<typeof linkReferenceTypeSchema>;
+
 export type SanityImage = z.infer<typeof sanityImageSchema>;
+
 export type DaisyTheme = z.infer<typeof daisyThemeSchema>;

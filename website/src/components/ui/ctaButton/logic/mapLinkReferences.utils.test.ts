@@ -70,7 +70,7 @@ describe('handlePageLink', () => {
 describe('handleUrlLink', () => {
   it('returns mapped URL link', async () => {
     const link: LinkReferenceType = { _type: 'urlLinkReference', _key: '1', _ref: 'url1' };
-    const result = await handleUrlLink(link, fetchLinkReference);
+    const result = await handleUrlLink(link, null, fetchLinkReference);
     expect(result).toEqual([{ url: 'https://example.com', icon: null }]);
   });
   it('logs error and returns [null] if fetch fails', async () => {
@@ -81,7 +81,7 @@ describe('handleUrlLink', () => {
       data: 'fail',
     });
     const link: LinkReferenceType = { _type: 'urlLinkReference', _key: '1', _ref: 'fail' };
-    const result = await handleUrlLink(link, fetchLinkReference);
+    const result = await handleUrlLink(link, null, fetchLinkReference);
     expect(result).toEqual([null]);
     expect(logger.error).toHaveBeenCalled();
   });
