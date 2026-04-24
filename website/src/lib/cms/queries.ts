@@ -8,7 +8,7 @@ export const referenceIdToNavLinkQuery = /* groq */ `
   }
 `;
 
-export const referenceIdToContactLinkQuery = /* groq */ `
+export const referenceIdQuery = /* groq */ `
   *[_id == $id][0]
 `;
 

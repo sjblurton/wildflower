@@ -58,7 +58,11 @@ describe('footer.load.utils', () => {
     expect(footer._id).toBe('footerSettings-fallback');
     expect(footer.footerSiteName).toBeNull();
     expect(footer.footerLogo).toBeNull();
-    expect(footer.footerNavLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      footer.footerNavLinks.map((link) =>
+        link._type !== 'urlLinkReference' ? link.slug : undefined,
+      ),
+    ).toEqual(['/', '/contact']);
     expect(footer.footerContactLinks).toEqual([]);
   });
 
@@ -66,7 +70,11 @@ describe('footer.load.utils', () => {
     const footer = normaliseInvalidFooter(42);
 
     expect(footer._id).toBe('footerSettings-fallback');
-    expect(footer.footerNavLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      footer.footerNavLinks.map((link) =>
+        link._type !== 'urlLinkReference' ? link.slug : undefined,
+      ),
+    ).toEqual(['/', '/contact']);
     expect(footer.footerContactLinks).toEqual([]);
   });
 
@@ -131,7 +139,11 @@ describe('footer.load.utils', () => {
     });
 
     expect(footer._id).toBe('footer-non-array');
-    expect(footer.footerNavLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      footer.footerNavLinks.map((link) =>
+        link._type !== 'urlLinkReference' ? link.slug : undefined,
+      ),
+    ).toEqual(['/', '/contact']);
     expect(footer.footerContactLinks).toEqual([]);
   });
 });

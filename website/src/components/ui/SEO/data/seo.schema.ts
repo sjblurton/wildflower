@@ -7,7 +7,10 @@ export const siteSeoSchema = z.object({
   siteUrl: z.string(),
   defaultMetaTitle: z.string().nullable().default(null),
   defaultMetaDescription: z.string().nullable().default(null),
-  defaultOgImage: sanityImageSchema.nullable().default(null),
+  defaultOgImage: sanityImageSchema
+    .transform((img) => (img.asset ? img : null))
+    .nullable()
+    .default(null),
   globalWebIndex: z.boolean().nullable().optional().default(false),
 });
 

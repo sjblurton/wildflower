@@ -3,6 +3,7 @@ import {
   handlePageLink,
   handleContactLink,
   mapContactLinksToContactLinks,
+  handleUrlLink,
 } from './mapLinkReferences.utils';
 import { logger } from '../../../../lib/logging/logger';
 import type { LinkReferenceType } from '../../../../lib/schemas/shared/primitives';
@@ -12,6 +13,7 @@ import type {
   ContactLinkReference,
   ContactLinkUnionType,
 } from '../../../../lib/links/contact-links.schema';
+import type { UrlLink } from '../../../../lib/schemas/links/urlLink';
 
 vi.mock('../../../../lib/logging/logger', () => ({ logger: { error: vi.fn() } }));
 
@@ -27,11 +29,22 @@ const fakeContactData = (contactType: ContactLinkUnionType[] = []): ContactLinkR
   contactType,
 });
 
+const fakeUrlData = {
+  _type: 'urlLinkReference',
+  url: 'https://example.com',
+  title: 'Example',
+} satisfies UrlLink;
+
 const fetchLinkReference = {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   page: vi.fn(async (_ref: string) => ({ success: true as const, data: fakePageData })),
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   contact: vi.fn(async (_ref: string) => ({ success: true as const, data: fakeContactData([]) })),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  url: vi.fn(async (_ref: string) => ({
+    success: true as const,
+    data: fakeUrlData,
+  })),
 } satisfies FetchLinkReference;
 
 describe('handlePageLink', () => {
@@ -49,6 +62,26 @@ describe('handlePageLink', () => {
     });
     const link: LinkReferenceType = { _type: 'pageLinkReference', _key: '1', _ref: 'fail' };
     const result = await handlePageLink(link, null, fetchLinkReference);
+    expect(result).toEqual([null]);
+    expect(logger.error).toHaveBeenCalled();
+  });
+});
+
+describe('handleUrlLink', () => {
+  it('returns mapped URL link', async () => {
+    const link: LinkReferenceType = { _type: 'urlLinkReference', _key: '1', _ref: 'url1' };
+    const result = await handleUrlLink(link, null, fetchLinkReference);
+    expect(result).toEqual([{ url: 'https://example.com', icon: null }]);
+  });
+  it('logs error and returns [null] if fetch fails', async () => {
+    fetchLinkReference.url.mockResolvedValueOnce({
+      // @ts-expect-error - testing failure case
+      success: false as const,
+      //   @ts-expect-error - testing failure case
+      data: 'fail',
+    });
+    const link: LinkReferenceType = { _type: 'urlLinkReference', _key: '1', _ref: 'fail' };
+    const result = await handleUrlLink(link, null, fetchLinkReference);
     expect(result).toEqual([null]);
     expect(logger.error).toHaveBeenCalled();
   });

@@ -123,6 +123,12 @@ export const ctaType = defineType({
           type: 'reference',
           to: [{type: 'page'}],
         }),
+        defineArrayMember({
+          name: 'urlLinkReference',
+          title: 'URL link',
+          type: 'reference',
+          to: [{type: 'urlLink'}],
+        }),
       ],
       validation: (Rule) => Rule.required().min(1),
     }),

@@ -8,6 +8,24 @@ import { logger } from '../../../../lib/logging/logger';
 import type { LinkReferenceType } from '../../../../lib/schemas/shared/primitives';
 import type { MappedLinkReference } from '../types/CTAButton.interfaces';
 
+export const handleUrlLink = async (
+  link: LinkReferenceType,
+  iconProp: IconProp | null | undefined,
+  fetchLinkReference: FetchLinkReference,
+): Promise<(MappedLinkReference | null)[]> => {
+  const { success, data } = await fetchLinkReference.url(link._ref);
+  if (!success) {
+    logger.error({
+      event: LOG_EVENTS.cta.linkValidationFailed,
+      area: 'mapLinkReferences',
+      message: `Failed to parse URL link reference for CTA with _ref: ${link._ref}`,
+      meta: { linkRef: link._ref, linkType: 'url', error: data },
+    });
+    return [null];
+  }
+  return [{ url: data.url, icon: iconProp ?? null }];
+};
+
 export const handlePageLink = async (
   link: LinkReferenceType,
   iconProp: IconProp | null | undefined,

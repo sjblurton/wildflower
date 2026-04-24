@@ -11,6 +11,7 @@ import {phoneLinkType} from './links/phoneLink'
 import {ticTocLinkType} from './links/ticTocLink'
 import {emailLinkType} from './links/emailLink'
 import {whatsappLinkType} from './links/watsappLink'
+import {urlLinkType} from './links/urlLink'
 
 import {footerSettingsType} from './settings/footerSettings'
 import {navSettingsType} from './settings/navSettings'
@@ -18,6 +19,7 @@ import {siteSettingsType} from './settings/siteSettings'
 
 export const schemaTypes = [
   contactLinkType,
+  urlLinkType,
   ctaType,
   footerSettingsType,
   imageSectionType,

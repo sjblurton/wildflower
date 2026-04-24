@@ -67,7 +67,11 @@ describe('loadFooterSettings', () => {
       log,
     });
 
-    expect(footer.footerNavLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      footer.footerNavLinks.map((link) =>
+        link._type !== 'urlLinkReference' ? link.slug : undefined,
+      ),
+    ).toEqual(['/', '/contact']);
     expect(footer.footerContactLinks).toEqual([]);
     expect(log.error).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -155,7 +159,11 @@ describe('loadFooterSettings', () => {
       log,
     });
 
-    expect(footer.footerNavLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      footer.footerNavLinks.map((link) =>
+        link._type !== 'urlLinkReference' ? link.slug : undefined,
+      ),
+    ).toEqual(['/', '/contact']);
     expect(footer.footerContactLinks).toEqual([]);
     expect(log.error).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -176,7 +184,11 @@ describe('loadFooterSettings', () => {
     });
 
     expect(footer.footerSiteName).toBeNull();
-    expect(footer.footerNavLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
+    expect(
+      footer.footerNavLinks.map((link) =>
+        link._type !== 'urlLinkReference' ? link.slug : undefined,
+      ),
+    ).toEqual(['/', '/contact']);
     expect(footer.footerContactLinks).toEqual([]);
 
     expect(log.warn).toHaveBeenCalledWith(
@@ -209,7 +221,15 @@ describe('loadFooterSettings', () => {
       log,
     });
 
-    expect(footer.footerNavLinks.map((link) => link.slug)).toEqual(['/', '/contact']);
-    expect(footer.footerNavLinks.map((link) => link.label)).toEqual(['Home', 'Contact']);
+    expect(
+      footer.footerNavLinks.map((link) =>
+        link._type !== 'urlLinkReference' ? link.slug : undefined,
+      ),
+    ).toEqual(['/', '/contact']);
+    expect(
+      footer.footerNavLinks.map((link) =>
+        link._type !== 'urlLinkReference' ? link.label : undefined,
+      ),
+    ).toEqual(['Home', 'Contact']);
   });
 });

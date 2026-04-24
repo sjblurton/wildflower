@@ -47,7 +47,7 @@ export const imageSectionType = defineType({
     },
     prepare({title, media, opacity}) {
       return {
-        title: title + '- Image section',
+        title: (title ? title + '- ' : '') + 'Image section',
         subtitle: `Opacity: ${opacity || 3}`,
         media,
       }

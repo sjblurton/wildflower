@@ -2,7 +2,13 @@ export const navLinkProjection = /* groq */ `
   _key,
   _type,
   label,
-  "slug": page->slug.current
+  "slug": page->slug.current,
+  ...select(
+    _type == "urlLinkReference" => {
+      "label": @->title,
+      "url": @->url
+    }
+  )
 `;
 
 export const contactLinkProjection = /* groq */ `
