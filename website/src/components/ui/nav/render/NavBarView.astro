@@ -9,7 +9,11 @@ interface Props {
 
 const { nav } = Astro.props;
 const links = Array.isArray(nav?.navLinks)
-  ? nav.navLinks.filter((link) => link?.label?.trim() && link?.slug?.trim())
+  ? nav.navLinks.filter(
+      (link) =>
+        link?.label?.trim() &&
+        (link._type === 'urlLinkReference' ? link.url?.trim() : link.slug?.trim()),
+    )
   : [];
 const siteName = nav?.navSiteName?.trim() || null;
 const hasLogo = Boolean(nav?.navLogo?.asset?._ref);
@@ -43,7 +47,7 @@ const showFallbackName = !hasLogo && !hasSiteName;
         >
           {
             links.map((link) => {
-              const href = link.slug;
+              const href = link._type === 'urlLinkReference' ? link.url : link.slug;
               return (
                 <li>
                   <a href={href}>{link.label}</a>

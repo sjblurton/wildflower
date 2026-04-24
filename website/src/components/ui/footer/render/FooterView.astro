@@ -58,7 +58,10 @@ const backgroundClass = footer.backgroundColour
           <ul class="space-y-2 text-sm">
             {footer.footerNavLinks.map((item) => (
               <li>
-                <a href={item.slug} class="link link-hover">
+                <a
+                  href={item._type === 'urlLinkReference' ? item.url : item.slug}
+                  class="link link-hover"
+                >
                   {item.label}
                 </a>
               </li>

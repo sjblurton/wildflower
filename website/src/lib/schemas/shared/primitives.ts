@@ -20,15 +20,17 @@ const sanityAssetRefSchema = z.object({
   _type: z.literal('reference'),
 });
 
-export const sanityImageSchema = z.object({
-  _type: z.literal('image'),
-  alt: z.string().min(1),
-  asset: sanityAssetRefSchema,
-});
+export const sanityImageSchema = z
+  .object({
+    _type: z.literal('image'),
+    alt: z.string().min(1),
+    asset: sanityAssetRefSchema.nullable(),
+  })
+  .transform((img) => (img.asset ? img : null));
 
 export const linkReferenceTypeSchema = z.object({
   _ref: z.string().min(1),
-  _type: z.enum(['contactLinkReference', 'pageLinkReference']),
+  _type: z.enum(['contactLinkReference', 'pageLinkReference', 'urlLinkReference']),
   _key: z.string().min(1),
 });
 
