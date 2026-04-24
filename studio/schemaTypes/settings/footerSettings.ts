@@ -108,6 +108,12 @@ export const footerSettingsType = defineType({
             },
           },
         }),
+        defineArrayMember({
+          name: 'urlLinkReference',
+          title: 'URL link',
+          type: 'reference',
+          to: [{type: 'urlLink'}],
+        }),
       ],
       group: 'links',
       validation: (Rule) =>

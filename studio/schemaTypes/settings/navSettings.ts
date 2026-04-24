@@ -96,6 +96,12 @@ export const navSettingsType = defineType({
             },
           },
         }),
+        defineArrayMember({
+          name: 'urlLinkReference',
+          title: 'URL link',
+          type: 'reference',
+          to: [{type: 'urlLink'}],
+        }),
       ],
       group: 'content',
     }),
