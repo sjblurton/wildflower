@@ -5,8 +5,8 @@ import type { ProductCardViewProps } from './ProductCardView.interface';
 const { description, title, image } = Astro.props as ProductCardViewProps;
 ---
 
-<div class="card bg-base-100 w-80 shadow-sm">
-  <figure>
+<div class="card bg-base-100 w-80 shadow-sm flex flex-col">
+  <figure class="flex-none">
     <SanityImage
       data-testid="sanity-image-product-card"
       image={image}
@@ -15,9 +15,10 @@ const { description, title, image } = Astro.props as ProductCardViewProps;
       decoding="async"
     />
   </figure>
-  <div class="card-body">
-    <h2 class="card-title min-h-18">{title}</h2>
-    <p class="min-h-16">{description}</p>
+  <div class="card-body flex flex-col flex-1 justify-between">
+    <h2 class="card-title">{title}</h2>
+    <p>{description}</p>
+
     <div class="card-actions justify-end">
       <slot name="cta" />
     </div>
